@@ -31,6 +31,6 @@ jobs:
       - name: Run bot
         run: python main.py
         env:
-          BOT_TOKEN: ${{ BOT_TOKEN }}
-          CHANNEL_ID: ${{ CHANNEL_ID }}
-          GEMINI_KEY: ${{ GEMINI_KEY }}
+           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
