@@ -3,7 +3,7 @@ name: Daily News Bot
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 12 * * *"
+     - cron: "* * * * *"
 
 jobs:
   run-news:
