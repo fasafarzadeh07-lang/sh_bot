@@ -20,8 +20,11 @@ GEMINI_KEY = os.getenv("GEMINI_KEY")
 
 
 RSS_FEEDS = [
-    "https://feeds.bbci.co.uk/news/world/rss.xml",
-    "https://feeds.bbci.co.uk/news/business/rss.xml",
+    "https://feeds.marketwatch.com/marketwatch/topstories/",
+    "https://www.coindesk.com/arc/outboundfeeds/rss/",
+    "https://www.investing.com/rss/news.rss",
+    "https://feeds.reuters.com/reuters/businessNews",
+    "https://feeds.reuters.com/reuters/globalmarketsNews",
 ]
 
 
@@ -49,18 +52,46 @@ def summarize_news(articles):
         ]
     )
 
-    prompt = f"""
-Create a professional Telegram daily news digest.
+prompt = f"""
+You are a professional global macroeconomic news editor writing for a Telegram audience of students and finance enthusiasts.
+
+Task:
+- Read all provided headlines.
+- Select the 5 most important global macroeconomic and financial stories of the day.
+- Prioritize: inflation, GDP, central banks, interest rates, stock markets, oil/energy, crypto, major corporate events.
+- Ignore low-impact, local, entertainment, and repetitive news.
+
+Output format:
+
+🌍 Global Economic News 💰📈
+
+1. Title of story 🧠/emoji
+Short but informative explanation (2–4 sentences). Include key numbers (percentages, prices, rates) if available.
+
+2. Title of story 🧠/emoji
+Short explanation (2–4 sentences) with context and impact on markets/economy.
+
+3. Title of story 🧠/emoji
+Short explanation (2–4 sentences).
+
+4. Title of story 🧠/emoji
+Short explanation (2–4 sentences).
+
+5. Title of story 🧠/emoji
+Short explanation (2–4 sentences).
+
+📌 Market Summary:
+Write 2–3 sentences summarizing the overall global market mood (risk-on / risk-off), and what investors should watch next (rates, inflation, geopolitics, crypto, etc.).
 
 Rules:
-- Add a short title
-- Use 5 bullet points
-- Simple language
-- Maximum 300 words
-- Add important source links at the end
+- Maximum 200 words total.
+- Clear, professional English (not too academic, not casual).
+- Use numbers when available.
+- Do NOT invent data.
+- If multiple headlines describe the same event, merge them into one point.
+- Make it feel like a Bloomberg-style daily briefing for Telegram.
 
-News:
-
+Headlines:
 {headlines}
 """
 
