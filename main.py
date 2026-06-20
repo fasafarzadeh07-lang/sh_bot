@@ -32,16 +32,23 @@ def get_news():
     articles = []
 
     for feed_url in RSS_FEEDS:
-        feed = feedparser.parse(feed_url)
+        try:
+            feed = feedparser.parse(feed_url)
 
-        for entry in feed.entries[:5]:
-            articles.append({
-                "title": entry.title,
-                "link": entry.link
-            })
+            if not hasattr(feed, "entries"):
+                continue
+
+            for entry in feed.entries[:3]:
+                if hasattr(entry, "title") and hasattr(entry, "link"):
+                    articles.append({
+                        "title": entry.title,
+                        "link": entry.link
+                    })
+
+        except Exception as e:
+            print(f"RSS failed: {feed_url} -> {e}")
 
     return articles
-
 
 def summarize_news(articles):
 
