@@ -46,13 +46,11 @@ def get_news():
 def summarize_news(articles):
 
     headlines = "\n".join(
-        [
-            f"- {article['title']}"
-            for article in articles
-        ]
+        f"- {article['title']}"
+        for article in articles
     )
 
-prompt = f"""
+    prompt = f"""
 You are a professional global macroeconomic news editor writing for a Telegram audience of students and finance enthusiasts.
 
 Task:
@@ -65,31 +63,28 @@ Output format:
 
 🌍 Global Economic News 💰📈
 
-1. Title of story 🧠/emoji
-Short but informative explanation (2–4 sentences). Include key numbers (percentages, prices, rates) if available.
-
-2. Title of story 🧠/emoji
-Short explanation (2–4 sentences) with context and impact on markets/economy.
-
-3. Title of story 🧠/emoji
+1. Story 🧠
 Short explanation (2–4 sentences).
 
-4. Title of story 🧠/emoji
+2. Story 🧠
 Short explanation (2–4 sentences).
 
-5. Title of story 🧠/emoji
+3. Story 🧠
+Short explanation (2–4 sentences).
+
+4. Story 🧠
+Short explanation (2–4 sentences).
+
+5. Story 🧠
 Short explanation (2–4 sentences).
 
 📌 Market Summary:
-Write 2–3 sentences summarizing the overall global market mood (risk-on / risk-off), and what investors should watch next (rates, inflation, geopolitics, crypto, etc.).
+2–3 sentences about overall market mood.
 
 Rules:
-- Maximum 200 words total.
-- Clear, professional English (not too academic, not casual).
-- Use numbers when available.
+- Maximum 200 words.
 - Do NOT invent data.
-- If multiple headlines describe the same event, merge them into one point.
-- Make it feel like a Bloomberg-style daily briefing for Telegram.
+- Use numbers when available.
 
 Headlines:
 {headlines}
@@ -97,7 +92,10 @@ Headlines:
 
     client = genai.Client(api_key=GEMINI_KEY)
 
-    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
 
     return response.text
 
