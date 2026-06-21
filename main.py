@@ -170,6 +170,7 @@ Rules:
   - Energy → 🛢️⚡
   - Risk → ⚠️🌍
   - Tech/companies → 🤖💻🚀
+  - Telegram formatting rule: Do NOT use double asterisks (**). If you want bold text, use single asterisks (*) only.
 
 Make it feel like a Bloomberg-style structured daily briefing for Telegram.
 
