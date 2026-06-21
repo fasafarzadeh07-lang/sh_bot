@@ -57,44 +57,42 @@ def get_news():
 
     return articles
 
+import requests
+
 def get_market_data():
-    # ₿ Bitcoin & Ethereum (CoinGecko - بدون API key)
+
+    # 🟡 GOLD
+    gold = requests.get(
+        "https://api.metals.live/v1/spot/gold"
+    ).json()
+    gold_price = gold[0]["price"]
+
+    # 🛢️ OIL (WTI Crude)
+    oil = requests.get(
+        "https://stooq.com/q/l/?s=cl.f&f=sd2t2ohlcv&h&e=json"
+    ).json()
+    wti_price = oil["symbols"][0]["close"]
+
+    # ₿ CRYPTO (Bitcoin + Ethereum + Solana)
     crypto = requests.get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
+        "https://api.coingecko.com/api/v3/simple/price",
+        params={
+            "ids": "bitcoin,ethereum,solana",
+            "vs_currencies": "usd"
+        }
     ).json()
 
     btc_price = crypto["bitcoin"]["usd"]
     eth_price = crypto["ethereum"]["usd"]
-
-    # 🥇 Gold (Alpha Vantage)
-    gold = requests.get(
-        f"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=XAU&to_currency=USD&apikey={ALPHA_VANTAGE_KEY}"
-    ).json()
-    gold_price = gold["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
-
-    # 🛢️ Oil (WTI & Brent - Alpha Vantage)
-    wti = requests.get(
-        f"https://www.alphavantage.co/query?function=WTI&interval=daily&apikey={ALPHA_VANTAGE_KEY}"
-    ).json()
-
-    # آخرین مقدار
-    wti_price = wti["data"][0]["value"]
-
-    # ⚠️ Brent در Alpha Vantage مستقیم نیست → از TradingEconomics fallback ساده
-    brent_price = "N/A"
-
-    # 📈 S&P500 & DXY (Alpha Vantage FX)
-    sp500_price = "N/A"
-    dxy_price = "N/A"
+    sol_price = crypto["solana"]["usd"]
 
     return {
         "gold_price": gold_price,
         "wti_price": wti_price,
-        "brent_price": brent_price,
+
         "btc_price": btc_price,
         "eth_price": eth_price,
-        "sp500_price": sp500_price,
-        "dxy_price": dxy_price,
+        "sol_price": sol_price
     }
 
 def summarize_news(articles, market_data):
@@ -137,12 +135,10 @@ Write 2–3 sentences summarizing the overall global market mood (risk-on / risk
 📊 Live Market Snapshot:
 
 Gold: {market_data['gold_price']}
-Brent Oil: {market_data['brent_price']}
-WTI Oil: {market_data['wti_price']}
+Oil (WTI): {market_data['wti_price']}
 Bitcoin: {market_data['btc_price']}
 Ethereum: {market_data['eth_price']}
-S&P 500 Futures: {market_data['sp500_price']}
-DXY (US Dollar Index): {market_data['dxy_price']}
+Solana: {market_data['sol_price']}
 
 
 Rules:
