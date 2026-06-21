@@ -25,6 +25,12 @@ RSS_FEEDS = [
     "https://www.investing.com/rss/news.rss",
     "https://feeds.reuters.com/reuters/businessNews",
     "https://feeds.reuters.com/reuters/globalmarketsNews",
+
+    # Added feeds
+    "https://www.ft.com/rss/home",
+    "https://oilprice.com/rss/main",
+    "https://cointelegraph.com/rss",
+    "https://www.imf.org/en/News/RSS",
 ]
 
 
