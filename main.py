@@ -17,7 +17,6 @@ from google import genai
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 GEMINI_KEY = os.getenv("GEMINI_KEY")
-ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY")
 
 
 RSS_FEEDS = [
@@ -26,12 +25,6 @@ RSS_FEEDS = [
     "https://www.investing.com/rss/news.rss",
     "https://feeds.reuters.com/reuters/businessNews",
     "https://feeds.reuters.com/reuters/globalmarketsNews",
-
-    # Added feeds
-    "https://www.ft.com/rss/home",
-    "https://oilprice.com/rss/main",
-    "https://cointelegraph.com/rss",
-    "https://www.imf.org/en/News/RSS",
 ]
 
 
@@ -57,45 +50,8 @@ def get_news():
 
     return articles
 
-import requests
+def summarize_news(articles):
 
-def get_market_data():
-
-    # 🟡 GOLD
-    gold = requests.get(
-        "https://api.metals.live/v1/spot/gold"
-    ).json()
-    gold_price = gold[0]["price"]
-
-    # 🛢️ OIL (WTI Crude)
-    oil = requests.get(
-        "https://stooq.com/q/l/?s=cl.f&f=sd2t2ohlcv&h&e=json"
-    ).json()
-    wti_price = oil["symbols"][0]["close"]
-
-    # ₿ CRYPTO (Bitcoin + Ethereum + Solana)
-    crypto = requests.get(
-        "https://api.coingecko.com/api/v3/simple/price",
-        params={
-            "ids": "bitcoin,ethereum,solana",
-            "vs_currencies": "usd"
-        }
-    ).json()
-
-    btc_price = crypto["bitcoin"]["usd"]
-    eth_price = crypto["ethereum"]["usd"]
-    sol_price = crypto["solana"]["usd"]
-
-    return {
-        "gold_price": gold_price,
-        "wti_price": wti_price,
-
-        "btc_price": btc_price,
-        "eth_price": eth_price,
-        "sol_price": sol_price
-    }
-
-def summarize_news(articles, market_data):
     headlines = "\n".join(
         f"- {article['title']}"
         for article in articles
@@ -131,15 +87,6 @@ Short explanation (2–4 sentences).
 
 📌 Market Summary:
 Write 2–3 sentences summarizing the overall global market mood (risk-on / risk-off), and what investors should watch next (rates, inflation, geopolitics, crypto, etc.).
-
-📊 Live Market Snapshot:
-
-Gold: {market_data['gold_price']}
-Oil (WTI): {market_data['wti_price']}
-Bitcoin: {market_data['btc_price']}
-Ethereum: {market_data['eth_price']}
-Solana: {market_data['sol_price']}
-
 
 Rules:
 - Maximum 200 words total.
@@ -201,9 +148,8 @@ def main():
 
     print(f"Found {len(articles)} articles")
 
-    market_data = get_market_data()
+    summary = summarize_news(articles)
 
-    summary = summarize_news(articles, market_data)
     print("Summary created")
 
     send_to_telegram(summary)
