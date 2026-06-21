@@ -114,8 +114,10 @@ Prioritize these sections:
 ⚠️ Geopolitics (only if market-relevant)
 
 Rules:
-- Each section should include 1–2 key stories max (only if relevant headlines exist).
+- Each section can include up to 2–3 stories if multiple highly important and relevant headlines exist in that category.
+- If a section has more than one strong story, include them all in the same section (ranked by importance).
 - If a section has no important news, skip it completely.
+- Do NOT limit sections to only one story if additional meaningful macro-relevant news is available.
 - Do NOT force stories into sections where they don’t belong.
 - Merge duplicate stories within sections.
 
