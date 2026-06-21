@@ -57,8 +57,47 @@ def get_news():
 
     return articles
 
-def summarize_news(articles):
+def get_market_data():
+    # ₿ Bitcoin & Ethereum (CoinGecko - بدون API key)
+    crypto = requests.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
+    ).json()
 
+    btc_price = crypto["bitcoin"]["usd"]
+    eth_price = crypto["ethereum"]["usd"]
+
+    # 🥇 Gold (Alpha Vantage)
+    gold = requests.get(
+        f"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=XAU&to_currency=USD&apikey={ALPHA_VANTAGE_KEY}"
+    ).json()
+    gold_price = gold["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
+
+    # 🛢️ Oil (WTI & Brent - Alpha Vantage)
+    wti = requests.get(
+        f"https://www.alphavantage.co/query?function=WTI&interval=daily&apikey={ALPHA_VANTAGE_KEY}"
+    ).json()
+
+    # آخرین مقدار
+    wti_price = wti["data"][0]["value"]
+
+    # ⚠️ Brent در Alpha Vantage مستقیم نیست → از TradingEconomics fallback ساده
+    brent_price = "N/A"
+
+    # 📈 S&P500 & DXY (Alpha Vantage FX)
+    sp500_price = "N/A"
+    dxy_price = "N/A"
+
+    return {
+        "gold_price": gold_price,
+        "wti_price": wti_price,
+        "brent_price": brent_price,
+        "btc_price": btc_price,
+        "eth_price": eth_price,
+        "sp500_price": sp500_price,
+        "dxy_price": dxy_price,
+    }
+
+def summarize_news(articles, market_data):
     headlines = "\n".join(
         f"- {article['title']}"
         for article in articles
@@ -97,13 +136,13 @@ Write 2–3 sentences summarizing the overall global market mood (risk-on / risk
 
 📊 Live Market Snapshot:
 
-Gold: {gold_price}
-Brent Oil: {brent_price}
-WTI Oil: {wti_price}
-Bitcoin: {btc_price}
-Ethereum: {eth_price}
-S&P 500 Futures: {sp500_price}
-DXY (US Dollar Index): {dxy_price}
+Gold: {market_data['gold_price']}
+Brent Oil: {market_data['brent_price']}
+WTI Oil: {market_data['wti_price']}
+Bitcoin: {market_data['btc_price']}
+Ethereum: {market_data['eth_price']}
+S&P 500 Futures: {market_data['sp500_price']}
+DXY (US Dollar Index): {market_data['dxy_price']}
 
 
 Rules:
@@ -166,8 +205,9 @@ def main():
 
     print(f"Found {len(articles)} articles")
 
-    summary = summarize_news(articles)
+    market_data = get_market_data()
 
+    summary = summarize_news(articles, market_data)
     print("Summary created")
 
     send_to_telegram(summary)
