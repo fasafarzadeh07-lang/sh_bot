@@ -26,5 +26,6 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+          CHANNEL_ID_2: ${{ secrets.CHANNEL_ID_2 }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: python main.py
