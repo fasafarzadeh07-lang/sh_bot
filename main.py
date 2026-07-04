@@ -191,6 +191,7 @@ Link inclusion rules:
 - Do NOT attach URLs to every story.
 - Do NOT reduce the number of stories because of URL rules.
 - Keep story selection and URL selection as separate steps.
+- Never output a URL whose domain is ft.com. If a selected story only has an ft.com link available, do not include a source link for that story.
 
 When adding a URL:
 - Place it under the story as:
