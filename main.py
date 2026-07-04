@@ -65,6 +65,11 @@ RSS_FEEDS = [
 ]
 
 
+
+def is_valid_url(url):
+    return url and url.startswith("http") and "news.google.com" not in url
+
+
 def get_news():
     articles = []
 
@@ -77,11 +82,12 @@ def get_news():
 
             for entry in feed.entries[:3]:
                 if hasattr(entry, "title") and hasattr(entry, "link"):
-                    articles.append({
-                        "title": entry.title,
-                        "summary": getattr(entry, "summary", ""),
-                        "link": entry.link
-                    })
+                    if is_valid_url(entry.link):
+                        articles.append({
+                            "title": entry.title,
+                            "summary": getattr(entry, "summary", ""),
+                            "link": entry.link
+                        })
 
         except Exception as e:
             print(f"RSS failed: {feed_url} -> {e}")
@@ -166,6 +172,15 @@ Rules:
 - Merge duplicate coverage from multiple sources.
 - Prefer official reporting over commentary.
 - Prefer Reuters, Bloomberg, Financial Times, Wall Street Journal and official releases when multiple sources report the same story.
+
+URL Rules:
+- Do NOT include a URL for every story.
+- Only include a URL if the story is:
+  - Top-tier / market-moving (high importance), OR
+  - Selected as the #1 story in its section
+- Maximum: 3–5 total links in the entire report.
+- Never attach a link to analysis-only or minor stories.
+
 
 Output format:
 
