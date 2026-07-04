@@ -79,6 +79,7 @@ def get_news():
                 if hasattr(entry, "title") and hasattr(entry, "link"):
                     articles.append({
                         "title": entry.title,
+                        "summary": getattr(entry, "summary", ""),
                         "link": entry.link
                     })
 
@@ -89,8 +90,10 @@ def get_news():
 
 def summarize_news(articles):
 
-    headlines = "\n".join(
-        f"- {article['title']}"
+    headlines = "\n\n".join(
+        f"""Title: {article['title']}
+    Summary: {article['summary']}
+    URL: {article['link']}"""
         for article in articles
     )
 
@@ -98,81 +101,151 @@ def summarize_news(articles):
 You are a professional global macroeconomic news editor writing for a Telegram audience of students and finance enthusiasts.
 
 Task:
-- Read all provided headlines.
+- Read all provided articles (Title, Summary, URL).
 - Group them into thematic sections.
-- Select the most important stories for each section.
-- Ignore low-impact, local, entertainment, and repetitive news.
+- Select only the most important and market-moving stories.
+- Merge duplicate stories from different sources into one concise story.
+- Ignore low-impact, local, entertainment, lifestyle, promotional, repetitive, and non-economic news.
+
+Newsworthiness Rules:
+
+Prioritize factual, event-driven news.
+
+Prefer stories reporting:
+- Official economic data releases (CPI, PPI, GDP, PMI, employment, retail sales, etc.)
+- Central bank decisions or speeches that moved markets
+- Government policy announcements
+- Major corporate earnings
+- Mergers & acquisitions
+- Trade policy, tariffs, sanctions
+- Significant geopolitical developments affecting financial markets
+- Major moves in financial markets, commodities, or crypto
+
+Avoid:
+- Opinion articles
+- Editorials
+- Commentary
+- Explainers
+- Long-form features
+- Lifestyle pieces
+- Generic "trend" articles
+- Speculative forecasts without a new catalyst
+
+Only include an analysis article if it explains a major market-moving event that occurred today and there is no stronger factual story available.
+
+Before selecting a story, ask:
+"Would Bloomberg or Reuters likely consider this one of today's important market headlines?"
+If the answer is no, skip it.
+
+For the Macroeconomy section, prioritize in this order:
+1. Inflation
+2. Employment
+3. GDP
+4. PMI
+5. Retail Sales
+6. Manufacturing
+7. Consumer Confidence
+8. Fiscal Policy
+
+Avoid broad opinion pieces discussing long-term economic trends unless they are based on newly released official data.
 
 Prioritize these sections:
 
-🌍 Macroeconomy (inflation, GDP, unemployment, growth)
+🌍 Macroeconomy
 🏦 Central Banks & Interest Rates
-📈 Financial Markets (stocks, bonds, volatility)
+📈 Financial Markets
 ₿ Crypto & Digital Assets
-🛢️ Energy & Commodities (oil, gas, metals)
-🤖 Corporate & Global Industry (major companies, tech, AI, trade)
+🛢️ Energy & Commodities
+🤖 Corporate & Global Industry
 ⚠️ Geopolitics (only if market-relevant)
 
 Rules:
-- Each section should include 1–2 key stories max (only if relevant headlines exist).
-- If a section has no important news, skip it completely.
-- Do NOT force stories into sections where they don’t belong.
-- Merge duplicate stories within sections.
+- Each section should include a maximum of 1–2 stories.
+- Skip sections with no important news.
+- Do NOT force stories into sections.
+- Merge duplicate coverage from multiple sources.
+- Prefer official reporting over commentary.
+- Prefer Reuters, Bloomberg, Financial Times, Wall Street Journal and official releases when multiple sources report the same story.
 
 Output format:
 
 🌍 Global Economic News 💰📈
 
+🌍 Macroeconomy
+1. Story title + 1–2 relevant emojis
+Short explanation (2–3 sentences including key figures when available)
+🔗 Read more:
+<URL>
+
 🏦 Central Banks & Interest Rates
-1. Title of story + 1–2 relevant emojis only
-Short explanation (2–3 sentences with key numbers if available)
+1. Story title + 1–2 relevant emojis
+Short explanation
+🔗 Read more:
+<URL>
 
 📈 Financial Markets
-1. Title of story + 1–2 relevant emojis only
-Short explanation (2–3 sentences)
+1. Story title + 1–2 relevant emojis
+Short explanation
+🔗 Read more:
+<URL>
 
 ₿ Crypto & Digital Assets
-1. Title of story + 1–2 relevant emojis only
+1. Story title + 1–2 relevant emojis
 Short explanation
+🔗 Read more:
+<URL>
 
 🛢️ Energy & Commodities
-1. Title of story + 1–2 relevant emojis only
+1. Story title + 1–2 relevant emojis
 Short explanation
+🔗 Read more:
+<URL>
 
 🤖 Corporate & Global Industry
-1. Title of story + 1–2 relevant emojis only
+1. Story title + 1–2 relevant emojis
 Short explanation
+🔗 Read more:
+<URL>
 
 ⚠️ Geopolitics
-1. Title of story + 1–2 relevant emojis only
+1. Story title + 1–2 relevant emojis
 Short explanation
+🔗 Read more:
+<URL>
 
 📌 Market Summary:
-Write 2–3 sentences summarizing overall global market mood (risk-on / risk-off), cross-asset behavior, and what investors should watch next.
+Write 2–3 sentences summarizing:
+- Overall market mood (risk-on / risk-off)
+- Cross-asset behavior
+- What investors should watch next
 
 📚 Daily Econ Word (Education Bonus):
-- From the provided news, select ONE economic or financial term that might be difficult for general readers.
-- The term must be directly relevant to one of the stories.
-- Explain it in a simple, clear way (2–3 sentences max).
-- Make it practical and intuitive, not textbook-like.
-- Example types: inflation, yield curve, liquidity, fiscal deficit, hawkish, quantitative tightening, etc.
+- Select ONE economic or financial term directly related to today's news.
+- Explain it simply in 2–3 sentences.
+- Make it intuitive rather than textbook-like.
 
 Rules:
-- Keep total output between 200 and 250 words.
-- Clear, professional English (not too academic, not casual).
-- Do NOT invent data.
-- Each section should use different emojis per story.
-- Emojis must match meaning:
+- Keep total output between 200 and 250 words (excluding URLs).
+- Use clear, professional English.
+- Do NOT invent facts or numbers.
+- Base explanations only on the provided articles.
+- If multiple articles cover the same event, combine them into one story.
+- Each story should use different emojis.
+- Emojis should match the topic:
   - Macro → 📊📈💹
   - Rates → 🏦💰
   - Markets → 📉📈💼
   - Crypto → ₿🚀🪙
   - Energy → 🛢️⚡
-  - Risk → ⚠️🌍
-  - Tech/companies → 🤖💻🚀
-  - Telegram formatting rule: Do NOT use double asterisks (**). If you want bold text, use single asterisks (*) only.
+  - Geopolitics → ⚠️🌍
+  - Corporate → 🤖💻🚀
+- Telegram formatting rule: Do NOT use double asterisks (**). Use single asterisks (*) only for bold.
+- Do not include URLs for stories that were not selected.
+- If a selected story is primarily analysis rather than factual reporting, label it as:
+  📝 Analysis
+  before its explanation.
 
-Make it feel like a Bloomberg-style structured daily briefing for Telegram.
+Make the final result feel like a Bloomberg Morning Brief or Reuters Market Wrap: concise, factual, highly newsworthy, and easy to skim.
 
 Headlines:
 {headlines}
