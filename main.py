@@ -173,13 +173,26 @@ Rules:
 - Prefer official reporting over commentary.
 - Prefer Reuters, Bloomberg, Financial Times, Wall Street Journal and official releases when multiple sources report the same story.
 
-URL Rules:
-- Do NOT include a URL for every story.
-- Only include a URL if the story is:
-  - Top-tier / market-moving (high importance), OR
-  - Selected as the #1 story in its section
-- Maximum: 3–5 total links in the entire report.
-- Never attach a link to analysis-only or minor stories.
+URL RULES (IMPORTANT):
+
+- First, select all news and structure the briefing normally.
+- AFTER selection, decide which stories deserve a link.
+
+Link inclusion rules:
+- Include URLs for ONLY 2–4 stories in the entire report.
+- Prioritize linking:
+  • Most important macro story
+  • One major markets or central bank story
+  • One geopolitical or energy story (if highly relevant)
+- Do NOT attach URLs to every story.
+- Do NOT reduce the number of stories because of URL rules.
+- Keep story selection and URL selection as separate steps.
+
+When adding a URL:
+- Place it under the story as:
+  🔗 Source
+  <URL>
+
 
 
 Output format:
