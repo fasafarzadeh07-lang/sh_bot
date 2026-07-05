@@ -136,9 +136,10 @@ def get_market_snapshot():
 
         return snapshot
 
-    except Exception as e:
-        print(f"Market snapshot failed: {e}")
-        return "📊 Market Snapshot unavailable today"
+   except Exception as e:
+       import traceback
+       traceback.print_exc()
+       return "📊 Market Snapshot unavailable today"
 
 
 
