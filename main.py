@@ -61,7 +61,7 @@ RSS_FEEDS = [
     "https://news.google.com/rss/search?q=site:barrons.com+markets",
 
     # 🌍 The Economist (no official RSS → workaround)
-    "https://news.google.com/rss/search?q=site:economist.com+economy"
+    "https://news.google.com/rss/search?q=site:economist.com+economy",
 
     # 💱 Forex Factory (VERY IMPORTANT for FX + macro)
     "https://www.forexfactory.com/news-feed",
@@ -98,8 +98,35 @@ def get_news():
 
     return articles
 
-def summarize_news(articles):
 
+def get_market_snapshot():
+
+    url = (
+        "https://api.coingecko.com/api/v3/simple/price"
+        "?ids=bitcoin,ethereum"
+        "&vs_currencies=usd"
+        "&include_24hr_change=true"
+    )
+
+    data = requests.get(url).json()
+
+    btc = data["bitcoin"]["usd"]
+    btc_change = data["bitcoin"]["usd_24h_change"]
+
+    eth = data["ethereum"]["usd"]
+    eth_change = data["ethereum"]["usd_24h_change"]
+
+    snapshot = f"""📊 Market Snapshot
+
+₿ Bitcoin: ${btc:,.0f} ({btc_change:+.1f}%)
+🔷 Ethereum: ${eth:,.0f} ({eth_change:+.1f}%)
+"""
+
+    return snapshot
+
+
+
+def summarize_news(articles):    
     headlines = "\n\n".join(
         f"""Title: {article['title']}
     Summary: {article['summary']}
@@ -322,11 +349,18 @@ def main():
 
     summary = summarize_news(articles)
 
+    snapshot = get_market_snapshot()
+
+    final_message = f"""{summary}
+
+{snapshot}"""
+
     print("Summary created")
 
-    send_to_telegram(summary)
+    send_to_telegram(final_message)
 
     print("Posted to Telegram")
+
 
 
 if __name__ == "__main__":
