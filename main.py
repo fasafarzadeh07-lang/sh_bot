@@ -309,7 +309,11 @@ Rules:
   - Energy → 🛢️⚡
   - Geopolitics → ⚠️🌍
   - Corporate → 🤖💻🚀
-- Telegram formatting rule: Do NOT use double asterisks (**). Use single asterisks (*) only for bold.
+- Telegram formatting rules (IMPORTANT):
+  - Do NOT use any Markdown formatting.
+  - Do NOT use asterisks (*) anywhere in the output.
+  - Do NOT bold, italicize, or underline any text.
+  - Output plain text only.
 - Do not include URLs for stories that were not selected.
 - If a selected story is primarily analysis rather than factual reporting, label it as:
   📝 Analysis
