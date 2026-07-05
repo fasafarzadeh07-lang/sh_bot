@@ -313,10 +313,20 @@ Headlines:
 
     client = genai.Client(api_key=GEMINI_KEY)
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    for i in range(3):
+        try:
+           response = client.models.generate_content(
+               model="gemini-2.5-flash",
+               contents=prompt
+           )
+           break
+       except Exception as e:
+           print(f"Attempt {i+1} failed: {e}")
+
+           if i == 2:
+               raise
+
+           time.sleep(10)
 
     return response.text
 
