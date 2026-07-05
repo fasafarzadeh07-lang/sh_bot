@@ -315,21 +315,21 @@ Headlines:
 
     for i in range(3):
         try:
-           response = client.models.generate_content(
-               model="gemini-2.5-flash",
-               contents=prompt
-           )
-           break
-       except Exception as e:
-           print(f"Attempt {i+1} failed: {e}")
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
+            break
 
-           if i == 2:
-               raise
+        except Exception as e:
+            print(f"Attempt {i + 1} failed: {e}")
 
-           time.sleep(10)
+            if i == 2:
+                raise
+
+            time.sleep(10)
 
     return response.text
-
 def send_to_telegram(message):
 
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
