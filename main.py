@@ -120,10 +120,6 @@ def get_market_snapshot():
         sp500 = yf.Ticker("^GSPC").history(period="2d")["Close"]
         sp500_change = ((sp500.iloc[-1] - sp500.iloc[-2]) / sp500.iloc[-2]) * 100
 
-        dxy = yf.Ticker("DX-Y.NYB").history(period="2d")["Close"]
-        dxy_change = ((dxy.iloc[-1] - dxy.iloc[-2]) / dxy.iloc[-2]) * 100
-
-
         snapshot = f"""📊 Market Snapshot
 
 ₿ Bitcoin: ${btc.iloc[-1]:,.0f} ({btc_change:+.1f}%)
@@ -131,7 +127,6 @@ def get_market_snapshot():
 🛢️ Brent: ${brent.iloc[-1]:.2f} ({brent_change:+.1f}%)
 🥇 Gold: ${gold.iloc[-1]:.2f} ({gold_change:+.1f}%)
 📈 S&P 500: {sp500.iloc[-1]:.0f} ({sp500_change:+.1f}%)
-💵 DXY: {dxy.iloc[-1]:.2f} ({dxy_change:+.1f}%)
 """
 
         return snapshot
