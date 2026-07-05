@@ -301,14 +301,12 @@ Rules:
 - Base explanations only on the provided articles.
 - If multiple articles cover the same event, combine them into one story.
 - Each story should use different emojis.
-- Emojis should match the topic:
-  - Macro → 📊📈💹
-  - Rates → 🏦💰
-  - Markets → 📉📈💼
-  - Crypto → ₿🚀🪙
-  - Energy → 🛢️⚡
-  - Geopolitics → ⚠️🌍
-  - Corporate → 🤖💻🚀
+-Emoji rules (IMPORTANT):
+  - Use 1–2 emojis in every headline. 
+  - Choose emojis that match the specific story, company, event, or concept—not just the section.
+  - Avoid repeating the same emoji combinations across different stories.
+  - Prefer descriptive emojis that help readers instantly recognize the topic (e.g. 🐋 for Bitcoin whales, 🏦 for banks, 🛢️ for oil, 🥇 for gold, 🤝 for mergers, 🏭 for manufacturing, 🗳️ for elections, 🚢 for shipping, 💻 for semiconductors, 📊 for ETFs).
+  - Every emoji should have a purpose, not just decoration.
 - Telegram formatting rules (IMPORTANT):
   - Do NOT use any Markdown formatting.
   - Do NOT use asterisks (*) anywhere in the output.
