@@ -8,9 +8,12 @@ Original file is located at
 """
 
 import os
+import time
 import feedparser
 import requests
 from google import genai
+import yfinance as yf
+
 
 
 # Get secrets from GitHub Actions
@@ -101,28 +104,41 @@ def get_news():
 
 def get_market_snapshot():
 
-    url = (
-        "https://api.coingecko.com/api/v3/simple/price"
-        "?ids=bitcoin,ethereum"
-        "&vs_currencies=usd"
-        "&include_24hr_change=true"
-    )
+    try:
+        btc = yf.Ticker("BTC-USD").history(period="2d")["Close"]
+        btc_change = ((btc.iloc[-1] - btc.iloc[-2]) / btc.iloc[-2]) * 100
 
-    data = requests.get(url).json()
+        eth = yf.Ticker("ETH-USD").history(period="2d")["Close"]
+        eth_change = ((eth.iloc[-1] - eth.iloc[-2]) / eth.iloc[-2]) * 100
 
-    btc = data["bitcoin"]["usd"]
-    btc_change = data["bitcoin"]["usd_24h_change"]
+        brent = yf.Ticker("BZ=F").history(period="2d")["Close"]
+        brent_change = ((brent.iloc[-1] - brent.iloc[-2]) / brent.iloc[-2]) * 100
 
-    eth = data["ethereum"]["usd"]
-    eth_change = data["ethereum"]["usd_24h_change"]
+        gold = yf.Ticker("GC=F").history(period="2d")["Close"]
+        gold_change = ((gold.iloc[-1] - gold.iloc[-2]) / gold.iloc[-2]) * 100
 
-    snapshot = f"""📊 Market Snapshot
+        sp500 = yf.Ticker("^GSPC").history(period="2d")["Close"]
+        sp500_change = ((sp500.iloc[-1] - sp500.iloc[-2]) / sp500.iloc[-2]) * 100
 
-₿ Bitcoin: ${btc:,.0f} ({btc_change:+.1f}%)
-🔷 Ethereum: ${eth:,.0f} ({eth_change:+.1f}%)
+        dxy = yf.Ticker("DX-Y.NYB").history(period="2d")["Close"]
+        dxy_change = ((dxy.iloc[-1] - dxy.iloc[-2]) / dxy.iloc[-2]) * 100
+
+
+        snapshot = f"""📊 Market Snapshot
+
+₿ Bitcoin: ${btc.iloc[-1]:,.0f} ({btc_change:+.1f}%)
+🔷 Ethereum: ${eth.iloc[-1]:,.0f} ({eth_change:+.1f}%)
+🛢️ Brent: ${brent.iloc[-1]:.2f} ({brent_change:+.1f}%)
+🥇 Gold: ${gold.iloc[-1]:.2f} ({gold_change:+.1f}%)
+📈 S&P 500: {sp500.iloc[-1]:.0f} ({sp500_change:+.1f}%)
+💵 DXY: {dxy.iloc[-1]:.2f} ({dxy_change:+.1f}%)
 """
 
-    return snapshot
+        return snapshot
+
+    except Exception as e:
+        print(f"Market snapshot failed: {e}")
+        return "📊 Market Snapshot unavailable today"
 
 
 
