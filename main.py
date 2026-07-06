@@ -102,38 +102,54 @@ def get_news():
     return articles
 
 
+
+def get_change(symbol):
+    hist = yf.Ticker(symbol).history(period="5d")
+
+    if len(hist) < 2:
+        return None
+
+    last = hist["Close"].iloc[-1]
+    prev = hist["Close"].iloc[-2]
+
+    change = ((last - prev) / prev) * 100
+
+    return last, change
+
+
+
+
 def get_market_snapshot():
 
-    try:
-        btc = yf.Ticker("BTC-USD").history(period="2d")["Close"]
-        btc_change = ((btc.iloc[-1] - btc.iloc[-2]) / btc.iloc[-2]) * 100
+    snapshot = "📊 Market Snapshot\n\n"
 
-        eth = yf.Ticker("ETH-USD").history(period="2d")["Close"]
-        eth_change = ((eth.iloc[-1] - eth.iloc[-2]) / eth.iloc[-2]) * 100
+    assets = [
+        ("₿ Bitcoin", "BTC-USD", "${:,.0f}"),
+        ("🔷 Ethereum", "ETH-USD", "${:,.0f}"),
+        ("🛢️ Brent", "BZ=F", "${:.2f}"),
+        ("🥇 Gold", "GC=F", "${:.2f}"),
+        ("📈 S&P 500", "^GSPC", "{:.0f}")
+    ]
 
-        brent = yf.Ticker("BZ=F").history(period="2d")["Close"]
-        brent_change = ((brent.iloc[-1] - brent.iloc[-2]) / brent.iloc[-2]) * 100
+    for name, ticker, fmt in assets:
 
-        gold = yf.Ticker("GC=F").history(period="2d")["Close"]
-        gold_change = ((gold.iloc[-1] - gold.iloc[-2]) / gold.iloc[-2]) * 100
+        try:
+            result = get_change(ticker)
 
-        sp500 = yf.Ticker("^GSPC").history(period="2d")["Close"]
-        sp500_change = ((sp500.iloc[-1] - sp500.iloc[-2]) / sp500.iloc[-2]) * 100
+            if result is None:
+                continue
 
-        snapshot = f"""📊 Market Snapshot
+            price, change = result
 
-₿ Bitcoin: ${btc.iloc[-1]:,.0f} ({btc_change:+.1f}%)
-🔷 Ethereum: ${eth.iloc[-1]:,.0f} ({eth_change:+.1f}%)
-🛢️ Brent: ${brent.iloc[-1]:.2f} ({brent_change:+.1f}%)
-🥇 Gold: ${gold.iloc[-1]:.2f} ({gold_change:+.1f}%)
-📈 S&P 500: {sp500.iloc[-1]:.0f} ({sp500_change:+.1f}%)
-"""
+            snapshot += f"{name}: {fmt.format(price)} ({change:+.1f}%)\n"
 
-        return snapshot
+        except Exception as e:
+            print(f"{ticker} failed: {e}")
 
-    except Exception as e:
-        print(f"Market snapshot failed: {e}")
+    if snapshot.strip() == "📊 Market Snapshot":
         return "📊 Market Snapshot unavailable today"
+
+    return snapshot
 
 
 def summarize_news(articles):    
