@@ -300,10 +300,15 @@ Short explanation
 <URL>
 
 📌 Market Summary:
-Write 2–3 sentences summarizing:
-- Overall market mood (risk-on / risk-off)
-- Cross-asset behavior
-- What investors should watch next
+Write 2–3 sentences connecting the most important stories above.
+
+-Explain:
+ - How the reported events are related to each other (if there is a connection)
+ - How they influenced different markets or investor sentiment
+ - The main economic implication investors should pay attention to
+-Rules:
+ -Do not introduce new information that was not mentioned in the selected stories.
+ -If the stories are unrelated, summarize the key market themes separately.
 
 📚 Daily Econ Word (Education Bonus):
 - Select ONE economic or financial term directly related to today's news.
