@@ -12,8 +12,8 @@ import time
 import feedparser
 import requests
 from google import genai
+from google.genai.errors import APIError  # Added to handle Gemini specific errors
 import yfinance as yf
-
 
 
 # Get secrets from GitHub Actions
@@ -72,7 +72,6 @@ RSS_FEEDS = [
 ]
 
 
-
 def is_valid_url(url):
     return url and url.startswith("http") and "news.google.com" not in url
 
@@ -102,7 +101,6 @@ def get_news():
     return articles
 
 
-
 def get_change(symbol):
     hist = yf.Ticker(symbol).history(period="5d")
 
@@ -117,10 +115,7 @@ def get_change(symbol):
     return last, change
 
 
-
-
 def get_market_snapshot():
-
     snapshot = "📊 Market Snapshot\n\n"
 
     assets = [
@@ -132,7 +127,6 @@ def get_market_snapshot():
     ]
 
     for name, ticker, fmt in assets:
-
         try:
             result = get_change(ticker)
 
@@ -155,8 +149,8 @@ def get_market_snapshot():
 def summarize_news(articles):    
     headlines = "\n\n".join(
         f"""Title: {article['title']}
-    Summary: {article['summary']}
-    URL: {article['link']}"""
+Summary: {article['summary']}
+URL: {article['link']}"""
         for article in articles
     )
 
@@ -345,30 +339,52 @@ Headlines:
 """
 
     client = genai.Client(api_key=GEMINI_KEY)
+    
+    primary_model = "gemini-3.5-flash"
+    backup_model = "gemini-2.5-flash"
+    max_retries = 3
+    delay = 2  # wait 2 seconds initially
 
-    for i in range(3):
+    # --- Try generating with the newer Gemini 3.5 Flash first ---
+    for attempt in range(max_retries):
         try:
+            print(f"Attempting econ summary with {primary_model} (Attempt {attempt + 1}/{max_retries})...")
             response = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model=primary_model,
                 contents=prompt
             )
-            break
-
+            return response.text
+            
+        except APIError as e:
+            if e.code == 503:
+                print(f"Gemini 3.5 is busy (503). Retrying in {delay} seconds...")
+                time.sleep(delay)
+                delay *= 2  # Exponential backoff
+            else:
+                # If it is any other type of API error (like 400 or 403), raise it
+                raise e
         except Exception as e:
-            print(f"Attempt {i + 1} failed: {e}")
+            print(f"Connection issue on attempt {attempt + 1}: {e}. Retrying...")
+            time.sleep(delay)
+            delay *= 2
 
-            if i == 2:
-                raise
+    # --- Fallback Option ---
+    # If Gemini 3.5 was completely overloaded, we use your highly reliable Gemini 2.5 Flash
+    print(f"Gemini 3.5 was unavailable. Falling back to the highly reliable {backup_model}...")
+    try:
+        response = client.models.generate_content(
+            model=backup_model,
+            contents=prompt
+        )
+        return response.text
+    except Exception as fallback_err:
+        return f"Gemini Error: Both {primary_model} and {backup_model} failed. Details: {fallback_err}"
 
-            time.sleep(10)
 
-    return response.text
 def send_to_telegram(message):
-
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
     for chat_id in [CHANNEL_ID, CHANNEL_ID_2]:
-
         payload = {
             "chat_id": chat_id,
             "text": message
@@ -383,7 +399,6 @@ def send_to_telegram(message):
 
 
 def main():
-
     print("Getting news...")
 
     articles = get_news()
@@ -403,7 +418,6 @@ def main():
     send_to_telegram(final_message)
 
     print("Posted to Telegram")
-
 
 
 if __name__ == "__main__":
