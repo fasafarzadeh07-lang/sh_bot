@@ -1,0 +1,247 @@
+[
+  {
+    "id": 0,
+    "word": "Core inflation",
+    "definition": "A measure of inflation that excludes highly volatile food and energy prices to track the true, long-term underlying trend of cost increases in the economy."
+  },
+  {
+    "id": 1,
+    "word": "Safe-haven asset",
+    "definition": "A reliable financial asset (like gold, US Treasuries, or the Swiss franc) that investors rush to buy during times of market panic or geopolitical tension to protect their capital."
+  },
+  {
+    "id": 2,
+    "word": "Soft landing",
+    "definition": "A delicate economic scenario where a central bank successfully raises interest rates enough to cool inflation down without tipping the economy into a recession."
+  },
+  {
+    "id": 3,
+    "word": "Hard landing",
+    "definition": "An economic downturn where rapid central bank interest rate hikes cool inflation but inadvertently trigger a sharp recession and rising unemployment."
+  },
+  {
+    "id": 4,
+    "word": "Yield curve",
+    "definition": "A line graph plotting the interest rates of bonds with different maturity dates; its slope tells us what investors collectively expect the future of the economy to look like."
+  },
+  {
+    "id": 5,
+    "word": "Hawkish",
+    "definition": "A monetary policy stance favored by central bankers who prioritize fighting inflation, typically by raising interest rates and tightening credit conditions."
+  },
+  {
+    "id": 6,
+    "word": "Dovish",
+    "definition": "A monetary policy stance where central bankers favor lowering interest rates to support job growth and economic expansion, accepting a higher risk of inflation."
+  },
+  {
+    "id": 7,
+    "word": "Quantitative easing",
+    "definition": "An unconventional monetary policy where a central bank buys massive amounts of long-term government bonds to flood the financial system with cash and lower interest rates."
+  },
+  {
+    "id": 8,
+    "word": "Quantitative tightening",
+    "definition": "The opposite of quantitative easing; a central bank shrinks its balance sheet by selling assets or letting them mature to pull cash out of the system and cool down the economy."
+  },
+  {
+    "id": 9,
+    "word": "Carry trade",
+    "definition": "An investment strategy where traders borrow money in a currency with very low interest rates (like the Japanese Yen) and invest it in high-yielding assets elsewhere."
+  },
+  {
+    "id": 10,
+    "word": "Repo market",
+    "definition": "The short-term market for repurchase agreements, where banks and financial institutions lend each other cash overnight in exchange for safe collateral like government bonds."
+  },
+  {
+    "id": 11,
+    "word": "Risk premium",
+    "definition": "The extra return or investment yield an investor demands as compensation for taking on a riskier asset instead of a risk-free government bond."
+  },
+  {
+    "id": 12,
+    "word": "Credit spread",
+    "definition": "The difference in yield between a risk-free government bond and a corporate bond of the same maturity, reflecting the market's perception of corporate default risk."
+  },
+  {
+    "id": 13,
+    "word": "Capital flight",
+    "definition": "A rapid and massive movement of money and assets out of a country, usually triggered by political instability, sudden currency devaluation, or harsh economic policies."
+  },
+  {
+    "id": 14,
+    "word": "Currency peg",
+    "definition": "A policy where a country's government fixes its currency's exchange rate to another major global currency (typically the US dollar) to stabilize trade and inflation."
+  },
+  {
+    "id": 15,
+    "word": "Current account deficit",
+    "definition": "An economic state where a country spends more on foreign imports, services, and transfers than it earns from its own exports to the rest of the world."
+  },
+  {
+    "id": 16,
+    "word": "Balance of payments",
+    "definition": "A comprehensive statement tracking all financial transactions between a country's residents and the rest of the world over a specific period."
+  },
+  {
+    "id": 17,
+    "word": "Trade surplus",
+    "definition": "A positive economic balance achieved when a country's total value of exported goods exceeds the total value of its imported goods."
+  },
+  {
+    "id": 18,
+    "word": "Fiscal deficit",
+    "definition": "A budget shortfall that occurs when a government's total spending exceeds the tax revenue it collects, forcing it to borrow money to cover the difference."
+  },
+  {
+    "id": 19,
+    "word": "Fiscal stimulus",
+    "definition": "Government measures, such as cutting taxes or increasing public spending on infrastructure, designed to kickstart economic activity during a slowdown."
+  },
+  {
+    "id": 20,
+    "word": "Fiscal consolidation",
+    "definition": "A set of government policies aimed at reducing budget deficits and accumulating national debt, typically through tax hikes and public spending cuts."
+  },
+  {
+    "id": 21,
+    "word": "Purchasing Managers' Index (PMI)",
+    "definition": "An economic indicator derived from monthly surveys of private sector companies, where a reading above 50 signals sector expansion and below 50 signals contraction."
+  },
+  {
+    "id": 22,
+    "word": "Open market operations",
+    "definition": "The buying and selling of government securities in the open market by a central bank to control the money supply and influence interest rates."
+  },
+  {
+    "id": 23,
+    "word": "Reserve requirement",
+    "definition": "The minimum percentage of customer deposits that commercial banks are legally mandated to hold in cash, either in their vaults or at the central bank."
+  },
+  {
+    "id": 24,
+    "word": "Policy transmission",
+    "definition": "The complex chain reaction by which a central bank's policy rate changes actually filter down to affect interest rates, bank lending, and the broader real economy."
+  },
+  {
+    "id": 25,
+    "word": "Exchange rate pass-through",
+    "definition": "The degree to which changes in a country's currency value lead to direct changes in the import prices and domestic inflation of that country."
+  },
+  {
+    "id": 26,
+    "word": "Volatility",
+    "definition": "A statistical measure of how much an asset's price swings up and down over a period of time, indicating the relative risk level of that investment."
+  },
+  {
+    "id": 27,
+    "word": "Leverage",
+    "definition": "The use of borrowed capital (debt) to increase the potential return on an investment, which also proportionally multiplies the potential risk of loss."
+  },
+  {
+    "id": 28,
+    "word": "Deleveraging",
+    "definition": "The process where individuals, businesses, or financial institutions actively pay down their debts to reduce their balance sheet risk."
+  },
+  {
+    "id": 29,
+    "word": "Margin call",
+    "definition": "A broker's demand that an investor deposit additional cash or collateral to meet minimum requirements after an investment funded with borrowed money loses value."
+  },
+  {
+    "id": 30,
+    "word": "Haircut",
+    "definition": "The percentage reduction applied to the value of an asset being used as collateral, reflecting the risk that its market price might drop before it can be sold."
+  },
+  {
+    "id": 31,
+    "word": "Liquidity trap",
+    "definition": "A scenario where expansionary monetary policy fails because consumers and businesses prefer to hoard cash rather than spend or invest, even when interest rates are near zero."
+  },
+  {
+    "id": 32,
+    "word": "Stagflation",
+    "definition": "A rare and challenging economic period defined by stagnant economic growth, high unemployment, and persistently rising inflation."
+  },
+  {
+    "id": 33,
+    "word": "Disinflation",
+    "definition": "A temporary slowing of the pace of price inflation; prices are still rising, but at a slower rate than they were previously."
+  },
+  {
+    "id": 34,
+    "word": "Contango",
+    "definition": "A market situation where the futures price of a commodity is higher than its current spot price, often due to storage costs and insurance fees over time."
+  },
+  {
+    "id": 35,
+    "word": "Backwardation",
+    "definition": "A market condition where the current spot price of an asset or commodity is higher than its future contract price, signaling a high near-term demand or shortage."
+  },
+  {
+    "id": 36,
+    "word": "Shadow banking",
+    "definition": "A network of non-bank financial intermediaries that provide services similar to traditional commercial banks but operate outside of strict banking regulations."
+  },
+  {
+    "id": 37,
+    "word": "Sterilized intervention",
+    "definition": "An action where a central bank buys or sells foreign currency to influence exchange rates while simultaneously offseting the impact on the domestic money supply using bond operations."
+  },
+  {
+    "id": 38,
+    "word": "Debt monetization",
+    "definition": "The practice of a central bank directly purchasing government debt using newly created money, effectively financing government spending via money printing."
+  },
+  {
+    "id": 39,
+    "word": "Debt restructuring",
+    "definition": "A process that allows a struggling borrower (such as a company or nation) to renegotiate the terms of its outstanding debt to improve liquidity and avoid default."
+  },
+  {
+    "id": 40,
+    "word": "Sovereign default",
+    "definition": "The failure of a national government to pay back the principal or interest on its national debt when it becomes due."
+  },
+  {
+    "id": 41,
+    "word": "Credit default swap (CDS)",
+    "definition": "A financial derivative that acts as an insurance policy against the default of a borrower, allowing investors to buy or sell protection on a specific bond."
+  },
+  {
+    "id": 42,
+    "word": "Moral hazard",
+    "definition": "The tendency for people or institutions to take on excessive risks because they know they are protected from the negative consequences of their actions (e.g., expecting a government bailout)."
+  },
+  {
+    "id": 43,
+    "word": "Black swan",
+    "definition": "An extremely rare, unpredictable event that carries a massive, widespread impact on financial markets, which people only try to rationalize after it occurs."
+  },
+  {
+    "id": 44,
+    "word": "White knight",
+    "definition": "A friendly investor or company that steps in to acquire a target company on the brink of being taken over by a hostile bidder or facing bankruptcy."
+  },
+  {
+    "id": 45,
+    "word": "Green shoots",
+    "definition": "A colloquial financial term used to describe early, promising signs of economic recovery during a recession or period of market downturn."
+  },
+  {
+    "id": 46,
+    "word": "Zombie company",
+    "definition": "A heavily indebted company that earns just enough money to continue operating and pay the interest on its debt, but cannot afford to pay off the principal or invest in growth."
+  },
+  {
+    "id": 47,
+    "word": "Dead cat bounce",
+    "definition": "A temporary, short-lived recovery in the price of a declining asset or market index, usually driven by short-covering rather than a true shift in fundamentals."
+  },
+  {
+    "id": 48,
+    "word": "Dollarization",
+    "definition": "A process where a country officially or unofficially abandons its own domestic currency and adopts a foreign currency (usually the US dollar) as its legal tender."
+  }
+]
