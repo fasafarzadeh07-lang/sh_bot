@@ -29,3 +29,12 @@ jobs:
           CHANNEL_ID_2: ${{ secrets.CHANNEL_ID_2 }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: python main.py
+
+      # 🔄 Save the updated tracker.json index back to the GitHub repository
+      - name: Commit and push tracker update
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add tracker.json
+          # Only commit and push if tracker.json actually changed (i.e. fallback was triggered)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-increment econ word index tracker" && git push)
