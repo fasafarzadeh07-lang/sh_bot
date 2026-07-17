@@ -305,9 +305,19 @@ Write 2–3 sentences connecting the most important stories above.
  -If the stories are unrelated, summarize the key market themes separately.
 
 📚 Daily Econ Word (Education Bonus):
-- Select ONE economic or financial term directly related to today's news.
-- Explain it simply in 2–3 sentences.
-- Make it intuitive rather than textbook-like.
+- Select ONE intermediate or advanced economic or financial term that appears naturally in today's selected news.
+- The purpose is to teach readers a concept they are unlikely to already know well.
+- Before choosing a term, ask yourself:
+  "Would a second-year economics student already be familiar with this term?"
+  If yes, continue looking for a more educational term.
+- Avoid choosing basic terms such as:
+  GDP, CPI, PPI, inflation, deflation, recession, tariff, interest rates, employment, unemployment, stocks, bonds, oil, gold, Bitcoin, cryptocurrency, exports, imports, trade, central bank, Federal Reserve, ECB.
+- Prefer richer concepts such as:
+  Yield curve, Carry trade, Repo market, Quantitative easing, Quantitative tightening, Credit spread, Risk premium, Core inflation, Stagflation, Disinflation, Capital flight, Safe-haven asset, Shadow banking, Currency peg, Contango, Backwardation, Moral hazard, Liquidity trap, Soft landing, Hard landing.
+- Explain the term simply in 2–3 sentences.
+- Whenever possible, relate the explanation to one of today's selected news stories.
+- Make the explanation intuitive rather than textbook-like.
+
 
 Rules:
 - Keep total output between 200 and 250 words (excluding URLs).
