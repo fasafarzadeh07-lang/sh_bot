@@ -5,6 +5,7 @@ import json
 import feedparser
 import requests
 from google import genai
+from google.genai import types
 from google.genai.errors import APIError  # Added to handle Gemini specific errors
 import yfinance as yf
 
@@ -179,7 +180,8 @@ URL: {article['link']}"""
         for article in articles
     )
 
-    prompt = f"""
+    # Cleaned and optimized system instruction payload
+    system_instruction = """
 You are a professional global macroeconomic news editor writing for a Telegram audience of students and finance enthusiasts.
 
 Task:
@@ -190,9 +192,7 @@ Task:
 - Ignore low-impact, local, entertainment, lifestyle, promotional, repetitive, and non-economic news.
 
 Newsworthiness Rules:
-
 Prioritize factual, event-driven news.
-
 Prefer stories reporting:
 - Official economic data releases (CPI, PPI, GDP, PMI, employment, retail sales, etc.)
 - Central bank decisions or speeches that moved markets
@@ -204,35 +204,17 @@ Prefer stories reporting:
 - Major moves in financial markets, commodities, or crypto
 
 Avoid:
-- Opinion articles
-- Editorials
-- Commentary
-- Explainers
-- Long-form features
-- Lifestyle pieces
-- Generic "trend" articles
-- Speculative forecasts without a new catalyst
-
-Only include an analysis article if it explains a major market-moving event that occurred today and there is no stronger factual story available.
+- Opinion articles, editorials, commentary, explainers, long-form features, lifestyle pieces.
+- Generic "trend" articles and speculative forecasts without a new catalyst.
 
 Before selecting a story, ask:
 "Would Bloomberg or Reuters likely consider this one of today's important market headlines?"
 If the answer is no, skip it.
 
 For the Macroeconomy section, prioritize in this order:
-1. Inflation
-2. Employment
-3. GDP
-4. PMI
-5. Retail Sales
-6. Manufacturing
-7. Consumer Confidence
-8. Fiscal Policy
-
-Avoid broad opinion pieces discussing long-term economic trends unless they are based on newly released official data.
+1. Inflation, 2. Employment, 3. GDP, 4. PMI, 5. Retail Sales, 6. Manufacturing, 7. Consumer Confidence, 8. Fiscal Policy.
 
 Prioritize these sections:
-
 🌍 Macroeconomy
 🏦 Central Banks & Interest Rates
 📈 Financial Markets
@@ -243,34 +225,21 @@ Prioritize these sections:
 
 Rules:
 - Each section should include a maximum of 1–2 stories.
-- Skip sections with no important news.
-- Do NOT force stories into sections.
+- Skip sections with no important news. Do NOT force stories into sections.
 - Merge duplicate coverage from multiple sources.
-- Prefer official reporting over commentary.
-- Prefer Reuters, Bloomberg, Financial Times, Wall Street Journal and official releases when multiple sources report the same story.
+- Prefer official reporting over commentary. Prefer Reuters, Bloomberg, Financial Times, Wall Street Journal when multiple sources report the same story.
 
 URL RULES (IMPORTANT):
-
 - First, select all news and structure the briefing normally.
 - AFTER selection, decide which stories deserve a link.
-
-Link inclusion rules:
 - Include URLs for ONLY 2–4 stories in the entire report.
-- Prioritize linking:
-  • Most important macro story
-  • One major markets or central bank story
-  • One geopolitical or energy story (if highly relevant)
+- Prioritize linking: Most important macro story, major markets/central bank story, geopolitical/energy story.
 - Do NOT attach URLs to every story.
-- Do NOT reduce the number of stories because of URL rules.
-- Keep story selection and URL selection as separate steps.
 - Never output a URL whose domain is ft.com. If a selected story only has an ft.com link available, do not include a source link for that story.
 
-When adding a URL:
-- Place it under the story as:
-  🔗 Source
-  <URL>
-
-
+When adding a URL, place it under the story as:
+🔗 Source
+<URL>
 
 Output format:
 
@@ -320,46 +289,39 @@ Short explanation
 
 📌 Market Summary:
 Write 2–3 sentences connecting the most important stories above.
-
--Explain:
- - How the reported events are related to each other (if there is a connection)
- - How they influenced different markets or investor sentiment
- - The main economic implication investors should pay attention to
--Rules:
- -Do not introduce new information that was not mentioned in the selected stories.
- -If the stories are unrelated, summarize the key market themes separately.
+- Explain how the reported events are related to each other or how they influenced different markets/investor sentiment.
+- Do not introduce new information.
 
 📚 Daily Econ Word (Education Bonus):
-- If today's news contains an advanced, highly educational, non-trivial economic or financial term (e.g. stagflation, backwardation, quantitative tightening, yield curve inversion), select it, explain it simply, and keep it intuitive.
-- STRICT RULE: Do NOT use simple/obvious terms like GDP, Inflation, Tariff, Interest Rates, Stock, Bond, or Tax. If there are no complex, advanced economic terms present in today's headlines, you must output EXACTLY the following text in this section:
+- Analyze today's news headlines and extract exactly ONE highly relevant, advanced economic or financial concept that is mentioned or clearly implied in the text.
+- If you find a relevant advanced term, select it, explain it simply, and keep it intuitive.
+
+EXAMPLES OF WHAT TO LOOK FOR IN TODAY'S HEADLINES:
+• If investors are selling off tech to buy other assets: "Sector Rotation"
+• If two big competitors are merging (like Stripe & PayPal): "Horizontal Integration" or "Consolidation"
+• If a central bank hikes or moves unexpectedly: "Monetary Tightening"
+• If trade conflicts escalate: "Bilateral Trade Friction" or "Protectionism"
+• If port strikes block grains: "Supply Chain Disruption" or "Commodity Volatility"
+
+AVOID OBVIOUS/BASIC TERMS:
+Do NOT select baseline introductory terms like GDP, Inflation, Tariff, Interest Rates, Stock, Bond, or Tax unless there is a deeper concept behind them. Look for the professional terms.
+
+If—and ONLY if—absolutely no professional economic concepts can be found or implied in today's news, you must output EXACTLY the following text in this section:
 NO_WORTH_READING_WORD_FOUND
 
-Rules:
+General Constraints:
 - Keep total output between 200 and 250 words (excluding URLs).
-- Use clear, professional English.
-- Do NOT invent facts or numbers.
-- Base explanations only on the provided articles.
-- If multiple articles cover the same event, combine them into one story.
-- Each story should use different emojis.
--Emoji rules (IMPORTANT):
-  - Use 1–2 emojis in every headline. 
-  - Choose emojis that match the specific story, company, event, or concept—not just the section.
-  - Avoid repeating the same emoji combinations across different stories.
-  - Prefer descriptive emojis that help readers instantly recognize the topic (e.g. 🐋 for Bitcoin whales, 🏦 for banks, 🛢️ for oil, 🥇 for gold, 🤝 for mergers, 🏭 for manufacturing, 🗳️ for elections, 🚢 for shipping, 💻 for semiconductors, 📊 for ETFs).
-  - Every emoji should have a purpose, not just decoration.
-- Telegram formatting rules (IMPORTANT):
-  - Do NOT use any Markdown formatting.
-  - Do NOT use asterisks (*) anywhere in the output.
-  - Do NOT bold, italicize, or underline any text.
-  - Output plain text only.
-- Do not include URLs for stories that were not selected.
-- If a selected story is primarily analysis rather than factual reporting, label it as:
-  📝 Analysis
-  before its explanation.
+- Use clear, professional English. Do NOT invent facts or numbers.
+- Each story should use different, highly specific, descriptive emojis (e.g. 💻 for semiconductors, 🤝 for mergers, 🚢 for shipping).
+- Telegram formatting rules (IMPORTANT): Do NOT use any Markdown formatting. Do NOT use asterisks (*) anywhere. Do NOT bold, italicize, or underline any text. Output plain text only.
+- If a selected story is primarily analysis, label it as:
+📝 Analysis
+before its explanation.
+"""
 
-Make the final result feel like a Bloomberg Morning Brief or Reuters Market Wrap: concise, factual, highly newsworthy, and easy to skim.
+    prompt = f"""
+Here are today's headlines to analyze and summarize:
 
-Headlines:
 {headlines}
 """
 
@@ -378,7 +340,11 @@ Headlines:
             print(f"Attempting econ summary with {primary_model} (Attempt {attempt + 1}/{max_retries})...")
             response = client.models.generate_content(
                 model=primary_model,
-                contents=prompt
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_instruction,
+                    temperature=0.3
+                )
             )
             raw_response = response.text
             break
@@ -401,7 +367,11 @@ Headlines:
         try:
             response = client.models.generate_content(
                 model=backup_model,
-                contents=prompt
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_instruction,
+                    temperature=0.3
+                )
             )
             raw_response = response.text
         except Exception as fallback_err:
