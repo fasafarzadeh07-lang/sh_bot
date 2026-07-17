@@ -330,7 +330,7 @@ Rules:
   - Use 1–2 emojis in every headline. 
   - Choose emojis that match the specific story, company, event, or concept—not just the section.
   - Avoid repeating the same emoji combinations across different stories.
-  - Prefer descriptive emojis that help readers instantly recognize the topic (e.g. 🐋 for Bitcoin whales, 🏦 for banks, 🛢️ for oil, 🥇 for gold, 🤝 for mergers, 🏭 for manufacturing, 🗳️ for elections, 🚢 for shipping, 💻 for semiconductors, 📊 for ETFs).
+  - Prefer descriptive emojis that help readers instantly recognize the topic (e.g. 🏦 for banks, 🛢️ for oil, 🥇 for gold, 🤝 for mergers, 🏭 for manufacturing, 🗳️ for elections, 🚢 for shipping, 💻 for semiconductors, 📊 for ETFs).
   - Every emoji should have a purpose, not just decoration.
 - Telegram formatting rules (IMPORTANT):
   - Do NOT use any Markdown formatting.
