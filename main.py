@@ -11,9 +11,7 @@ import yfinance as yf
 
 # Get secrets from GitHub Actions
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHANNEL_ID = os.getenv("CHANNEL_ID")
 GEMINI_KEY = os.getenv("GEMINI_KEY")
-CHANNEL_ID_2 = os.getenv("CHANNEL_ID_2")
 
 
 RSS_FEEDS = [
@@ -429,18 +427,35 @@ Headlines:
 def send_to_telegram(message):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
-    for chat_id in [CHANNEL_ID, CHANNEL_ID_2]:
+    # --- 1. DYNAMICALLY SCAN ALL ACTIVE CHANNEL ENVS ---
+    # Scans all system environment variables starting with "CHANNEL_ID" (e.g. CHANNEL_ID, CHANNEL_ID_2, CHANNEL_ID_3)
+    active_channels = []
+    for key, value in os.environ.items():
+        if key.startswith("CHANNEL_ID"):
+            clean_value = value.strip() if value else ""
+            if clean_value:
+                active_channels.append(clean_value)
+
+    # De-duplicate the list in case the same ID is used across different keys
+    active_channels = list(set(active_channels))
+
+    if not active_channels:
+        print("Warning: No active CHANNEL_ID environment variables found.")
+        return
+
+    # --- 2. DISPATCH MESSAGES SAFELY ---
+    for chat_id in active_channels:
         payload = {
             "chat_id": chat_id,
             "text": message
         }
 
-        result = requests.post(
-            url,
-            json=payload
-        )
-
-        print(result.json())
+        try:
+            result = requests.post(url, json=payload)
+            result.raise_for_status()
+            print(f"Successfully posted to Telegram channel: {chat_id}")
+        except Exception as e:
+            print(f"Failed to post to Telegram channel {chat_id}: {e}")
 
 
 def main():
@@ -463,10 +478,6 @@ def main():
     send_to_telegram(final_message)
 
     print("Posted to Telegram")
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":
