@@ -66,6 +66,9 @@ RSS_FEEDS = [
     # 🌍 The Economist (no official RSS → workaround)
     "https://news.google.com/rss/search?q=site:economist.com+economy",
 
+    # 🇪🇺 EU Digital Markets Act (official RSS)
+    "https://digital-markets-act.ec.europa.eu/node/2/rss_en",
+
     # 💱 Forex Factory (VERY IMPORTANT for FX + macro)
     "https://www.forexfactory.com/news-feed",
     "https://www.forexfactory.com/calendar"
