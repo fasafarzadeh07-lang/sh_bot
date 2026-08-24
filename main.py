@@ -157,12 +157,8 @@ def get_market_snapshot():
         except Exception as e:
             print(f"{ticker} failed: {e}")
 
-    if snapshot.strip() == "📊 Market Snapshot":
-        return "📊 Market Snapshot unavailable today"
 
-    return snapshot
-
-    # US 10-Year Treasury Yield
+        # US 10-Year Treasury Yield
     try:
         result = get_yield_change("^TNX")
 
@@ -172,6 +168,12 @@ def get_market_snapshot():
 
     except Exception as e:
         print(f"^TNX failed: {e}")
+        
+
+    if snapshot.strip() == "📊 Market Snapshot":
+        return "📊 Market Snapshot unavailable today"
+
+    return snapshot
 
 
 def summarize_news(articles):    
