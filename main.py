@@ -127,7 +127,7 @@ def get_yield_change(symbol):
     prev = hist["Close"].iloc[-2]
 
     # Yield change in basis points
-    change_bps = (last - prev) * 10
+    change_bps = (last - prev) * 100
 
     return last, change_bps
 
