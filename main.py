@@ -164,7 +164,7 @@ def get_market_snapshot():
 
         if result is not None:
             yield_10y, change_bps = result
-            snapshot += f"🇺🇸 US 10Y Yield: {yield_10y:.2f}% ({change_bps:+.1f} bps)\n"
+            snapshot += f"🇺🇸 US 10Y Yield: {yield_10y:.2f}% ({change_bps:+.0f} bps)\n"
 
     except Exception as e:
         print(f"^TNX failed: {e}")
