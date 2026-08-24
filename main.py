@@ -117,6 +117,20 @@ def get_change(symbol):
 
     return last, change
 
+def get_yield_change(symbol):
+    hist = yf.Ticker(symbol).history(period="5d")
+
+    if len(hist) < 2:
+        return None
+
+    last = hist["Close"].iloc[-1]
+    prev = hist["Close"].iloc[-2]
+
+    # Yield change in basis points
+    change_bps = (last - prev) * 10
+
+    return last, change_bps
+
 
 def get_market_snapshot():
     snapshot = "📊 Market Snapshot\n\n"
@@ -147,6 +161,17 @@ def get_market_snapshot():
         return "📊 Market Snapshot unavailable today"
 
     return snapshot
+
+    # US 10-Year Treasury Yield
+    try:
+        result = get_yield_change("^TNX")
+
+        if result is not None:
+            yield_10y, change_bps = result
+            snapshot += f"🇺🇸 US 10Y Yield: {yield_10y:.2f}% ({change_bps:+.0f} bps)\n"
+
+    except Exception as e:
+        print(f"^TNX failed: {e}")
 
 
 def summarize_news(articles):    
