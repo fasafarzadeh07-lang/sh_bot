@@ -192,9 +192,9 @@ def get_market_snapshot():
         ("💻 Nasdaq 100", "^NDX", "{:,.0f}"),
         ("🏭 Dow Jones", "^DJI", "{:,.0f}"),
 
-        ("💵 US Dollar Index (DXY)", "DX-Y.NYB", "{:.3f}"),
+        ("💵 DXY", "DX-Y.NYB", "{:.3f}"),
 
-        ("🛢️ Brent futures", "BZ=F", "${:,.2f}"),
+        ("🛢️ Brent ", "BZ=F", "${:,.2f}"),
         ("🥇 Gold futures", "GC=F", "${:,.0f}"),
 
         ("₿ Bitcoin", "BTC-USD", "${:,.2f}"),
