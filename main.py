@@ -519,10 +519,21 @@ def split_telegram_message(message, limit=4000):
 
 
 def send_to_telegram(message):
+    primary_chat_id = (CHANNEL_ID or "").strip()
+    secondary_chat_id = (CHANNEL_ID_2 or "").strip()
+    if not primary_chat_id:
+        raise ValueError("CHANNEL_ID is required. Set it in GitHub Actions secrets.")
+
+    destinations = [("CHANNEL_ID", primary_chat_id)]
+    if secondary_chat_id:
+        destinations.append(("CHANNEL_ID_2", secondary_chat_id))
+    else:
+        print("CHANNEL_ID_2 is not set; skipping the optional second channel.")
+
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     parts = split_telegram_message(message)
 
-    for chat_id in [CHANNEL_ID, CHANNEL_ID_2]:
+    for channel_name, chat_id in destinations:
         for index, part in enumerate(parts):
             if index:
                 time.sleep(1)
@@ -534,9 +545,10 @@ def send_to_telegram(message):
             data = result.json()
             if not result.ok or not data.get("ok"):
                 raise RuntimeError(
-                    f"Telegram send failed: {data.get('description', 'Unknown error')}"
+                    f"Telegram send to {channel_name} failed: "
+                    f"{data.get('description', 'Unknown error')}"
                 )
-            print(f"Sent part {index + 1}/{len(parts)}")
+            print(f"Sent part {index + 1}/{len(parts)} to {channel_name}")
 
 
 def main():
