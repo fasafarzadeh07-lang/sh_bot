@@ -8,6 +8,10 @@ Original file is located at
 """
 
 import os
+import csv
+import io
+import math
+from datetime import datetime, timezone
 import time
 import feedparser
 import requests
@@ -102,75 +106,143 @@ def get_news():
 
 
 def get_change(symbol):
-    hist = yf.Ticker(symbol).history(period="5d")
-
-    if len(hist) < 2:
+    """Change between the latest two available Yahoo daily closing values."""
+    hist = yf.Ticker(symbol).history(period="1mo", timeout=20)
+    if hist.empty or "Close" not in hist:
         return None
 
-    last = hist["Close"].iloc[-1]
-    prev = hist["Close"].iloc[-2]
-
-    change = ((last - prev) / prev) * 100
-
-    return last, change
-
-def get_yield_change(symbol):
-    hist = yf.Ticker(symbol).history(period="5d")
-
-    if len(hist) < 2:
+    closes = hist["Close"].dropna().sort_index()
+    if len(closes) < 2:
         return None
 
-    last = hist["Close"].iloc[-1]
-    prev = hist["Close"].iloc[-2]
+    last, prev = float(closes.iloc[-1]), float(closes.iloc[-2])
+    if not math.isfinite(last) or not math.isfinite(prev) or prev <= 0:
+        return None
+    return last, ((last - prev) / prev) * 100
 
-    # Yield change in basis points
-    change_bps = (last - prev) * 100
 
-    return last, change_bps
+def format_change(change, unit="%", decimals=2):
+    # Round before choosing the arrow to avoid negative zero or tiny-move arrows.
+    value = round(change, decimals)
+    arrow = "⬆️" if value > 0 else "⬇️" if value < 0 else "↔️"
+    number = f"{value:+.{decimals}f}" if value else f"{0:.{decimals}f}"
+    separator = " " if unit == "bps" else ""
+    return f"{arrow} {number}{separator}{unit}"
+
+
+def get_treasury_yields():
+    """Fetch all four daily par yields from one official Treasury series.
+
+    Source and methodology:
+    https://home.treasury.gov/policy-issues/financing-the-government/interest-rate-statistics
+    Values are percentages; a 0.01 percentage-point change equals 1 basis point.
+    These are daily par yields, not live quotes for individual Treasury bonds.
+    """
+    today = datetime.now(timezone.utc).date()
+    columns = ("2 Yr", "5 Yr", "10 Yr", "30 Yr")
+    observations = {}
+
+    # At New Year, the previous comparison observation may be in last year's file.
+    for year in (today.year, today.year - 1):
+        url = (
+            "https://home.treasury.gov/resource-center/data-chart-center/"
+            f"interest-rates/daily-treasury-rates.csv/{year}/all"
+        )
+        response = requests.get(
+            url,
+            params={
+                "_format": "csv",
+                "field_tdr_date_value": year,
+                "type": "daily_treasury_yield_curve",
+            },
+            timeout=20,
+        )
+        response.raise_for_status()
+        reader = csv.DictReader(io.StringIO(response.content.decode("utf-8-sig")))
+        if not reader.fieldnames or not {"Date", *columns}.issubset(reader.fieldnames):
+            raise ValueError("Treasury returned an unexpected CSV format")
+
+        for row in reader:
+            try:
+                day = datetime.strptime(row["Date"], "%m/%d/%Y").date()
+                values = {column: float(row[column]) for column in columns}
+            except (TypeError, ValueError):
+                continue
+            if day <= today and all(math.isfinite(v) for v in values.values()):
+                observations[day] = values
+        if len(observations) >= 2:
+            break
+
+    if len(observations) < 2:
+        return None
+
+    previous_day, latest_day = sorted(observations)[-2:]
+    return latest_day, {
+        column: (
+            observations[latest_day][column],
+            (observations[latest_day][column] - observations[previous_day][column]) * 100,
+        )
+        for column in columns
+    }
 
 
 def get_market_snapshot():
-    snapshot = "📊 Market Snapshot\n\n"
-
+    lines = ["📊 Market Snapshot", "", "📊 Key Market Prices"]
     assets = [
-        ("₿ Bitcoin", "BTC-USD", "${:,.0f}"),
-        ("🔷 Ethereum", "ETH-USD", "${:,.0f}"),
-        ("🛢️ Brent", "BZ=F", "${:.2f}"),
-        ("🥇 Gold", "GC=F", "${:.2f}"),
-        ("📈 S&P 500", "^GSPC", "{:.0f}")
+        ("🥇 Gold futures", "GC=F", "${:,.2f}"),
+        ("💻 Nasdaq 100", "^NDX", "{:,.2f}"),
+        ("📈 S&P 500", "^GSPC", "{:,.2f}"),
+        ("🏭 Dow Jones", "^DJI", "{:,.2f}"),
+        ("🛢️ Brent futures", "BZ=F", "${:,.2f}"),
+        ("💵 US Dollar Index (DXY)", "DX-Y.NYB", "{:.3f}"),
+        ("₿ Bitcoin", "BTC-USD", "${:,.2f}"),
+        ("🔷 Ethereum", "ETH-USD", "${:,.2f}"),
     ]
 
-    for name, ticker, fmt in assets:
+    def add_quote(name, ticker, fmt):
         try:
             result = get_change(ticker)
-
-            if result is None:
-                continue
-
-            price, change = result
-
-            snapshot += f"{name}: {fmt.format(price)} ({change:+.1f}%)\n"
-
+            if result is not None:
+                price, change = result
+                lines.append(f"{name}: {fmt.format(price)} ({format_change(change)})")
+                return
         except Exception as e:
             print(f"{ticker} failed: {e}")
+        lines.append(f"{name}: unavailable")
 
+    for name, ticker, fmt in assets:
+        add_quote(name, ticker, fmt)
 
-        # US 10-Year Treasury Yield
+    lines.extend(["", "🇺🇸 US Treasury Yields"])
     try:
-        result = get_yield_change("^TNX")
-
-        if result is not None:
-            yield_10y, change_bps = result
-            snapshot += f"🇺🇸 US 10Y Yield: {yield_10y:.2f}% ({change_bps:+.0f} bps)\n"
-
+        result = get_treasury_yields()
+        if result is None:
+            lines.append("Treasury yields unavailable")
+        else:
+            as_of, yields = result
+            lines.append(f"Daily par yields • {as_of:%Y-%m-%d}")
+            for column, label in (
+                ("2 Yr", "2-Year"), ("5 Yr", "5-Year"),
+                ("10 Yr", "10-Year"), ("30 Yr", "30-Year"),
+            ):
+                value, change_bps = yields[column]
+                lines.append(
+                    f"🔹 {label}: {value:.2f}% "
+                    f"({format_change(change_bps, unit='bps', decimals=0)})"
+                )
     except Exception as e:
-        print(f"^TNX failed: {e}")
-        
+        print(f"Treasury yields failed: {e}")
+        lines.append("Treasury yields unavailable")
 
-    if snapshot.strip() == "📊 Market Snapshot":
-        return "📊 Market Snapshot unavailable today"
-
-    return snapshot
+    lines.extend(["", "💱 Currency Pairs"])
+    add_quote("💶 EUR/USD", "EURUSD=X", "{:.5f}")
+    add_quote("💷 GBP/USD", "GBPUSD=X", "{:.5f}")
+    lines.extend([
+        "",
+        "Latest available quotes; changes vs previous daily close.",
+        "Yield changes vs previous published day, in bps.",
+    ])
+    return "\n".join(lines)
 
 
 def summarize_news(articles):    
@@ -418,21 +490,53 @@ Headlines:
         return f"Gemini Error: Both {primary_model} and {backup_model} failed. Details: {fallback_err}"
 
 
+def split_telegram_message(message, limit=4000):
+    """Keep each part below Telegram's limit, including supplementary emojis."""
+    chunks = []
+    while message:
+        units = 0
+        end = 0
+        for char in message:
+            size = 2 if ord(char) > 0xFFFF else 1
+            if units + size > limit:
+                break
+            units += size
+            end += 1
+        if end == 0:
+            raise ValueError("Message limit is too small")
+        if end < len(message):
+            # Prefer paragraph, then line boundaries to keep stories readable.
+            boundary = message.rfind("\n\n", 0, end)
+            if boundary > 0:
+                end = boundary + 2
+            else:
+                boundary = message.rfind("\n", 0, end)
+                if boundary > 0:
+                    end = boundary + 1
+        chunks.append(message[:end])
+        message = message[end:]
+    return chunks
+
+
 def send_to_telegram(message):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    parts = split_telegram_message(message)
 
     for chat_id in [CHANNEL_ID, CHANNEL_ID_2]:
-        payload = {
-            "chat_id": chat_id,
-            "text": message
-        }
-
-        result = requests.post(
-            url,
-            json=payload
-        )
-
-        print(result.json())
+        for index, part in enumerate(parts):
+            if index:
+                time.sleep(1)
+            result = requests.post(
+                url,
+                json={"chat_id": chat_id, "text": part},
+                timeout=30,
+            )
+            data = result.json()
+            if not result.ok or not data.get("ok"):
+                raise RuntimeError(
+                    f"Telegram send failed: {data.get('description', 'Unknown error')}"
+                )
+            print(f"Sent part {index + 1}/{len(parts)}")
 
 
 def main():
