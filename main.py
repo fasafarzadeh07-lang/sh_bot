@@ -189,13 +189,13 @@ def get_market_snapshot():
     lines = ["📊 Market Snapshot", "", "📊 Key Market Prices"]
     assets = [
         ("📈 S&P 500", "^GSPC", "{:,.2f}"),
-        ("💻 Nasdaq 100", "^NDX", "{:,.2f}"),
-        ("🏭 Dow Jones", "^DJI", "{:,.2f}"),
+        ("💻 Nasdaq 100", "^NDX", "{:,.0f}"),
+        ("🏭 Dow Jones", "^DJI", "{:,.0f}"),
 
         ("💵 US Dollar Index (DXY)", "DX-Y.NYB", "{:.3f}"),
 
         ("🛢️ Brent futures", "BZ=F", "${:,.2f}"),
-        ("🥇 Gold futures", "GC=F", "${:,.2f}"),
+        ("🥇 Gold futures", "GC=F", "${:,.0f}"),
 
         ("₿ Bitcoin", "BTC-USD", "${:,.2f}"),
         ("🔷 Ethereum", "ETH-USD", "${:,.2f}"),
