@@ -238,8 +238,6 @@ def get_market_snapshot():
     add_quote("💷 GBP/USD", "GBPUSD=X", "{:.5f}")
     lines.extend([
         "",
-        "Latest available quotes; changes vs previous daily close.",
-        "Yield changes vs previous published day, in bps.",
     ])
     return "\n".join(lines)
 
