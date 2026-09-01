@@ -188,12 +188,15 @@ def get_treasury_yields():
 def get_market_snapshot():
     lines = ["📊 Market Snapshot", "", "📊 Key Market Prices"]
     assets = [
-        ("🥇 Gold futures", "GC=F", "${:,.2f}"),
-        ("💻 Nasdaq 100", "^NDX", "{:,.2f}"),
         ("📈 S&P 500", "^GSPC", "{:,.2f}"),
+        ("💻 Nasdaq 100", "^NDX", "{:,.2f}"),
         ("🏭 Dow Jones", "^DJI", "{:,.2f}"),
-        ("🛢️ Brent futures", "BZ=F", "${:,.2f}"),
+
         ("💵 US Dollar Index (DXY)", "DX-Y.NYB", "{:.3f}"),
+
+        ("🛢️ Brent futures", "BZ=F", "${:,.2f}"),
+        ("🥇 Gold futures", "GC=F", "${:,.2f}"),
+
         ("₿ Bitcoin", "BTC-USD", "${:,.2f}"),
         ("🔷 Ethereum", "ETH-USD", "${:,.2f}"),
     ]
