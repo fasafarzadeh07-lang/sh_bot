@@ -126,7 +126,7 @@ def format_change(change, unit="%", decimals=2):
     value = round(change, decimals)
     number = f"{value:+.{decimals}f}" if value else f"{0:.{decimals}f}"
     separator = " " if unit == "bps" else ""
-    return f"{number}{separator}{unit}""
+    return f"{number}{separator}{unit}"
 
 
 def get_treasury_yields():
