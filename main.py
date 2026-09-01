@@ -124,10 +124,9 @@ def get_change(symbol):
 def format_change(change, unit="%", decimals=2):
     # Round before choosing the arrow to avoid negative zero or tiny-move arrows.
     value = round(change, decimals)
-    arrow = "⬆️" if value > 0 else "⬇️" if value < 0 else "↔️"
     number = f"{value:+.{decimals}f}" if value else f"{0:.{decimals}f}"
     separator = " " if unit == "bps" else ""
-    return f"{arrow} {number}{separator}{unit}"
+    return f"{number}{separator}{unit}""
 
 
 def get_treasury_yields():
