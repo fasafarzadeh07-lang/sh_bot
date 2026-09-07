@@ -154,7 +154,7 @@ def get_treasury_yields():
                 "field_tdr_date_value": year,
                 "type": "daily_treasury_yield_curve",
             },
-            timeout=20,
+            timeout=60,
         )
         response.raise_for_status()
         reader = csv.DictReader(io.StringIO(response.content.decode("utf-8-sig")))
