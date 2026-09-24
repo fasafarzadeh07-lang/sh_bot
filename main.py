@@ -106,6 +106,50 @@ def get_news():
     return articles
 
 
+
+def get_fred_observations(series_id, units=None, limit=2):
+    """Get the latest observations for a FRED economic series."""
+    if not FRED_API_KEY:
+        raise ValueError("FRED_API_KEY is not set")
+
+    params = {
+        "series_id": series_id,
+        "api_key": FRED_API_KEY,
+        "file_type": "json",
+        "sort_order": "desc",
+        "limit": limit,
+    }
+
+    if units:
+        params["units"] = units
+
+    response = requests.get(
+        "https://api.stlouisfed.org/fred/series/observations",
+        params=params,
+        timeout=30,
+    )
+    response.raise_for_status()
+
+    observations = response.json().get("observations", [])
+
+    # FRED sometimes uses "." for a missing value.
+    valid = []
+    for obs in observations:
+        try:
+            value = float(obs["value"])
+        except (KeyError, TypeError, ValueError):
+            continue
+
+        if math.isfinite(value):
+            valid.append({
+                "date": obs["date"],
+                "value": value,
+            })
+
+    return valid
+
+
+
 def get_change(symbol):
     """Change between the latest two available Yahoo daily closing values."""
     hist = yf.Ticker(symbol).history(period="1mo", timeout=20)
@@ -554,6 +598,16 @@ def send_to_telegram(message):
 
 def main():
     print("Getting news...")
+
+    print("Testing FRED...")
+
+    cpi_test = get_fred_observations(
+        "CPIAUCSL",
+        units="pc1",
+        limit=2
+    )
+
+    print("FRED CPI test:", cpi_test)
 
     articles = get_news()
 
