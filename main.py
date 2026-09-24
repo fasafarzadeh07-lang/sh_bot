@@ -15,7 +15,6 @@ from datetime import datetime, timezone
 import time
 import feedparser
 import requests
-import json
 from google import genai
 from google.genai.errors import APIError  # Added to handle Gemini specific errors
 import yfinance as yf
@@ -105,215 +104,6 @@ def get_news():
             print(f"RSS failed: {feed_url} -> {e}")
 
     return articles
-
-
-
-def get_fred_observations(series_id, units=None, limit=2):
-    """Get the latest observations for a FRED economic series."""
-    if not FRED_API_KEY:
-        raise ValueError("FRED_API_KEY is not set")
-
-    params = {
-        "series_id": series_id,
-        "api_key": FRED_API_KEY,
-        "file_type": "json",
-        "sort_order": "desc",
-        "limit": limit,
-    }
-
-    if units:
-        params["units"] = units
-
-    response = requests.get(
-        "https://api.stlouisfed.org/fred/series/observations",
-        params=params,
-        timeout=30,
-    )
-    response.raise_for_status()
-
-    observations = response.json().get("observations", [])
-
-    # FRED sometimes uses "." for a missing value.
-    valid = []
-    for obs in observations:
-        try:
-            value = float(obs["value"])
-        except (KeyError, TypeError, ValueError):
-            continue
-
-        if math.isfinite(value):
-            valid.append({
-                "date": obs["date"],
-                "value": value,
-            })
-
-    return valid
-
-
-
-def get_fred_economic_data():
-    """Fetch the main U.S. macroeconomic indicators used by the bot."""
-    data = []
-
-    # Inflation — year-over-year %
-    inflation_series = [
-        ("📈 CPI Inflation", "CPIAUCSL"),
-        ("🌡️ Core CPI", "CPILFESL"),
-        ("💵 PCE Inflation", "PCEPI"),
-    ]
-
-    for name, series_id in inflation_series:
-        try:
-            obs = get_fred_observations(series_id, units="pc1", limit=2)
-
-            if len(obs) >= 2:
-                data.append({
-                    "series_id": series_id,
-                    "name": name,
-                    "date": obs[0]["date"],
-                    "value": obs[0]["value"],
-                    "previous": obs[1]["value"],
-                    "unit": "% YoY",
-                })
-        except Exception as e:
-            print(f"FRED {series_id} failed: {e}")
-
-    # Unemployment rate — already stored as %
-    try:
-        obs = get_fred_observations("UNRATE", limit=2)
-
-        if len(obs) >= 2:
-            data.append({
-                "series_id": "UNRATE",
-                "name": "👥 Unemployment Rate",
-                "date": obs[0]["date"],
-                "value": obs[0]["value"],
-                "previous": obs[1]["value"],
-                "unit": "%",
-            })
-    except Exception as e:
-        print(f"FRED UNRATE failed: {e}")
-
-    # Nonfarm payrolls — PAYEMS is measured in thousands of jobs.
-    # We want the change from the previous month.
-    try:
-        obs = get_fred_observations("PAYEMS", limit=3)
-
-        if len(obs) >= 3:
-            latest_change = obs[0]["value"] - obs[1]["value"]
-            previous_change = obs[1]["value"] - obs[2]["value"]
-
-            data.append({
-                "series_id": "PAYEMS",
-                "name": "💼 Nonfarm Payrolls",
-                "date": obs[0]["date"],
-                "value": latest_change,
-                "previous": previous_change,
-                "unit": "K jobs",
-            })
-    except Exception as e:
-        print(f"FRED PAYEMS failed: {e}")
-
-    # Real GDP — annualized quarter-over-quarter growth
-    try:
-        obs = get_fred_observations("GDPC1", units="pca", limit=2)
-
-        if len(obs) >= 2:
-            data.append({
-                "series_id": "GDPC1",
-                "name": "🏭 Real GDP Growth",
-                "date": obs[0]["date"],
-                "value": obs[0]["value"],
-                "previous": obs[1]["value"],
-                "unit": "% annualized",
-            })
-    except Exception as e:
-        print(f"FRED GDPC1 failed: {e}")
-
-    return data
-
-
-FRED_STATE_FILE = "data/fred_state.json"
-
-
-def load_fred_state():
-    """Load the latest FRED observations already seen by the bot."""
-    if not os.path.exists(FRED_STATE_FILE):
-        return {}
-
-    try:
-        with open(FRED_STATE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (OSError, json.JSONDecodeError) as e:
-        print(f"Could not load FRED state: {e}")
-        return {}
-
-
-def save_fred_state(state):
-    """Save the latest FRED observation dates."""
-    os.makedirs(os.path.dirname(FRED_STATE_FILE), exist_ok=True)
-
-    with open(FRED_STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump(state, f, indent=2)
-
-
-def get_new_fred_releases():
-    """Return new indicators plus the state to save after a successful Telegram send."""
-    data = get_fred_economic_data()
-    old_state = load_fred_state()
-
-    new_state = dict(old_state)
-    new_releases = []
-
-    for item in data:
-        series_id = item["series_id"]
-        latest_date = item["date"]
-
-        # On the first ever run, initialize the state without
-        # treating all existing observations as new releases.
-        if series_id in old_state and latest_date > old_state[series_id]:
-            new_releases.append(item)
-
-        # Only update series that were fetched successfully today.
-        new_state[series_id] = latest_date
-
-    return new_releases, new_state
-
-
-def format_fred_releases(releases):
-    """Format only newly released U.S. macro data for Telegram."""
-    if not releases:
-        return ""
-
-    lines = ["🇺🇸 US Economic Data"]
-
-    for item in releases:
-        series_id = item["series_id"]
-        name = item["name"]
-        value = item["value"]
-        previous = item["previous"]
-
-        lines.append("")
-
-        if series_id == "PAYEMS":
-            lines.append(f"{name}: {value:+,.0f}K jobs")
-            lines.append(f"Previous: {previous:+,.0f}K")
-
-        elif series_id == "UNRATE":
-            lines.append(f"{name}: {value:.1f}%")
-            lines.append(f"Previous: {previous:.1f}%")
-
-        elif series_id == "GDPC1":
-            lines.append(f"{name}: {value:.1f}% annualized")
-            lines.append(f"Previous quarter: {previous:.1f}%")
-
-        else:
-            lines.append(f"{name}: {value:.1f}% YoY")
-            lines.append(f"Previous: {previous:.1f}%")
-
-    return "\n".join(lines)
-
-
 
 
 def get_change(symbol):
@@ -658,73 +448,47 @@ Headlines:
 {headlines}
 """
 
-    if not GEMINI_KEY:
-        print("GEMINI_KEY is not set; skipping the news summary.")
-        return ""
-
     client = genai.Client(api_key=GEMINI_KEY)
+    
+    primary_model = "gemini-3.5-flash"
+    backup_model = "gemini-2.5-flash"
+    max_retries = 3
+    delay = 2  # wait 2 seconds initially
 
-    # Keep Gemini 3.5 Flash as the first choice so the normal output style stays
-    # as close as possible to the bot's previous behavior. The others are fallbacks.
-    models = [
-        "gemini-3.5-flash",
-        "gemini-3.8-flash",
-        "gemini-3.7-flash",
-        "gemini-3.6-flash",
-        "gemini-3.5-flash-lite",
-        "gemini-2.5-flash",
-    ]
+    # --- Try generating with the newer Gemini 3.5 Flash first ---
+    for attempt in range(max_retries):
+        try:
+            print(f"Attempting econ summary with {primary_model} (Attempt {attempt + 1}/{max_retries})...")
+            response = client.models.generate_content(
+                model=primary_model,
+                contents=prompt
+            )
+            return response.text
+            
+        except APIError as e:
+            if e.code == 503:
+                print(f"Gemini 3.5 is busy (503). Retrying in {delay} seconds...")
+                time.sleep(delay)
+                delay *= 2  # Exponential backoff
+            else:
+                # If it is any other type of API error (like 400 or 403), raise it
+                raise e
+        except Exception as e:
+            print(f"Connection issue on attempt {attempt + 1}: {e}. Retrying...")
+            time.sleep(delay)
+            delay *= 2
 
-    max_retries_per_model = 2
-
-    for model in models:
-        delay = 2
-
-        for attempt in range(max_retries_per_model):
-            try:
-                print(
-                    f"Attempting econ summary with {model} "
-                    f"(Attempt {attempt + 1}/{max_retries_per_model})..."
-                )
-
-                response = client.models.generate_content(
-                    model=model,
-                    contents=prompt
-                )
-
-                result = (response.text or "").strip()
-                if result:
-                    print(f"Summary created with {model}")
-                    return result
-
-                print(f"{model} returned an empty response. Trying next model.")
-                break
-
-            except APIError as e:
-                code = getattr(e, "code", None)
-
-                # Retry only temporary errors, then move to the next model.
-                if code in (408, 429) or (isinstance(code, int) and 500 <= code <= 599):
-                    print(
-                        f"{model} temporary error ({code}). "
-                        f"Retrying in {delay} seconds..."
-                    )
-                    time.sleep(delay)
-                    delay *= 2
-                    continue
-
-                # For model/access/client errors, skip this model rather than
-                # breaking the whole daily bot.
-                print(f"{model} API error ({code}): {e}. Trying next model.")
-                break
-
-            except Exception as e:
-                print(f"{model} failed: {e}. Trying next model.")
-                break
-
-    # Never send an internal Gemini error message to Telegram.
-    print("All Gemini models failed. Continuing without the news summary.")
-    return ""
+    # --- Fallback Option ---
+    # If Gemini 3.5 was completely overloaded, we use your highly reliable Gemini 2.5 Flash
+    print(f"Gemini 3.5 was unavailable. Falling back to the highly reliable {backup_model}...")
+    try:
+        response = client.models.generate_content(
+            model=backup_model,
+            contents=prompt
+        )
+        return response.text
+    except Exception as fallback_err:
+        return f"Gemini Error: Both {primary_model} and {backup_model} failed. Details: {fallback_err}"
 
 
 def split_telegram_message(message, limit=4000):
@@ -791,38 +555,21 @@ def send_to_telegram(message):
 def main():
     print("Getting news...")
 
-    print("Checking FRED releases...")
-    fred_releases, fred_state = get_new_fred_releases()
-    fred_section = format_fred_releases(fred_releases)
-    print(f"New FRED releases: {len(fred_releases)}")
-
     articles = get_news()
+
     print(f"Found {len(articles)} articles")
 
-    summary = summarize_news(articles) if articles else ""
+    summary = summarize_news(articles)
+
     snapshot = get_market_snapshot()
 
-    # Keep the original message order:
-    # news summary -> optional FRED section -> market snapshot
-    sections = []
+    final_message = f"""{summary}
 
-    if summary:
-        sections.append(summary)
-
-    if fred_section:
-        sections.append(fred_section)
-
-    sections.append(snapshot)
-
-    final_message = "\n\n".join(sections)
+{snapshot}"""
 
     print("Summary created")
 
     send_to_telegram(final_message)
-
-    # Save FRED state only after Telegram has been sent successfully.
-    # This prevents losing a release if Telegram itself fails.
-    save_fred_state(fred_state)
 
     print("Posted to Telegram")
 
