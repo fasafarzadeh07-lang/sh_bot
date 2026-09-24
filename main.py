@@ -73,7 +73,9 @@ RSS_FEEDS = [
 
     # 💱 Forex Factory (VERY IMPORTANT for FX + macro)
     "https://www.forexfactory.com/news-feed",
-    "https://www.forexfactory.com/calendar"
+    "https://www.forexfactory.com/calendar",
+
+    "https://seekingalpha.com/tag/wall-st-breakfast.xml"
 ]
 
 
