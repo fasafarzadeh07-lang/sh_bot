@@ -9,10 +9,9 @@ Original file is located at
 
 import os
 import csv
-import json
 import io
 import math
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 import time
 import feedparser
 import requests
@@ -27,7 +26,6 @@ CHANNEL_ID = os.getenv("CHANNEL_ID")
 GEMINI_KEY = os.getenv("GEMINI_KEY")
 CHANNEL_ID_2 = os.getenv("CHANNEL_ID_2")
 FRED_API_KEY = os.getenv("FRED_API_KEY")
-FISCAL_API_KEY = os.getenv("FISCAL_API_KEY")
 
 
 RSS_FEEDS = [
@@ -75,9 +73,7 @@ RSS_FEEDS = [
 
     # 💱 Forex Factory (VERY IMPORTANT for FX + macro)
     "https://www.forexfactory.com/news-feed",
-    "https://www.forexfactory.com/calendar",
-
-    "https://seekingalpha.com/tag/wall-st-breakfast.xml"
+    "https://www.forexfactory.com/calendar"
 ]
 
 
@@ -556,157 +552,7 @@ def send_to_telegram(message):
             print(f"Sent part {index + 1}/{len(parts)} to {channel_name}")
 
 
-def check_fiscal_connection():
-    if not FISCAL_API_KEY:
-        print("Fiscal.ai: FISCAL_API_KEY is missing")
-        return
-
-    for company_key in ("NASDAQ_NVDA", "NASDAQ_AMZN"):
-        try:
-            response = requests.get(
-                "https://api.fiscal.ai/v3/company/profile",
-                params={"companyKey": company_key},
-                headers={"X-Api-Key": FISCAL_API_KEY},
-                timeout=20,
-            )
-            response.raise_for_status()
-            print(f"Fiscal.ai: {company_key} connected successfully")
-        except requests.RequestException as e:
-            print(f"Fiscal.ai: {company_key} failed: {e}")
-
-
-CORPORATE_STATE_PATH = "data/corporate_state.json"
-WATCHED_COMPANIES = {
-    "NASDAQ_NVDA": "NVIDIA",
-    "NASDAQ_AMZN": "Amazon",
-    "NASDAQ_MSFT": "Microsoft",
-    "NASDAQ_GOOG": "Alphabet",
-    "NASDAQ_AAPL": "Apple",
-    "NYSE_JPM": "JPMorgan Chase",
-    "NYSE_SHEL": "Shell",
-}
-
-
-def get_corporate_watch():
-    """Return new earnings, or a dated NVDA/AMZN example on first setup."""
-    if not FISCAL_API_KEY:
-        print("Corporate Watch skipped: FISCAL_API_KEY is missing")
-        return "", None
-
-    try:
-        with open(CORPORATE_STATE_PATH, encoding="utf-8") as f:
-            previous = json.load(f)
-        if not isinstance(previous, dict):
-            raise ValueError("Corporate state must be an object")
-    except FileNotFoundError:
-        previous = {}
-    except (OSError, ValueError) as e:
-        print(f"Fiscal.ai state unavailable: {e}")
-        return "", None
-
-    headers = {"X-Api-Key": FISCAL_API_KEY}
-    try:
-        response = requests.get(
-            "https://api.fiscal.ai/v3/companies-list",
-            headers=headers,
-            timeout=20,
-        )
-        response.raise_for_status()
-        companies = response.json()["data"]
-    except (requests.RequestException, ValueError, KeyError, TypeError) as e:
-        print(f"Fiscal.ai company list unavailable: {e}")
-        return "", None
-
-    today = datetime.now(timezone.utc).date()
-    first_run = not previous
-    candidates = []
-    for company in companies:
-        if not isinstance(company, dict):
-            continue
-        key = company.get("companyKey")
-        filed_at = company.get("earningsFilingDate")
-        if key not in WATCHED_COMPANIES or not isinstance(filed_at, str):
-            continue
-        try:
-            filing_day = datetime.strptime(filed_at[:10], "%Y-%m-%d").date()
-        except ValueError:
-            continue
-        recent = today - timedelta(days=7) <= filing_day <= today
-        # On first setup, show the latest available report for the two requested
-        # companies once, even if neither reported this week.
-        example = first_run and key in ("NASDAQ_NVDA", "NASDAQ_AMZN") and filing_day <= today
-        if recent or example:
-            candidates.append((filing_day, key, company.get("reportingCurrency"), recent))
-
-    order = {key: index for index, key in enumerate(WATCHED_COMPANIES)}
-    candidates.sort(key=lambda item: (0 if first_run and item[1] in ("NASDAQ_NVDA", "NASDAQ_AMZN") else 1, -item[0].toordinal(), order[item[1]]))
-    if not candidates:
-        print("Corporate Watch: no earnings filed in the last 7 days; nothing to post")
-    lines = []
-    new_state = dict(previous)
-    for filing_day, key, currency, recent in candidates:
-        if len(lines) >= 2:
-            break
-        try:
-            response = requests.get(
-                "https://api.fiscal.ai/v1/company/earnings-summary",
-                params={"companyKey": key},
-                headers=headers,
-                timeout=20,
-            )
-            response.raise_for_status()
-            summaries = response.json()
-        except (requests.RequestException, ValueError) as e:
-            print(f"Fiscal.ai earnings unavailable for {key}: {e}")
-            continue
-        if not isinstance(summaries, list) or not summaries:
-            print(f"Corporate Watch: no earnings summary returned for {key}")
-            continue
-        report = summaries[0]
-        if not isinstance(report, dict):
-            continue
-        period = report.get("period")
-        if not isinstance(period, str) or not period.strip():
-            continue
-        report_id = f"{period}|{report.get('date', '')}"
-        if previous.get(key) == report_id:
-            print(f"Corporate Watch: {key} report already posted")
-            continue
-        eps, revenue = report.get("epsActual"), report.get("revenueActual")
-        metrics = []
-        if isinstance(revenue, (int, float)) and not isinstance(revenue, bool) and math.isfinite(revenue):
-            metrics.append(f"Revenue: {revenue / 1_000_000_000:,.2f}B {currency or 'reported currency'}")
-        if isinstance(eps, (int, float)) and not isinstance(eps, bool) and math.isfinite(eps):
-            metrics.append(f"EPS: {eps:,.2f} {currency or 'reported currency'}")
-        if not metrics:
-            print(f"Corporate Watch: {key} has no numeric revenue or EPS")
-            continue
-        label = "new results" if recent else "latest available report (first run)"
-        lines.append(
-            f"• {WATCHED_COMPANIES[key]} — {period} · {label} (filed {filing_day:%Y-%m-%d})\n"
-            + "  " + " · ".join(metrics)
-        )
-        new_state[key] = report_id
-        print(f"Corporate Watch: added {key} {period} ({label})")
-
-    if not lines:
-        print("Corporate Watch: no eligible earnings figures; see messages above")
-        return "", None
-    return "\n".join(["🏢 Corporate Watch · Fiscal.ai", *lines]), new_state
-
-
-def save_corporate_state(state):
-    """Remember reports only after the Telegram message succeeds."""
-    if state is None:
-        return
-    os.makedirs("data", exist_ok=True)
-    with open(CORPORATE_STATE_PATH, "w", encoding="utf-8") as f:
-        json.dump(state, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-
-
 def main():
-    check_fiscal_connection()
     print("Getting news...")
 
     articles = get_news()
@@ -716,18 +562,14 @@ def main():
     summary = summarize_news(articles)
 
     snapshot = get_market_snapshot()
-    corporate_watch, corporate_state = get_corporate_watch()
 
     final_message = f"""{summary}
 
 {snapshot}"""
-    if corporate_watch:
-        final_message += f"\n\n{corporate_watch}"
 
     print("Summary created")
 
     send_to_telegram(final_message)
-    save_corporate_state(corporate_state)
 
     print("Posted to Telegram")
 
