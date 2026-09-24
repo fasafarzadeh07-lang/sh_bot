@@ -258,66 +258,56 @@ def save_fred_state(state):
 
 
 def get_new_fred_releases():
-    """Return only indicators with a newer observation than the previous run."""
+    """Return new indicators plus the state to save after a successful Telegram send."""
     data = get_fred_economic_data()
     old_state = load_fred_state()
 
-    new_state = {}
+    new_state = dict(old_state)
     new_releases = []
 
     for item in data:
         series_id = item["series_id"]
         latest_date = item["date"]
 
-        new_state[series_id] = latest_date
-
         # On the first ever run, initialize the state without
         # treating all existing observations as new releases.
-        if series_id not in old_state:
-            continue
-
-        if latest_date > old_state[series_id]:
+        if series_id in old_state and latest_date > old_state[series_id]:
             new_releases.append(item)
 
-    # Preserve an old entry if a particular FRED request failed today.
-    for series_id, date in old_state.items():
-        if series_id not in new_state:
-            new_state[series_id] = date
+        # Only update series that were fetched successfully today.
+        new_state[series_id] = latest_date
 
-    save_fred_state(new_state)
-
-    return new_releases
+    return new_releases, new_state
 
 
 def format_fred_releases(releases):
-    """Format newly released FRED data for Telegram."""
+    """Format only newly released U.S. macro data for Telegram."""
     if not releases:
         return ""
 
     lines = ["🇺🇸 US Economic Data"]
 
     for item in releases:
+        series_id = item["series_id"]
         name = item["name"]
         value = item["value"]
         previous = item["previous"]
-        unit = item["unit"]
 
         lines.append("")
 
-        if item["series_id"] == "PAYEMS":
+        if series_id == "PAYEMS":
             lines.append(f"{name}: {value:+,.0f}K jobs")
             lines.append(f"Previous: {previous:+,.0f}K")
 
-        elif item["series_id"] == "UNRATE":
+        elif series_id == "UNRATE":
             lines.append(f"{name}: {value:.1f}%")
             lines.append(f"Previous: {previous:.1f}%")
 
-        elif item["series_id"] == "GDPC1":
+        elif series_id == "GDPC1":
             lines.append(f"{name}: {value:.1f}% annualized")
             lines.append(f"Previous quarter: {previous:.1f}%")
 
         else:
-            # CPI, Core CPI and PCE
             lines.append(f"{name}: {value:.1f}% YoY")
             lines.append(f"Previous: {previous:.1f}%")
 
@@ -669,52 +659,62 @@ Headlines:
 """
 
     if not GEMINI_KEY:
-        print("GEMINI_KEY is not set; skipping news summary.")
+        print("GEMINI_KEY is not set; skipping the news summary.")
         return ""
 
     client = genai.Client(api_key=GEMINI_KEY)
 
+    # Keep Gemini 3.5 Flash as the first choice so the normal output style stays
+    # as close as possible to the bot's previous behavior. The others are fallbacks.
     models = [
-        "gemini-3.8-flash",
-        "gemini-3.6-flash",
         "gemini-3.5-flash",
+        "gemini-3.8-flash",
+        "gemini-3.7-flash",
+        "gemini-3.6-flash",
         "gemini-3.5-flash-lite",
         "gemini-2.5-flash",
-        "gemini-2.5-flash-lite",
     ]
 
     max_retries_per_model = 2
 
     for model in models:
         delay = 2
+
         for attempt in range(max_retries_per_model):
             try:
                 print(
                     f"Attempting econ summary with {model} "
                     f"(Attempt {attempt + 1}/{max_retries_per_model})..."
                 )
+
                 response = client.models.generate_content(
                     model=model,
-                    contents=prompt,
+                    contents=prompt
                 )
+
                 result = (response.text or "").strip()
                 if result:
                     print(f"Summary created with {model}")
                     return result
-                print(f"{model} returned an empty response; trying another model.")
+
+                print(f"{model} returned an empty response. Trying next model.")
                 break
 
             except APIError as e:
                 code = getattr(e, "code", None)
-                if code == 429 or (isinstance(code, int) and 500 <= code <= 599):
+
+                # Retry only temporary errors, then move to the next model.
+                if code in (408, 429) or (isinstance(code, int) and 500 <= code <= 599):
                     print(
-                        f"{model} temporary API error ({code}). "
+                        f"{model} temporary error ({code}). "
                         f"Retrying in {delay} seconds..."
                     )
                     time.sleep(delay)
                     delay *= 2
                     continue
 
+                # For model/access/client errors, skip this model rather than
+                # breaking the whole daily bot.
                 print(f"{model} API error ({code}): {e}. Trying next model.")
                 break
 
@@ -722,7 +722,8 @@ Headlines:
                 print(f"{model} failed: {e}. Trying next model.")
                 break
 
-    print("All Gemini models failed; sending the report without the news summary.")
+    # Never send an internal Gemini error message to Telegram.
+    print("All Gemini models failed. Continuing without the news summary.")
     return ""
 
 
@@ -788,12 +789,12 @@ def send_to_telegram(message):
 
 
 def main():
+    print("Getting news...")
+
     print("Checking FRED releases...")
-
-    fred_releases = get_new_fred_releases()
+    fred_releases, fred_state = get_new_fred_releases()
     fred_section = format_fred_releases(fred_releases)
-
-    print(f"Found {len(fred_releases)} new FRED releases")
+    print(f"New FRED releases: {len(fred_releases)}")
 
     articles = get_news()
     print(f"Found {len(articles)} articles")
@@ -801,6 +802,8 @@ def main():
     summary = summarize_news(articles) if articles else ""
     snapshot = get_market_snapshot()
 
+    # Keep the original message order:
+    # news summary -> optional FRED section -> market snapshot
     sections = []
 
     if summary:
@@ -813,8 +816,14 @@ def main():
 
     final_message = "\n\n".join(sections)
 
-    print("Report created")
+    print("Summary created")
+
     send_to_telegram(final_message)
+
+    # Save FRED state only after Telegram has been sent successfully.
+    # This prevents losing a release if Telegram itself fails.
+    save_fred_state(fred_state)
+
     print("Posted to Telegram")
 
 
