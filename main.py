@@ -740,11 +740,11 @@ def send_to_telegram(message):
 def main():
     print("Getting news...")
 
-print("Checking FRED releases...")
+    print("Checking FRED releases...")
 
-fred_releases = get_new_fred_releases()
+    fred_releases = get_new_fred_releases()
 
-print("New FRED releases:", fred_releases)
+    print("New FRED releases:", fred_releases)
     articles = get_news()
 
     print(f"Found {len(articles)} articles")
