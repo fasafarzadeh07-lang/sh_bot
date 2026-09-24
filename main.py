@@ -168,6 +168,7 @@ def get_fred_economic_data():
 
             if len(obs) >= 2:
                 data.append({
+                    "series_id": series_id,
                     "name": name,
                     "date": obs[0]["date"],
                     "value": obs[0]["value"],
@@ -183,6 +184,7 @@ def get_fred_economic_data():
 
         if len(obs) >= 2:
             data.append({
+                "series_id": "UNRATE",
                 "name": "👥 Unemployment Rate",
                 "date": obs[0]["date"],
                 "value": obs[0]["value"],
@@ -202,6 +204,7 @@ def get_fred_economic_data():
             previous_change = obs[1]["value"] - obs[2]["value"]
 
             data.append({
+                "series_id": "PAYEMS",
                 "name": "💼 Nonfarm Payrolls",
                 "date": obs[0]["date"],
                 "value": latest_change,
@@ -217,6 +220,7 @@ def get_fred_economic_data():
 
         if len(obs) >= 2:
             data.append({
+                "series_id": "GDPC1",
                 "name": "🏭 Real GDP Growth",
                 "date": obs[0]["date"],
                 "value": obs[0]["value"],
@@ -736,7 +740,11 @@ def send_to_telegram(message):
 def main():
     print("Getting news...")
 
+print("Checking FRED releases...")
 
+fred_releases = get_new_fred_releases()
+
+print("New FRED releases:", fred_releases)
     articles = get_news()
 
     print(f"Found {len(articles)} articles")
