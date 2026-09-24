@@ -26,6 +26,7 @@ CHANNEL_ID = os.getenv("CHANNEL_ID")
 GEMINI_KEY = os.getenv("GEMINI_KEY")
 CHANNEL_ID_2 = os.getenv("CHANNEL_ID_2")
 FRED_API_KEY = os.getenv("FRED_API_KEY")
+FISCAL_API_KEY = os.getenv("FISCAL_API_KEY")
 
 
 RSS_FEEDS = [
@@ -554,7 +555,27 @@ def send_to_telegram(message):
             print(f"Sent part {index + 1}/{len(parts)} to {channel_name}")
 
 
+def check_fiscal_connection():
+    if not FISCAL_API_KEY:
+        print("Fiscal.ai: FISCAL_API_KEY is missing")
+        return
+
+    for company_key in ("NASDAQ_NVDA", "NASDAQ_AMZN"):
+        try:
+            response = requests.get(
+                "https://api.fiscal.ai/v3/company/profile",
+                params={"companyKey": company_key},
+                headers={"X-Api-Key": FISCAL_API_KEY},
+                timeout=20,
+            )
+            response.raise_for_status()
+            print(f"Fiscal.ai: {company_key} connected successfully")
+        except requests.RequestException as e:
+            print(f"Fiscal.ai: {company_key} failed: {e}")
+
+
 def main():
+    check_fiscal_connection()
     print("Getting news...")
 
     articles = get_news()
