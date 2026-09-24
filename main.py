@@ -783,18 +783,18 @@ def main():
 
     print(f"Found {len(articles)} articles")
 
-summary = summarize_news(articles)
+    summary = summarize_news(articles)
 
-snapshot = get_market_snapshot()
+    snapshot = get_market_snapshot()
 
-sections = [summary]
+    sections = [summary]
 
-if fred_section:
-    sections.append(fred_section)
+    if fred_section:
+        sections.append(fred_section)
 
-sections.append(snapshot)
+    sections.append(snapshot)
 
-final_message = "\n\n".join(sections)
+    final_message = "\n\n".join(sections)
 
     print("Summary created")
 
