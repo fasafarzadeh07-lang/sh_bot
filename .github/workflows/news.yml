@@ -28,4 +28,5 @@ jobs:
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
           CHANNEL_ID_2: ${{ secrets.CHANNEL_ID_2 }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python main.py
