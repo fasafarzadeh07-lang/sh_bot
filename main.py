@@ -677,12 +677,6 @@ def send_to_telegram(message):
 def main():
     print("Getting news...")
 
-    print("Testing FRED economic data...")
-
-    fred_test = get_fred_economic_data()
-
-    for item in fred_test:
-        print(item)
 
     articles = get_news()
 
