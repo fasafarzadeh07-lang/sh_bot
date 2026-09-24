@@ -11,7 +11,7 @@ import os
 import csv
 import io
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import time
 import feedparser
 import requests
@@ -574,6 +574,81 @@ def check_fiscal_connection():
             print(f"Fiscal.ai: {company_key} failed: {e}")
 
 
+def get_corporate_watch():
+    """Show at most two confirmed earnings releases in the next seven days."""
+    if not FISCAL_API_KEY:
+        return ""
+
+    watched = {
+        "NASDAQ_NVDA": "NVIDIA",
+        "NASDAQ_AMZN": "Amazon",
+        "NASDAQ_MSFT": "Microsoft",
+        "NASDAQ_GOOG": "Alphabet",
+        "NASDAQ_AAPL": "Apple",
+        "NYSE_JPM": "JPMorgan Chase",
+        "NYSE_SHEL": "Shell",
+    }
+    headers = {"X-Api-Key": FISCAL_API_KEY}
+    try:
+        companies_response = requests.get(
+            "https://api.fiscal.ai/v3/companies-list",
+            headers=headers,
+            timeout=20,
+        )
+        companies_response.raise_for_status()
+        company_ids = {
+            row["companyFiscalIdentifier"]: row["companyKey"]
+            for row in companies_response.json()["data"]
+            if row.get("companyKey") in watched
+            and row.get("companyFiscalIdentifier")
+        }
+        if not company_ids:
+            print("Fiscal.ai: no watched companies were returned")
+            return ""
+
+        today = datetime.now(timezone.utc).date()
+        events_response = requests.get(
+            "https://api.fiscal.ai/v1/events-calendar",
+            params={
+                "companies": ",".join(company_ids),
+                "startDate": today.isoformat(),
+                "endDate": (today + timedelta(days=7)).isoformat(),
+                "status": "confirmed",
+                "pageSize": 100,
+            },
+            headers=headers,
+            timeout=20,
+        )
+        events_response.raise_for_status()
+        events = events_response.json()["data"]
+    except (requests.RequestException, ValueError, KeyError, TypeError) as e:
+        print(f"Fiscal.ai corporate watch unavailable: {e}")
+        return ""
+
+    releases = set()
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        company_key = company_ids.get(event.get("companyFiscalIdentifier"))
+        if (company_key not in watched or event.get("eventType") != "earnings"
+                or event.get("eventRole") != "financial_results_release"
+                or event.get("eventStatus") != "confirmed"):
+            continue
+        try:
+            day = datetime.strptime(event["eventDate"], "%Y-%m-%d").date()
+        except (KeyError, TypeError, ValueError):
+            continue
+        if today <= day <= today + timedelta(days=7):
+            releases.add((day, company_key))
+
+    if not releases:
+        return ""
+    lines = ["🏢 Corporate Watch", "📅 Upcoming confirmed earnings"]
+    for day, company_key in sorted(releases)[:2]:
+        lines.append(f"• {watched[company_key]} — {day:%Y-%m-%d}")
+    return "\n".join(lines)
+
+
 def main():
     check_fiscal_connection()
     print("Getting news...")
@@ -585,10 +660,13 @@ def main():
     summary = summarize_news(articles)
 
     snapshot = get_market_snapshot()
+    corporate_watch = get_corporate_watch()
 
     final_message = f"""{summary}
 
 {snapshot}"""
+    if corporate_watch:
+        final_message += f"\n\n{corporate_watch}"
 
     print("Summary created")
 
