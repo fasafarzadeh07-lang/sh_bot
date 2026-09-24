@@ -150,6 +150,84 @@ def get_fred_observations(series_id, units=None, limit=2):
 
 
 
+def get_fred_economic_data():
+    """Fetch the main U.S. macroeconomic indicators used by the bot."""
+    data = []
+
+    # Inflation — year-over-year %
+    inflation_series = [
+        ("📈 CPI Inflation", "CPIAUCSL"),
+        ("🌡️ Core CPI", "CPILFESL"),
+        ("💵 PCE Inflation", "PCEPI"),
+    ]
+
+    for name, series_id in inflation_series:
+        try:
+            obs = get_fred_observations(series_id, units="pc1", limit=2)
+
+            if len(obs) >= 2:
+                data.append({
+                    "name": name,
+                    "date": obs[0]["date"],
+                    "value": obs[0]["value"],
+                    "previous": obs[1]["value"],
+                    "unit": "% YoY",
+                })
+        except Exception as e:
+            print(f"FRED {series_id} failed: {e}")
+
+    # Unemployment rate — already stored as %
+    try:
+        obs = get_fred_observations("UNRATE", limit=2)
+
+        if len(obs) >= 2:
+            data.append({
+                "name": "👥 Unemployment Rate",
+                "date": obs[0]["date"],
+                "value": obs[0]["value"],
+                "previous": obs[1]["value"],
+                "unit": "%",
+            })
+    except Exception as e:
+        print(f"FRED UNRATE failed: {e}")
+
+    # Nonfarm payrolls — PAYEMS is measured in thousands of jobs.
+    # We want the change from the previous month.
+    try:
+        obs = get_fred_observations("PAYEMS", limit=3)
+
+        if len(obs) >= 3:
+            latest_change = obs[0]["value"] - obs[1]["value"]
+            previous_change = obs[1]["value"] - obs[2]["value"]
+
+            data.append({
+                "name": "💼 Nonfarm Payrolls",
+                "date": obs[0]["date"],
+                "value": latest_change,
+                "previous": previous_change,
+                "unit": "K jobs",
+            })
+    except Exception as e:
+        print(f"FRED PAYEMS failed: {e}")
+
+    # Real GDP — annualized quarter-over-quarter growth
+    try:
+        obs = get_fred_observations("GDPC1", units="pca", limit=2)
+
+        if len(obs) >= 2:
+            data.append({
+                "name": "🏭 Real GDP Growth",
+                "date": obs[0]["date"],
+                "value": obs[0]["value"],
+                "previous": obs[1]["value"],
+                "unit": "% annualized",
+            })
+    except Exception as e:
+        print(f"FRED GDPC1 failed: {e}")
+
+    return data
+
+
 def get_change(symbol):
     """Change between the latest two available Yahoo daily closing values."""
     hist = yf.Ticker(symbol).history(period="1mo", timeout=20)
@@ -599,15 +677,6 @@ def send_to_telegram(message):
 def main():
     print("Getting news...")
 
-    print("Testing FRED...")
-
-    cpi_test = get_fred_observations(
-        "CPIAUCSL",
-        units="pc1",
-        limit=2
-    )
-
-    print("FRED CPI test:", cpi_test)
 
     articles = get_news()
 
