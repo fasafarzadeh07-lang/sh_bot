@@ -668,47 +668,62 @@ Headlines:
 {headlines}
 """
 
+    if not GEMINI_KEY:
+        print("GEMINI_KEY is not set; skipping news summary.")
+        return ""
+
     client = genai.Client(api_key=GEMINI_KEY)
-    
-    primary_model = "gemini-3.5-flash"
-    backup_model = "gemini-2.5-flash"
-    max_retries = 3
-    delay = 2  # wait 2 seconds initially
 
-    # --- Try generating with the newer Gemini 3.5 Flash first ---
-    for attempt in range(max_retries):
-        try:
-            print(f"Attempting econ summary with {primary_model} (Attempt {attempt + 1}/{max_retries})...")
-            response = client.models.generate_content(
-                model=primary_model,
-                contents=prompt
-            )
-            return response.text
-            
-        except APIError as e:
-            if e.code == 503:
-                print(f"Gemini 3.5 is busy (503). Retrying in {delay} seconds...")
-                time.sleep(delay)
-                delay *= 2  # Exponential backoff
-            else:
-                # If it is any other type of API error (like 400 or 403), raise it
-                raise e
-        except Exception as e:
-            print(f"Connection issue on attempt {attempt + 1}: {e}. Retrying...")
-            time.sleep(delay)
-            delay *= 2
+    models = [
+        "gemini-3.8-flash",
+        "gemini-3.6-flash",
+        "gemini-3.5-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
+    ]
 
-    # --- Fallback Option ---
-    # If Gemini 3.5 was completely overloaded, we use your highly reliable Gemini 2.5 Flash
-    print(f"Gemini 3.5 was unavailable. Falling back to the highly reliable {backup_model}...")
-    try:
-        response = client.models.generate_content(
-            model=backup_model,
-            contents=prompt
-        )
-        return response.text
-    except Exception as fallback_err:
-        return f"Gemini Error: Both {primary_model} and {backup_model} failed. Details: {fallback_err}"
+    max_retries_per_model = 2
+
+    for model in models:
+        delay = 2
+        for attempt in range(max_retries_per_model):
+            try:
+                print(
+                    f"Attempting econ summary with {model} "
+                    f"(Attempt {attempt + 1}/{max_retries_per_model})..."
+                )
+                response = client.models.generate_content(
+                    model=model,
+                    contents=prompt,
+                )
+                result = (response.text or "").strip()
+                if result:
+                    print(f"Summary created with {model}")
+                    return result
+                print(f"{model} returned an empty response; trying another model.")
+                break
+
+            except APIError as e:
+                code = getattr(e, "code", None)
+                if code == 429 or (isinstance(code, int) and 500 <= code <= 599):
+                    print(
+                        f"{model} temporary API error ({code}). "
+                        f"Retrying in {delay} seconds..."
+                    )
+                    time.sleep(delay)
+                    delay *= 2
+                    continue
+
+                print(f"{model} API error ({code}): {e}. Trying next model.")
+                break
+
+            except Exception as e:
+                print(f"{model} failed: {e}. Trying next model.")
+                break
+
+    print("All Gemini models failed; sending the report without the news summary.")
+    return ""
 
 
 def split_telegram_message(message, limit=4000):
@@ -779,15 +794,17 @@ def main():
     fred_section = format_fred_releases(fred_releases)
 
     print(f"Found {len(fred_releases)} new FRED releases")
-    articles = get_news()
 
+    articles = get_news()
     print(f"Found {len(articles)} articles")
 
-    summary = summarize_news(articles)
-
+    summary = summarize_news(articles) if articles else ""
     snapshot = get_market_snapshot()
 
-    sections = [summary]
+    sections = []
+
+    if summary:
+        sections.append(summary)
 
     if fred_section:
         sections.append(fred_section)
@@ -796,10 +813,8 @@ def main():
 
     final_message = "\n\n".join(sections)
 
-    print("Summary created")
-
+    print("Report created")
     send_to_telegram(final_message)
-
     print("Posted to Telegram")
 
 
