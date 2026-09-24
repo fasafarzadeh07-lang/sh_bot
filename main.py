@@ -9,9 +9,10 @@ Original file is located at
 
 import os
 import csv
+import json
 import io
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import time
 import feedparser
 import requests
@@ -574,79 +575,120 @@ def check_fiscal_connection():
             print(f"Fiscal.ai: {company_key} failed: {e}")
 
 
-def get_corporate_watch():
-    """Show at most two confirmed earnings releases scheduled for today."""
-    if not FISCAL_API_KEY:
-        return ""
+CORPORATE_STATE_PATH = "data/corporate_state.json"
+WATCHED_COMPANIES = {
+    "NASDAQ_NVDA": "NVIDIA",
+    "NASDAQ_AMZN": "Amazon",
+    "NASDAQ_MSFT": "Microsoft",
+    "NASDAQ_GOOG": "Alphabet",
+    "NASDAQ_AAPL": "Apple",
+    "NYSE_JPM": "JPMorgan Chase",
+    "NYSE_SHEL": "Shell",
+}
 
-    watched = {
-        "NASDAQ_NVDA": "NVIDIA",
-        "NASDAQ_AMZN": "Amazon",
-        "NASDAQ_MSFT": "Microsoft",
-        "NASDAQ_GOOG": "Alphabet",
-        "NASDAQ_AAPL": "Apple",
-        "NYSE_JPM": "JPMorgan Chase",
-        "NYSE_SHEL": "Shell",
-    }
+
+def get_corporate_watch():
+    """Return newly filed earnings figures and state to save after sending."""
+    if not FISCAL_API_KEY:
+        return "", None
+
+    try:
+        with open(CORPORATE_STATE_PATH, encoding="utf-8") as f:
+            previous = json.load(f)
+        if not isinstance(previous, dict):
+            raise ValueError("Corporate state must be an object")
+    except FileNotFoundError:
+        previous = {}
+    except (OSError, ValueError) as e:
+        print(f"Fiscal.ai state unavailable: {e}")
+        return "", None
+
     headers = {"X-Api-Key": FISCAL_API_KEY}
     try:
-        companies_response = requests.get(
+        response = requests.get(
             "https://api.fiscal.ai/v3/companies-list",
             headers=headers,
             timeout=20,
         )
-        companies_response.raise_for_status()
-        company_ids = {
-            row["companyFiscalIdentifier"]: row["companyKey"]
-            for row in companies_response.json()["data"]
-            if row.get("companyKey") in watched
-            and row.get("companyFiscalIdentifier")
-        }
-        if not company_ids:
-            print("Fiscal.ai: no watched companies were returned")
-            return ""
-
-        today = datetime.now(timezone.utc).date()
-        events_response = requests.get(
-            "https://api.fiscal.ai/v1/events-calendar",
-            params={
-                "companies": ",".join(company_ids),
-                "startDate": today.isoformat(),
-                "endDate": today.isoformat(),
-                "status": "confirmed",
-                "pageSize": 100,
-            },
-            headers=headers,
-            timeout=20,
-        )
-        events_response.raise_for_status()
-        events = events_response.json()["data"]
+        response.raise_for_status()
+        companies = response.json()["data"]
     except (requests.RequestException, ValueError, KeyError, TypeError) as e:
-        print(f"Fiscal.ai corporate watch unavailable: {e}")
-        return ""
+        print(f"Fiscal.ai company list unavailable: {e}")
+        return "", None
 
-    releases = set()
-    for event in events:
-        if not isinstance(event, dict):
+    today = datetime.now(timezone.utc).date()
+    candidates = []
+    for company in companies:
+        if not isinstance(company, dict):
             continue
-        company_key = company_ids.get(event.get("companyFiscalIdentifier"))
-        if (company_key not in watched or event.get("eventType") != "earnings"
-                or event.get("eventRole") != "financial_results_release"
-                or event.get("eventStatus") != "confirmed"):
+        key = company.get("companyKey")
+        filed_at = company.get("earningsFilingDate")
+        if key not in WATCHED_COMPANIES or not isinstance(filed_at, str):
             continue
         try:
-            day = datetime.strptime(event["eventDate"], "%Y-%m-%d").date()
-        except (KeyError, TypeError, ValueError):
+            filing_day = datetime.strptime(filed_at[:10], "%Y-%m-%d").date()
+        except ValueError:
             continue
-        if day == today:
-            releases.add((day, company_key))
+        if today - timedelta(days=7) <= filing_day <= today:
+            candidates.append((filing_day, key, company.get("reportingCurrency")))
 
-    if not releases:
-        return ""
-    lines = ["🏢 Corporate Watch", "📅 Earnings scheduled today (confirmed)"]
-    for day, company_key in sorted(releases)[:2]:
-        lines.append(f"• {watched[company_key]} — {day:%Y-%m-%d}")
-    return "\n".join(lines)
+    order = {key: index for index, key in enumerate(WATCHED_COMPANIES)}
+    candidates.sort(key=lambda item: (-item[0].toordinal(), order[item[1]]))
+    lines = []
+    new_state = dict(previous)
+    for filing_day, key, currency in candidates:
+        if len(lines) >= 2:
+            break
+        try:
+            response = requests.get(
+                "https://api.fiscal.ai/v1/company/earnings-summary",
+                params={"companyKey": key},
+                headers=headers,
+                timeout=20,
+            )
+            response.raise_for_status()
+            summaries = response.json()
+        except (requests.RequestException, ValueError) as e:
+            print(f"Fiscal.ai earnings unavailable for {key}: {e}")
+            continue
+        if not isinstance(summaries, list) or not summaries:
+            continue
+        report = summaries[0]
+        if not isinstance(report, dict):
+            continue
+        period = report.get("period")
+        if not isinstance(period, str) or not period.strip():
+            continue
+        report_id = f"{period}|{report.get('date', '')}"
+        if previous.get(key) == report_id:
+            continue
+        eps, revenue = report.get("epsActual"), report.get("revenueActual")
+        metrics = []
+        if isinstance(revenue, (int, float)) and not isinstance(revenue, bool) and math.isfinite(revenue):
+            metrics.append(f"Revenue: {revenue / 1_000_000_000:,.2f}B {currency or 'reported currency'}")
+        if isinstance(eps, (int, float)) and not isinstance(eps, bool) and math.isfinite(eps):
+            metrics.append(f"EPS: {eps:,.2f} {currency or 'reported currency'}")
+        if not metrics:
+            continue
+        lines.append(
+            f"• {WATCHED_COMPANIES[key]} — {period} (filed {filing_day:%Y-%m-%d})\n"
+            + "  " + " · ".join(metrics)
+        )
+        new_state[key] = report_id
+
+    if not lines:
+        return "", None
+    return "\n".join(["🏢 Corporate Watch · Fiscal.ai", *lines]), new_state
+
+
+def save_corporate_state(state):
+    """Remember reports only after the Telegram message succeeds."""
+    if state is None:
+        return
+    os.makedirs("data", exist_ok=True)
+    with open(CORPORATE_STATE_PATH, "w", encoding="utf-8") as f:
+        json.dump(state, f, ensure_ascii=False, indent=2)
+        f.write("\n")
 
 
 def main():
@@ -660,7 +702,7 @@ def main():
     summary = summarize_news(articles)
 
     snapshot = get_market_snapshot()
-    corporate_watch = get_corporate_watch()
+    corporate_watch, corporate_state = get_corporate_watch()
 
     final_message = f"""{summary}
 
@@ -671,6 +713,7 @@ def main():
     print("Summary created")
 
     send_to_telegram(final_message)
+    save_corporate_state(corporate_state)
 
     print("Posted to Telegram")
 
