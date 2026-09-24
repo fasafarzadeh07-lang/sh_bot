@@ -588,8 +588,9 @@ WATCHED_COMPANIES = {
 
 
 def get_corporate_watch():
-    """Return newly filed earnings figures and state to save after sending."""
+    """Return new earnings, or a dated NVDA/AMZN example on first setup."""
     if not FISCAL_API_KEY:
+        print("Corporate Watch skipped: FISCAL_API_KEY is missing")
         return "", None
 
     try:
@@ -617,6 +618,7 @@ def get_corporate_watch():
         return "", None
 
     today = datetime.now(timezone.utc).date()
+    first_run = not previous
     candidates = []
     for company in companies:
         if not isinstance(company, dict):
@@ -629,14 +631,20 @@ def get_corporate_watch():
             filing_day = datetime.strptime(filed_at[:10], "%Y-%m-%d").date()
         except ValueError:
             continue
-        if today - timedelta(days=7) <= filing_day <= today:
-            candidates.append((filing_day, key, company.get("reportingCurrency")))
+        recent = today - timedelta(days=7) <= filing_day <= today
+        # On first setup, show the latest available report for the two requested
+        # companies once, even if neither reported this week.
+        example = first_run and key in ("NASDAQ_NVDA", "NASDAQ_AMZN") and filing_day <= today
+        if recent or example:
+            candidates.append((filing_day, key, company.get("reportingCurrency"), recent))
 
     order = {key: index for index, key in enumerate(WATCHED_COMPANIES)}
-    candidates.sort(key=lambda item: (-item[0].toordinal(), order[item[1]]))
+    candidates.sort(key=lambda item: (0 if first_run and item[1] in ("NASDAQ_NVDA", "NASDAQ_AMZN") else 1, -item[0].toordinal(), order[item[1]]))
+    if not candidates:
+        print("Corporate Watch: no earnings filed in the last 7 days; nothing to post")
     lines = []
     new_state = dict(previous)
-    for filing_day, key, currency in candidates:
+    for filing_day, key, currency, recent in candidates:
         if len(lines) >= 2:
             break
         try:
@@ -652,6 +660,7 @@ def get_corporate_watch():
             print(f"Fiscal.ai earnings unavailable for {key}: {e}")
             continue
         if not isinstance(summaries, list) or not summaries:
+            print(f"Corporate Watch: no earnings summary returned for {key}")
             continue
         report = summaries[0]
         if not isinstance(report, dict):
@@ -661,6 +670,7 @@ def get_corporate_watch():
             continue
         report_id = f"{period}|{report.get('date', '')}"
         if previous.get(key) == report_id:
+            print(f"Corporate Watch: {key} report already posted")
             continue
         eps, revenue = report.get("epsActual"), report.get("revenueActual")
         metrics = []
@@ -669,14 +679,18 @@ def get_corporate_watch():
         if isinstance(eps, (int, float)) and not isinstance(eps, bool) and math.isfinite(eps):
             metrics.append(f"EPS: {eps:,.2f} {currency or 'reported currency'}")
         if not metrics:
+            print(f"Corporate Watch: {key} has no numeric revenue or EPS")
             continue
+        label = "new results" if recent else "latest available report (first run)"
         lines.append(
-            f"• {WATCHED_COMPANIES[key]} — {period} (filed {filing_day:%Y-%m-%d})\n"
+            f"• {WATCHED_COMPANIES[key]} — {period} · {label} (filed {filing_day:%Y-%m-%d})\n"
             + "  " + " · ".join(metrics)
         )
         new_state[key] = report_id
+        print(f"Corporate Watch: added {key} {period} ({label})")
 
     if not lines:
+        print("Corporate Watch: no eligible earnings figures; see messages above")
         return "", None
     return "\n".join(["🏢 Corporate Watch · Fiscal.ai", *lines]), new_state
 
