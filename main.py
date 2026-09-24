@@ -289,6 +289,41 @@ def get_new_fred_releases():
     return new_releases
 
 
+def format_fred_releases(releases):
+    """Format newly released FRED data for Telegram."""
+    if not releases:
+        return ""
+
+    lines = ["🇺🇸 US Economic Data"]
+
+    for item in releases:
+        name = item["name"]
+        value = item["value"]
+        previous = item["previous"]
+        unit = item["unit"]
+
+        lines.append("")
+
+        if item["series_id"] == "PAYEMS":
+            lines.append(f"{name}: {value:+,.0f}K jobs")
+            lines.append(f"Previous: {previous:+,.0f}K")
+
+        elif item["series_id"] == "UNRATE":
+            lines.append(f"{name}: {value:.1f}%")
+            lines.append(f"Previous: {previous:.1f}%")
+
+        elif item["series_id"] == "GDPC1":
+            lines.append(f"{name}: {value:.1f}% annualized")
+            lines.append(f"Previous quarter: {previous:.1f}%")
+
+        else:
+            # CPI, Core CPI and PCE
+            lines.append(f"{name}: {value:.1f}% YoY")
+            lines.append(f"Previous: {previous:.1f}%")
+
+    return "\n".join(lines)
+
+
 
 
 def get_change(symbol):
@@ -738,24 +773,28 @@ def send_to_telegram(message):
 
 
 def main():
-    print("Getting news...")
-
     print("Checking FRED releases...")
 
     fred_releases = get_new_fred_releases()
+    fred_section = format_fred_releases(fred_releases)
 
-    print("New FRED releases:", fred_releases)
+    print(f"Found {len(fred_releases)} new FRED releases")
     articles = get_news()
 
     print(f"Found {len(articles)} articles")
 
-    summary = summarize_news(articles)
+summary = summarize_news(articles)
 
-    snapshot = get_market_snapshot()
+snapshot = get_market_snapshot()
 
-    final_message = f"""{summary}
+sections = [summary]
 
-{snapshot}"""
+if fred_section:
+    sections.append(fred_section)
+
+sections.append(snapshot)
+
+final_message = "\n\n".join(sections)
 
     print("Summary created")
 
