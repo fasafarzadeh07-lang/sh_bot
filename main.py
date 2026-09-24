@@ -25,6 +25,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 GEMINI_KEY = os.getenv("GEMINI_KEY")
 CHANNEL_ID_2 = os.getenv("CHANNEL_ID_2")
+FRED_API_KEY = os.getenv("FRED_API_KEY")
 
 
 RSS_FEEDS = [
