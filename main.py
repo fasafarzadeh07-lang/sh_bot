@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 import time
 import feedparser
 import requests
+import json
 from google import genai
 from google.genai.errors import APIError  # Added to handle Gemini specific errors
 import yfinance as yf
@@ -226,6 +227,64 @@ def get_fred_economic_data():
         print(f"FRED GDPC1 failed: {e}")
 
     return data
+
+
+FRED_STATE_FILE = "data/fred_state.json"
+
+
+def load_fred_state():
+    """Load the latest FRED observations already seen by the bot."""
+    if not os.path.exists(FRED_STATE_FILE):
+        return {}
+
+    try:
+        with open(FRED_STATE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"Could not load FRED state: {e}")
+        return {}
+
+
+def save_fred_state(state):
+    """Save the latest FRED observation dates."""
+    os.makedirs(os.path.dirname(FRED_STATE_FILE), exist_ok=True)
+
+    with open(FRED_STATE_FILE, "w", encoding="utf-8") as f:
+        json.dump(state, f, indent=2)
+
+
+def get_new_fred_releases():
+    """Return only indicators with a newer observation than the previous run."""
+    data = get_fred_economic_data()
+    old_state = load_fred_state()
+
+    new_state = {}
+    new_releases = []
+
+    for item in data:
+        series_id = item["series_id"]
+        latest_date = item["date"]
+
+        new_state[series_id] = latest_date
+
+        # On the first ever run, initialize the state without
+        # treating all existing observations as new releases.
+        if series_id not in old_state:
+            continue
+
+        if latest_date > old_state[series_id]:
+            new_releases.append(item)
+
+    # Preserve an old entry if a particular FRED request failed today.
+    for series_id, date in old_state.items():
+        if series_id not in new_state:
+            new_state[series_id] = date
+
+    save_fred_state(new_state)
+
+    return new_releases
+
+
 
 
 def get_change(symbol):
