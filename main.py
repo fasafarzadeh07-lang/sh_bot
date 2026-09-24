@@ -11,7 +11,7 @@ import os
 import csv
 import io
 import math
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 import time
 import feedparser
 import requests
@@ -575,7 +575,7 @@ def check_fiscal_connection():
 
 
 def get_corporate_watch():
-    """Show at most two confirmed earnings releases in the next seven days."""
+    """Show at most two confirmed earnings releases scheduled for today."""
     if not FISCAL_API_KEY:
         return ""
 
@@ -612,7 +612,7 @@ def get_corporate_watch():
             params={
                 "companies": ",".join(company_ids),
                 "startDate": today.isoformat(),
-                "endDate": (today + timedelta(days=7)).isoformat(),
+                "endDate": today.isoformat(),
                 "status": "confirmed",
                 "pageSize": 100,
             },
@@ -638,12 +638,12 @@ def get_corporate_watch():
             day = datetime.strptime(event["eventDate"], "%Y-%m-%d").date()
         except (KeyError, TypeError, ValueError):
             continue
-        if today <= day <= today + timedelta(days=7):
+        if day == today:
             releases.add((day, company_key))
 
     if not releases:
         return ""
-    lines = ["🏢 Corporate Watch", "📅 Upcoming confirmed earnings"]
+    lines = ["🏢 Corporate Watch", "📅 Earnings scheduled today (confirmed)"]
     for day, company_key in sorted(releases)[:2]:
         lines.append(f"• {watched[company_key]} — {day:%Y-%m-%d}")
     return "\n".join(lines)
