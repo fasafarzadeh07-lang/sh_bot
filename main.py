@@ -106,7 +106,7 @@ def get_news():
     return articles
 
 
-def get_change(symbol):
+def get_change(symbol, include_date=False):
     """Change between the latest two available Yahoo daily closing values."""
     hist = yf.Ticker(symbol).history(period="1mo", timeout=20)
     if hist.empty or "Close" not in hist:
@@ -119,7 +119,10 @@ def get_change(symbol):
     last, prev = float(closes.iloc[-1]), float(closes.iloc[-2])
     if not math.isfinite(last) or not math.isfinite(prev) or prev <= 0:
         return None
-    return last, ((last - prev) / prev) * 100
+    result = (last, ((last - prev) / prev) * 100)
+    if include_date:
+        return result[0], result[1], closes.index[-1].date()
+    return result
 
 
 def format_change(change, unit="%", decimals=2):
@@ -243,6 +246,55 @@ def get_market_snapshot():
     lines.extend([
         "",
     ])
+    return "\n".join(lines)
+
+
+def get_company_returns():
+    """Show fresh close-to-close changes for selected US companies."""
+    watchlist = (
+        ("NVIDIA", "NVDA"),
+        ("Amazon", "AMZN"),
+        ("Microsoft", "MSFT"),
+        ("Apple", "AAPL"),
+        ("Alphabet", "GOOG"),
+        ("Meta", "META"),
+        ("Tesla", "TSLA"),
+        ("JPMorgan", "JPM"),
+    )
+    quotes = {}
+    for name, symbol in (("S&P 500", "^GSPC"), *watchlist):
+        try:
+            result = get_change(symbol, include_date=True)
+            if result is not None:
+                _, percent, close_day = result
+                quotes[name] = (percent, close_day)
+        except Exception as exc:
+            print(f"Company returns: {symbol} unavailable: {exc}")
+
+    if not quotes:
+        print("Company returns: no prices available")
+        return ""
+
+    close_day = max(day for _, day in quotes.values())
+    age = (datetime.now(timezone.utc).date() - close_day).days
+    if not 0 <= age <= 1:
+        print(f"Company returns: {close_day} is an old trading session; skipping")
+        return ""
+
+    lines = [f"📈 Company Share Returns · US close {close_day:%Y-%m-%d}"]
+    market = quotes.get("S&P 500")
+    if market and market[1] == close_day:
+        lines.append(f"S&P 500: {format_change(market[0])}")
+
+    company_count = 0
+    for name, _ in watchlist:
+        quote = quotes.get(name)
+        if quote and quote[1] == close_day:
+            lines.append(f"{name}: {format_change(quote[0])}")
+            company_count += 1
+    if not company_count:
+        print("Company returns: no company prices for the latest session")
+        return ""
     return "\n".join(lines)
 
 
@@ -562,10 +614,13 @@ def main():
     summary = summarize_news(articles)
 
     snapshot = get_market_snapshot()
+    company_returns = get_company_returns()
 
     final_message = f"""{summary}
 
 {snapshot}"""
+    if company_returns:
+        final_message += f"\n\n{company_returns}"
 
     print("Summary created")
 
