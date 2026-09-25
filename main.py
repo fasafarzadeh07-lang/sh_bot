@@ -282,25 +282,32 @@ def get_company_returns():
         print(f"Company returns: {close_day} is an old trading session; skipping")
         return ""
 
-    lines = [f"📈 Company & Sector Returns · US close {close_day:%Y-%m-%d}"]
+    lines = ["📈 Company & Sector Returns", f"US close · {close_day:%Y-%m-%d}"]
     benchmark = quotes.get("^GSPC")
     if benchmark and benchmark[1] == close_day:
-        lines.append(f"S&P 500: {format_change(benchmark[0])}")
+        lines.extend(["", "🌐 Broad market", f"S&P 500: {format_change(benchmark[0])}"])
 
+    sector_icons = {
+        "Technology": "💻",
+        "Consumer discretionary": "🛍️",
+        "Communication services": "📱",
+        "Financials": "🏦",
+    }
     company_count = 0
     for sector_name, sector_symbol, companies in sectors:
         company_lines = []
         for name, symbol in companies:
             quote = quotes.get(symbol)
             if quote and quote[1] == close_day:
-                company_lines.append(f"  {name}: {format_change(quote[0])}")
+                company_lines.append(f"• {name}: {format_change(quote[0])}")
         if not company_lines:
             continue
+        lines.extend(["", f"{sector_icons[sector_name]} {sector_name}"])
         sector = quotes.get(sector_symbol)
         if sector and sector[1] == close_day:
-            lines.append(f"{sector_name} ({sector_symbol} ETF): {format_change(sector[0])}")
+            lines.append(f"{sector_symbol} ETF: {format_change(sector[0])}")
         else:
-            lines.append(f"{sector_name} ({sector_symbol} ETF): unavailable")
+            lines.append(f"{sector_symbol} ETF: unavailable")
         lines.extend(company_lines)
         company_count += len(company_lines)
 
