@@ -250,24 +250,25 @@ def get_market_snapshot():
 
 
 def get_company_returns():
-    """Show fresh close-to-close changes for selected US companies."""
-    watchlist = (
-        ("NVIDIA", "NVDA"),
-        ("Amazon", "AMZN"),
-        ("Microsoft", "MSFT"),
-        ("Apple", "AAPL"),
-        ("Alphabet", "GOOG"),
-        ("Meta", "META"),
-        ("Tesla", "TSLA"),
-        ("JPMorgan", "JPM"),
+    """Compare each stock's daily move with its sector ETF and the S&P 500."""
+    sectors = (
+        ("Technology", "XLK", (("NVIDIA", "NVDA"), ("Microsoft", "MSFT"), ("Apple", "AAPL"))),
+        ("Consumer discretionary", "XLY", (("Amazon", "AMZN"), ("Tesla", "TSLA"))),
+        ("Communication services", "XLC", (("Alphabet", "GOOG"), ("Meta", "META"))),
+        ("Financials", "XLF", (("JPMorgan", "JPM"),)),
     )
+    symbols = {"^GSPC"}
+    for _, sector_symbol, companies in sectors:
+        symbols.add(sector_symbol)
+        symbols.update(symbol for _, symbol in companies)
+
     quotes = {}
-    for name, symbol in watchlist:
+    for symbol in sorted(symbols):
         try:
             result = get_change(symbol, include_date=True)
             if result is not None:
-                price, percent, close_day = result
-                quotes[name] = (price, percent, close_day)
+                _, percent, close_day = result
+                quotes[symbol] = (percent, close_day)
         except Exception as exc:
             print(f"Company returns: {symbol} unavailable: {exc}")
 
@@ -275,19 +276,34 @@ def get_company_returns():
         print("Company returns: no prices available")
         return ""
 
-    close_day = max(day for _, _, day in quotes.values())
+    close_day = max(day for _, day in quotes.values())
     age = (datetime.now(timezone.utc).date() - close_day).days
     if not 0 <= age <= 1:
         print(f"Company returns: {close_day} is an old trading session; skipping")
         return ""
 
-    lines = [f"📈 Company Share Prices · US close {close_day:%Y-%m-%d}"]
+    lines = [f"📈 Company & Sector Returns · US close {close_day:%Y-%m-%d}"]
+    benchmark = quotes.get("^GSPC")
+    if benchmark and benchmark[1] == close_day:
+        lines.append(f"S&P 500: {format_change(benchmark[0])}")
+
     company_count = 0
-    for name, _ in watchlist:
-        quote = quotes.get(name)
-        if quote and quote[2] == close_day:
-            lines.append(f"{name}: ${quote[0]:,.2f} ({format_change(quote[1])})")
-            company_count += 1
+    for sector_name, sector_symbol, companies in sectors:
+        company_lines = []
+        for name, symbol in companies:
+            quote = quotes.get(symbol)
+            if quote and quote[1] == close_day:
+                company_lines.append(f"  {name}: {format_change(quote[0])}")
+        if not company_lines:
+            continue
+        sector = quotes.get(sector_symbol)
+        if sector and sector[1] == close_day:
+            lines.append(f"{sector_name} ({sector_symbol} ETF): {format_change(sector[0])}")
+        else:
+            lines.append(f"{sector_name} ({sector_symbol} ETF): unavailable")
+        lines.extend(company_lines)
+        company_count += len(company_lines)
+
     if not company_count:
         print("Company returns: no company prices for the latest session")
         return ""
