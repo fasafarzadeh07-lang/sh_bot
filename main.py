@@ -262,12 +262,12 @@ def get_company_returns():
         ("JPMorgan", "JPM"),
     )
     quotes = {}
-    for name, symbol in (("S&P 500", "^GSPC"), *watchlist):
+    for name, symbol in watchlist:
         try:
             result = get_change(symbol, include_date=True)
             if result is not None:
-                _, percent, close_day = result
-                quotes[name] = (percent, close_day)
+                price, percent, close_day = result
+                quotes[name] = (price, percent, close_day)
         except Exception as exc:
             print(f"Company returns: {symbol} unavailable: {exc}")
 
@@ -275,22 +275,18 @@ def get_company_returns():
         print("Company returns: no prices available")
         return ""
 
-    close_day = max(day for _, day in quotes.values())
+    close_day = max(day for _, _, day in quotes.values())
     age = (datetime.now(timezone.utc).date() - close_day).days
     if not 0 <= age <= 1:
         print(f"Company returns: {close_day} is an old trading session; skipping")
         return ""
 
-    lines = [f"📈 Company Share Returns · US close {close_day:%Y-%m-%d}"]
-    market = quotes.get("S&P 500")
-    if market and market[1] == close_day:
-        lines.append(f"S&P 500: {format_change(market[0])}")
-
+    lines = [f"📈 Company Share Prices · US close {close_day:%Y-%m-%d}"]
     company_count = 0
     for name, _ in watchlist:
         quote = quotes.get(name)
-        if quote and quote[1] == close_day:
-            lines.append(f"{name}: {format_change(quote[0])}")
+        if quote and quote[2] == close_day:
+            lines.append(f"{name}: ${quote[0]:,.2f} ({format_change(quote[1])})")
             company_count += 1
     if not company_count:
         print("Company returns: no company prices for the latest session")
