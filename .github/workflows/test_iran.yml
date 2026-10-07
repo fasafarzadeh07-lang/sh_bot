@@ -7,6 +7,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
 
     steps:
       - name: Checkout repository
@@ -17,7 +18,9 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Test Iranian market API
-        env:
-          BRSAPI_KEY: ${{ secrets.BRSAPI_KEY }}
-        run: python iran_market_test.py
+      - name: Install pytse-client
+        run: pip install pytse-client
+
+      - name: Test Iranian market data
+        run: python -u iran_market_test.py
+        timeout-minutes: 2
