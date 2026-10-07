@@ -1,35 +1,25 @@
 
-import os
-import json
-import urllib.request
-import urllib.parse
+import pytse_client as tse
 
-api_key = os.environ.get("BRSAPI_KEY")
-
-if not api_key:
-    raise ValueError("BRSAPI_KEY is missing!")
-
-params = urllib.parse.urlencode({
-    "key": api_key,
-    "type": 1
-})
-
-url = "https://Api.BrsApi.ir/Tsetmc/Index.php?" + params
-
-headers = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept": "application/json"
-}
+print("Testing pytse-client...", flush=True)
 
 try:
-    request = urllib.request.Request(url, headers=headers)
+    print("Downloading Foulad stock data...", flush=True)
 
-    with urllib.request.urlopen(request, timeout=20) as response:
-        data = json.load(response)
+    result = tse.download(
+        symbols="فولاد",
+        write_to_csv=False
+    )
 
-    print("API response received successfully!")
-    print(json.dumps(data, ensure_ascii=False, indent=2))
+    history = result["فولاد"]
+
+    if history.empty:
+        raise ValueError("No stock data returned")
+
+    print("SUCCESS! Data received.", flush=True)
+    print("Latest records:", flush=True)
+    print(history.tail(3).to_string(), flush=True)
 
 except Exception as e:
-    print("API request failed:", type(e).__name__)
+    print("FAILED:", type(e).__name__, str(e), flush=True)
     raise
