@@ -1,32 +1,35 @@
 
+import os
+import json
 import urllib.request
-import time
+import urllib.parse
 
-urls = {
-    "BrsApi": "https://BrsApi.ir",
-    "TSE Gateway": "https://webgw.tse.ir",
+api_key = os.environ.get("BRSAPI_KEY")
+
+if not api_key:
+    raise ValueError("BRSAPI_KEY is missing!")
+
+params = urllib.parse.urlencode({
+    "key": api_key,
+    "type": 1
+})
+
+url = "https://Api.BrsApi.ir/Tsetmc/Index.php?" + params
+
+headers = {
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "application/json"
 }
 
-for name, url in urls.items():
-    print(f"\nTesting {name}...", flush=True)
-    start = time.monotonic()
+try:
+    request = urllib.request.Request(url, headers=headers)
 
-    try:
-        request = urllib.request.Request(
-            url,
-            headers={"User-Agent": "Mozilla/5.0"}
-        )
+    with urllib.request.urlopen(request, timeout=20) as response:
+        data = json.load(response)
 
-        with urllib.request.urlopen(
-            request, timeout=10
-        ) as response:
-            print("HTTP status:", response.status)
+    print("API response received successfully!")
+    print(json.dumps(data, ensure_ascii=False, indent=2))
 
-    except Exception as e:
-        print("Result:", str(e))
-
-    print(
-        "Elapsed:",
-        round(time.monotonic() - start, 1),
-        "seconds"
-    )
+except Exception as e:
+    print("API request failed:", type(e).__name__)
+    raise
