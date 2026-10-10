@@ -521,12 +521,12 @@ Headlines:
 
     client = genai.Client(api_key=GEMINI_KEY)
     
-    primary_model = "gemini-3.5-flash"
+    primary_model = "gemini-3.6-flash"
     backup_model = "gemini-2.5-flash"
     max_retries = 3
     delay = 2  # wait 2 seconds initially
 
-    # --- Try generating with the newer Gemini 3.5 Flash first ---
+    # --- Try generating with the newer Gemini 3.6 Flash first ---
     for attempt in range(max_retries):
         try:
             print(f"Attempting econ summary with {primary_model} (Attempt {attempt + 1}/{max_retries})...")
@@ -538,7 +538,7 @@ Headlines:
             
         except APIError as e:
             if e.code == 503:
-                print(f"Gemini 3.5 is busy (503). Retrying in {delay} seconds...")
+                print(f"Gemini 3.6 is busy (503). Retrying in {delay} seconds...")
                 time.sleep(delay)
                 delay *= 2  # Exponential backoff
             else:
@@ -550,8 +550,8 @@ Headlines:
             delay *= 2
 
     # --- Fallback Option ---
-    # If Gemini 3.5 was completely overloaded, we use your highly reliable Gemini 2.5 Flash
-    print(f"Gemini 3.5 was unavailable. Falling back to the highly reliable {backup_model}...")
+    # If Gemini 3.6 was completely overloaded, we use your highly reliable Gemini 2.5 Flash
+    print(f"Gemini 3.6 was unavailable. Falling back to the highly reliable {backup_model}...")
     try:
         response = client.models.generate_content(
             model=backup_model,
