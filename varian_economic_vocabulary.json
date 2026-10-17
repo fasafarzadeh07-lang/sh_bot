@@ -1,735 +1,1094 @@
-{
-  "source": "Hal R. Varian, Intermediate Microeconomics: A Modern Approach, 9th edition",
-  "language": "en",
-  "entries": [
-    {
-      "id": "varian_02_001",
-      "term": "Budget Constraint",
-      "definition": "The limit on affordable consumption bundles given prices and income.",
-      "example": "With $20, a buyer can afford two $6 meals and one $8 drink.",
-      "chapter": 2,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_02_002",
-      "term": "Opportunity Cost",
-      "definition": "The value of the best alternative forgone when making a choice.",
-      "example": "Studying for an hour means giving up an hour of paid work.",
-      "chapter": 2,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_02_003",
-      "term": "Numeraire",
-      "definition": "A good whose price is normalized to one to express other prices relative to it.",
-      "example": "If bread is the numeraire, coffee costs three units of bread.",
-      "chapter": 2,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_03_004",
-      "term": "Indifference Curve",
-      "definition": "Bundles of goods that give a consumer the same satisfaction.",
-      "example": "A consumer is equally happy with two different combinations of tea and coffee.",
-      "chapter": 3,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_03_005",
-      "term": "Marginal Rate of Substitution",
-      "definition": "The rate at which a consumer is willing to trade one good for another while maintaining utility.",
-      "example": "A buyer would give up two apples for one extra orange.",
-      "chapter": 3,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_03_006",
-      "term": "Perfect Substitutes",
-      "definition": "Goods a consumer is willing to exchange at a constant rate.",
-      "example": "Two brands of identical bottled water may be perfect substitutes.",
-      "chapter": 3,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_03_007",
-      "term": "Perfect Complements",
-      "definition": "Goods that are consumed together in fixed proportions.",
-      "example": "Left and right shoes are useful as pairs.",
-      "chapter": 3,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_04_008",
-      "term": "Utility Function",
-      "definition": "A numerical representation of a consumer's preferences.",
-      "example": "A utility function can rank baskets of food and clothing.",
-      "chapter": 4,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_04_009",
-      "term": "Cobb-Douglas Preferences",
-      "definition": "Preferences often represented by utility as a product of goods raised to powers.",
-      "example": "A household allocates spending between food and housing.",
-      "chapter": 4,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_05_010",
-      "term": "Consumer Optimum",
-      "definition": "The most preferred affordable consumption bundle.",
-      "example": "A student chooses the best mix of books and meals within a budget.",
-      "chapter": 5,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_06_011",
-      "term": "Normal Good",
-      "definition": "A good whose demand rises as income increases, holding prices fixed.",
-      "example": "A consumer buys more restaurant meals after receiving a raise.",
-      "chapter": 6,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_06_012",
-      "term": "Inferior Good",
-      "definition": "A good whose demand falls as income increases, holding prices fixed.",
-      "example": "A commuter switches from bus rides to taxis after income rises.",
-      "chapter": 6,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_06_013",
-      "term": "Giffen Good",
-      "definition": "An inferior good whose quantity demanded rises when its own price rises.",
-      "example": "A severe budget squeeze may increase demand for a staple food.",
-      "chapter": 6,
-      "level": "advanced",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_07_014",
-      "term": "Revealed Preference",
-      "definition": "Inferring preferences from observed choices under budget constraints.",
-      "example": "Choosing A when B was affordable reveals A is preferred to B.",
-      "chapter": 7,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_07_015",
-      "term": "WARP",
-      "definition": "A consistency condition ruling out certain reversals of revealed preference.",
-      "example": "If A is chosen over affordable B, B should not later be chosen over affordable A.",
-      "chapter": 7,
-      "level": "advanced",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_08_016",
-      "term": "Substitution Effect",
-      "definition": "The demand change caused by a relative-price change while holding purchasing power appropriately adjusted.",
-      "example": "Cheaper tea encourages substitution away from coffee.",
-      "chapter": 8,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_08_017",
-      "term": "Income Effect",
-      "definition": "The demand change caused by a change in purchasing power after a price change.",
-      "example": "A fall in rice prices leaves more purchasing power for other goods.",
-      "chapter": 8,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_08_018",
-      "term": "Slutsky Equation",
-      "definition": "A decomposition of the total price effect into substitution and income effects.",
-      "example": "A price cut changes demand through both substitution and purchasing power.",
-      "chapter": 8,
-      "level": "advanced",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_09_019",
-      "term": "Endowment",
-      "definition": "The initial bundle of goods or resources an agent owns.",
-      "example": "A farmer starts with 100 kilograms of wheat to sell or consume.",
-      "chapter": 9,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_10_020",
-      "term": "Present Value",
-      "definition": "The value today of a future payment discounted at an interest rate.",
-      "example": "At 10% interest, $110 next year is worth $100 today.",
-      "chapter": 10,
-      "level": "basic",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_10_021",
-      "term": "Intertemporal Choice",
-      "definition": "Choosing consumption across different periods.",
-      "example": "A student saves some income now to spend after graduation.",
-      "chapter": 10,
-      "level": "intermediate",
-      "topic": "Consumer Theory"
-    },
-    {
-      "id": "varian_11_022",
-      "term": "Arbitrage",
-      "definition": "Exploiting price differences for equivalent assets or payoffs.",
-      "example": "A trader buys an asset where it is cheaper and sells where it is dearer.",
-      "chapter": 11,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_11_023",
-      "term": "Market Bubble",
-      "definition": "A sustained asset-price increase driven partly by expectations of further price rises.",
-      "example": "Investors buy an overpriced asset expecting to resell it later.",
-      "chapter": 11,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_12_024",
-      "term": "Expected Utility",
-      "definition": "Probability-weighted utility across possible outcomes.",
-      "example": "A person compares a guaranteed payment with a risky lottery.",
-      "chapter": 12,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_12_025",
-      "term": "Risk Aversion",
-      "definition": "A preference for a certain payoff over a fair gamble with the same expected value.",
-      "example": "An investor prefers a guaranteed $100 to an equal-chance $0 or $200 gamble.",
-      "chapter": 12,
-      "level": "basic",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_12_026",
-      "term": "Diversification",
-      "definition": "Reducing exposure to individual risks by spreading investments or activities.",
-      "example": "Holding shares in multiple industries reduces firm-specific risk.",
-      "chapter": 12,
-      "level": "basic",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_13_027",
-      "term": "Value at Risk",
-      "definition": "A loss threshold associated with a specified probability and time horizon.",
-      "example": "A portfolio has a 5% chance of losing more than its daily VaR.",
-      "chapter": 13,
-      "level": "advanced",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_14_028",
-      "term": "Consumer Surplus",
-      "definition": "The difference between willingness to pay and the amount actually paid.",
-      "example": "A buyer willing to pay $30 pays $20 and gains $10 in surplus.",
-      "chapter": 14,
-      "level": "basic",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_14_029",
-      "term": "Producer Surplus",
-      "definition": "Revenue minus variable production costs in the standard short-run framework.",
-      "example": "A firm earns $500 in revenue with $300 in variable costs: surplus is $200.",
-      "chapter": 14,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_14_030",
-      "term": "Compensating Variation",
-      "definition": "The money needed after a price change to restore the original utility level.",
-      "example": "After rent rises, calculate compensation that restores the tenant's former welfare.",
-      "chapter": 14,
-      "level": "advanced",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_15_031",
-      "term": "Market Demand",
-      "definition": "The sum of quantities demanded by individual consumers at each price.",
-      "example": "At $5, three customers demand 2, 3 and 4 units: market demand is 9.",
-      "chapter": 15,
-      "level": "basic",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_15_032",
-      "term": "Price Elasticity of Demand",
-      "definition": "The percentage change in quantity demanded divided by the percentage change in price.",
-      "example": "A 10% price rise causing a 20% demand fall gives elasticity of -2.",
-      "chapter": 15,
-      "level": "basic",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_15_033",
-      "term": "Marginal Revenue",
-      "definition": "The additional revenue from selling one more unit.",
-      "example": "A monopolist evaluates how selling another unit changes total revenue.",
-      "chapter": 15,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_15_034",
-      "term": "Income Elasticity",
-      "definition": "The percentage change in demand divided by the percentage change in income.",
-      "example": "If income rises 10% and demand rises 5%, income elasticity is 0.5.",
-      "chapter": 15,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_16_035",
-      "term": "Market Equilibrium",
-      "definition": "A price and quantity at which quantity supplied equals quantity demanded.",
-      "example": "At $8, buyers and sellers both want to trade 100 units.",
-      "chapter": 16,
-      "level": "basic",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_16_036",
-      "term": "Comparative Statics",
-      "definition": "Comparing equilibria before and after an external change.",
-      "example": "Analyze the new equilibrium after a tax is introduced.",
-      "chapter": 16,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_16_037",
-      "term": "Deadweight Loss",
-      "definition": "The reduction in total surplus caused by inefficient allocation.",
-      "example": "A tax prevents trades whose benefits exceed their costs.",
-      "chapter": 16,
-      "level": "intermediate",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_18_038",
-      "term": "Winner's Curse",
-      "definition": "The risk that an auction winner overestimates an item's value.",
-      "example": "The highest bidder overpays for an oil exploration license.",
-      "chapter": 18,
-      "level": "advanced",
-      "topic": "Risk and Welfare"
-    },
-    {
-      "id": "varian_19_039",
-      "term": "Marginal Product",
-      "definition": "The additional output from one extra unit of input, holding other inputs fixed.",
-      "example": "An additional worker raises daily production from 40 to 46 units.",
-      "chapter": 19,
-      "level": "basic",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_19_040",
-      "term": "Returns to Scale",
-      "definition": "How output changes when all inputs change proportionally.",
-      "example": "Doubling labor and capital triples output: increasing returns to scale.",
-      "chapter": 19,
-      "level": "intermediate",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_19_041",
-      "term": "Technical Rate of Substitution",
-      "definition": "The rate of input substitution along an isoquant.",
-      "example": "A factory replaces some labor with machines while keeping output fixed.",
-      "chapter": 19,
-      "level": "advanced",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_20_042",
-      "term": "Profit Maximization",
-      "definition": "Choosing feasible production decisions to maximize revenue minus economic costs.",
-      "example": "A firm expands output while marginal revenue exceeds marginal cost.",
-      "chapter": 20,
-      "level": "basic",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_21_043",
-      "term": "Sunk Cost",
-      "definition": "A past cost that cannot be recovered and should not affect marginal decisions.",
-      "example": "A nonrefundable software license is a sunk cost.",
-      "chapter": 21,
-      "level": "basic",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_21_044",
-      "term": "Cost Minimization",
-      "definition": "Choosing the least-cost input mix for a target output.",
-      "example": "A factory selects labor and machines to make 100 units at minimum cost.",
-      "chapter": 21,
-      "level": "intermediate",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_22_045",
-      "term": "Marginal Cost",
-      "definition": "The additional total cost of producing one more unit.",
-      "example": "Total cost rises from $90 to $97 when output rises by one: MC is $7.",
-      "chapter": 22,
-      "level": "basic",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_22_046",
-      "term": "Average Cost",
-      "definition": "Total cost divided by the quantity produced.",
-      "example": "Producing 50 units for $400 gives average cost of $8.",
-      "chapter": 22,
-      "level": "basic",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_23_047",
-      "term": "Perfect Competition",
-      "definition": "A market environment where individual firms take the market price as given.",
-      "example": "A small wheat farmer cannot influence the market price.",
-      "chapter": 23,
-      "level": "basic",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_23_048",
-      "term": "Shutdown Condition",
-      "definition": "A short-run rule comparing price with avoidable operating costs.",
-      "example": "A firm shuts down temporarily if price is below minimum average variable cost.",
-      "chapter": 23,
-      "level": "intermediate",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_24_049",
-      "term": "Economic Rent",
-      "definition": "Payment to a factor above the minimum needed to keep it in its current use.",
-      "example": "A scarce location earns rent due to its exceptional position.",
-      "chapter": 24,
-      "level": "intermediate",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_24_050",
-      "term": "Zero Economic Profit",
-      "definition": "Revenue exactly covers all economic costs including opportunity costs.",
-      "example": "At price equal to average cost, a competitive firm earns zero economic profit.",
-      "chapter": 24,
-      "level": "intermediate",
-      "topic": "Production and Costs"
-    },
-    {
-      "id": "varian_25_051",
-      "term": "Monopoly",
-      "definition": "A market with a single seller of a product without close substitutes.",
-      "example": "An exclusive local utility may face no direct rival.",
-      "chapter": 25,
-      "level": "basic",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_25_052",
-      "term": "Markup Pricing",
-      "definition": "Setting price above marginal cost, with the markup related to demand elasticity.",
-      "example": "A monopolist with inelastic demand may charge a higher markup.",
-      "chapter": 25,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_25_053",
-      "term": "Lerner Index",
-      "definition": "The price-cost margin divided by price, measuring monopoly markup.",
-      "example": "With price $10 and MC $6, the Lerner index is 0.4.",
-      "chapter": 25,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_25_054",
-      "term": "Natural Monopoly",
-      "definition": "A market where one firm can serve demand at lower cost than multiple firms.",
-      "example": "A water-pipe network can have large fixed costs and scale economies.",
-      "chapter": 25,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_055",
-      "term": "Price Discrimination",
-      "definition": "Charging different prices for the same good not explained by cost differences.",
-      "example": "A cinema offers cheaper tickets to students than other adults.",
-      "chapter": 26,
-      "level": "basic",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_056",
-      "term": "First-Degree Price Discrimination",
-      "definition": "Charging each customer their maximum willingness to pay for each unit.",
-      "example": "A seller perfectly tailors every price to each buyer's valuation.",
-      "chapter": 26,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_057",
-      "term": "Second-Degree Price Discrimination",
-      "definition": "Offering price schedules or product versions that induce self-selection.",
-      "example": "A utility charges different per-unit rates for different usage blocks.",
-      "chapter": 26,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_058",
-      "term": "Third-Degree Price Discrimination",
-      "definition": "Charging different observable customer groups different prices.",
-      "example": "A museum offers different admission prices for students and adults.",
-      "chapter": 26,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_059",
-      "term": "Bundling",
-      "definition": "Selling multiple products together as a package.",
-      "example": "A software company sells a word processor and spreadsheet together.",
-      "chapter": 26,
-      "level": "basic",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_060",
-      "term": "Two-Part Tariff",
-      "definition": "A pricing scheme with a fixed entry fee and a per-unit charge.",
-      "example": "A gym charges a membership fee plus a fee per visit.",
-      "chapter": 26,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_061",
-      "term": "Monopolistic Competition",
-      "definition": "Competition among many sellers offering differentiated products.",
-      "example": "Coffee shops compete with distinct brands and locations.",
-      "chapter": 26,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_26_062",
-      "term": "Product Differentiation",
-      "definition": "Making products distinct in consumers' perceptions or characteristics.",
-      "example": "Two cafes differ in location, ambiance and service.",
-      "chapter": 26,
-      "level": "basic",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_27_063",
-      "term": "Monopsony",
-      "definition": "A market with a single buyer of an input or product.",
-      "example": "A remote town has only one major employer hiring local workers.",
-      "chapter": 27,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_27_064",
-      "term": "Marginal Factor Cost",
-      "definition": "The extra total expenditure required to acquire one more unit of an input.",
-      "example": "A monopsonist may need to raise wages for existing workers to hire another.",
-      "chapter": 27,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_27_065",
-      "term": "Marginal Revenue Product",
-      "definition": "The extra revenue generated by an additional unit of input.",
-      "example": "A worker adds 4 units sold for $5 each, generating $20 of revenue.",
-      "chapter": 27,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_28_066",
-      "term": "Oligopoly",
-      "definition": "A market dominated by a small number of strategically interacting firms.",
-      "example": "Two major airlines compete on a particular route.",
-      "chapter": 28,
-      "level": "basic",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_28_067",
-      "term": "Cournot Equilibrium",
-      "definition": "An equilibrium where firms choose quantities as best responses to rivals' quantities.",
-      "example": "Two producers simultaneously choose how many units to make.",
-      "chapter": 28,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_28_068",
-      "term": "Bertrand Competition",
-      "definition": "A model in which firms strategically choose prices.",
-      "example": "Two sellers of identical goods compete by setting prices.",
-      "chapter": 28,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_28_069",
-      "term": "Stackelberg Leadership",
-      "definition": "A sequential quantity game where a leader commits before a follower.",
-      "example": "One producer chooses output first and the rival responds.",
-      "chapter": 28,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_28_070",
-      "term": "Collusion",
-      "definition": "Coordination among firms to raise joint profits by restricting competition.",
-      "example": "Rival producers agree to limit output and raise prices.",
-      "chapter": 28,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_29_071",
-      "term": "Payoff Matrix",
-      "definition": "A table showing each player's payoff for combinations of strategies.",
-      "example": "A matrix displays profits when two firms choose high or low prices.",
-      "chapter": 29,
-      "level": "basic",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_29_072",
-      "term": "Dominant Strategy",
-      "definition": "A strategy that yields a better payoff regardless of opponents' actions.",
-      "example": "A firm's low-price strategy beats its high-price strategy in every case.",
-      "chapter": 29,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_29_073",
-      "term": "Nash Equilibrium",
-      "definition": "A set of strategies where no player benefits from changing strategy alone.",
-      "example": "Neither of two firms can gain by changing its price unilaterally.",
-      "chapter": 29,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_29_074",
-      "term": "Prisoner's Dilemma",
-      "definition": "A game where individually attractive choices can produce a collectively worse result.",
-      "example": "Two firms cut prices even though both would gain from maintaining them.",
-      "chapter": 29,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_29_075",
-      "term": "Mixed Strategy",
-      "definition": "A strategy that randomizes among available actions.",
-      "example": "A firm varies promotions unpredictably to avoid being anticipated.",
-      "chapter": 29,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_30_076",
-      "term": "Best Response",
-      "definition": "A player's payoff-maximizing strategy given the other players' strategies.",
-      "example": "A firm chooses its best output after observing a rival's planned output.",
-      "chapter": 30,
-      "level": "intermediate",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_30_077",
-      "term": "Credible Commitment",
-      "definition": "An action that changes future incentives in a believable way.",
-      "example": "A company signs a costly long-term capacity contract before a rival enters.",
-      "chapter": 30,
-      "level": "advanced",
-      "topic": "Market Power and Strategy"
-    },
-    {
-      "id": "varian_31_078",
-      "term": "Loss Aversion",
-      "definition": "The tendency to weigh losses more heavily than comparable gains.",
-      "example": "Losing $50 feels worse than gaining $50 feels good.",
-      "chapter": 31,
-      "level": "basic",
-      "topic": "Behavior and Exchange"
-    },
-    {
-      "id": "varian_31_079",
-      "term": "Anchoring Effect",
-      "definition": "The influence of an initial reference number on later judgments.",
-      "example": "A high initial list price affects willingness to pay.",
-      "chapter": 31,
-      "level": "basic",
-      "topic": "Behavior and Exchange"
-    },
-    {
-      "id": "varian_32_080",
-      "term": "Edgeworth Box",
-      "definition": "A diagram of feasible allocations of two goods between two agents.",
-      "example": "Two consumers trade apples and oranges within a fixed total supply.",
-      "chapter": 32,
-      "level": "advanced",
-      "topic": "Behavior and Exchange"
-    },
-    {
-      "id": "varian_32_081",
-      "term": "Pareto Efficiency",
-      "definition": "An allocation where nobody can be made better off without making someone worse off.",
-      "example": "All mutually beneficial trades have been exhausted.",
-      "chapter": 32,
-      "level": "intermediate",
-      "topic": "Behavior and Exchange"
-    }
-  ]
-}
+[
+  {
+    "term": "Pareto Efficiency",
+    "definition": "An allocation is Pareto efficient if no feasible change can make someone better off without making anyone else worse off.",
+    "example": "An allocation may be efficient even if one person receives nearly everything; efficiency alone does not judge fairness.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Comparative Statics",
+    "definition": "The study of how an equilibrium changes when an underlying parameter changes, comparing the initial and new equilibria.",
+    "example": "A comparative-statics question asks how equilibrium quantity changes after a tax is introduced.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Kinked Budget Constraint",
+    "definition": "A budget frontier with different slopes across ranges because a tax, subsidy, ration, or price schedule changes the effective trade-off.",
+    "example": "A food-stamp program that subsidizes only the first $100 of purchases creates a kink at that spending level.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Rationing Constraint",
+    "definition": "A limit on how much of a good a consumer may buy, even when they can afford more at the posted price.",
+    "example": "A buyer may choose a bundle at the ration boundary rather than the unconstrained optimum.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Convex Preferences",
+    "definition": "Preferences for which mixtures of equally preferred bundles are at least as good as the bundles mixed.",
+    "example": "If a consumer is indifferent between two bundles, convexity makes their midpoint at least as good.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Satiation Point",
+    "definition": "A bundle that is preferred to all nearby alternatives because more of some goods can eventually reduce utility.",
+    "example": "A consumer who has had enough of a good may prefer less of it, so the highest indifference curve need not be farther northeast.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Utility Representation",
+    "definition": "A utility function that assigns numbers to bundles while preserving the consumer's preference ranking.",
+    "example": "Any strictly increasing transformation of a utility function represents the same preferences.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Quasilinear Preferences",
+    "definition": "Preferences linear in one good and nonlinear in another, often making demand for the nonlinear good independent of income above a threshold.",
+    "example": "With utility u(x,y)=v(x)+y, extra income may be spent entirely on the numeraire y.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Tangency Condition",
+    "definition": "At a smooth interior optimum, the slope of the indifference curve equals the slope of the budget line.",
+    "example": "For two goods, MRS equals the relative price at an interior consumer optimum.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Corner Solution",
+    "definition": "An optimum at a boundary of the feasible set, where the consumer chooses zero of a good or reaches another constraint.",
+    "example": "If a consumer views two goods as perfect substitutes and one is cheaper per unit of utility, they may buy only that good.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Cobb–Douglas Demand",
+    "definition": "Demand generated by Cobb–Douglas preferences, where fixed expenditure shares go to each good under standard interior conditions.",
+    "example": "With u=x^a y^b, the expenditure share on x is a/(a+b).",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Giffen Good",
+    "definition": "A strongly inferior good for which the income effect outweighs the substitution effect, so demand rises when its price rises.",
+    "example": "If a staple takes much of a very poor household's budget, a price rise can force it to buy more of the staple and less of better foods.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Engel Curve",
+    "definition": "A relationship between income and the quantity demanded of a good, holding prices fixed.",
+    "example": "An upward-sloping Engel curve indicates that demand for the good increases with income.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Homothetic Preferences",
+    "definition": "Preferences for which scaling income proportionally scales the chosen bundle at fixed prices; income expansion paths are rays from the origin.",
+    "example": "With homothetic preferences, doubling income at unchanged prices doubles each demanded quantity.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Income Offer Curve",
+    "definition": "The path of optimal bundles as income changes while prices remain fixed.",
+    "example": "Plotting the consumer's chosen x and y bundles at several income levels traces an income offer curve.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Price Offer Curve",
+    "definition": "The path of optimal bundles as one good's price changes while income and other prices remain fixed.",
+    "example": "The chosen bundles at several prices for x trace the price offer curve for x.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Gross Substitutes",
+    "definition": "Two goods are gross substitutes if a rise in the price of one raises demand for the other, including income effects.",
+    "example": "If coffee and tea are gross substitutes, a higher coffee price increases tea demand.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Revealed Preference",
+    "definition": "An inference about a consumer's ranking based on choices made from observed budget sets.",
+    "example": "If a consumer chose bundle A when B was affordable, A is revealed preferred to B.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Weak Axiom of Revealed Preference (WARP)",
+    "definition": "A consistency condition ruling out a pair of choices in which each chosen bundle is revealed preferred to the other.",
+    "example": "Choosing A over affordable B today, then B over affordable A later, violates WARP.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Strong Axiom of Revealed Preference (SARP)",
+    "definition": "A consistency condition ruling out cycles in revealed preference, including cycles involving several bundles.",
+    "example": "If A is revealed preferred to B and B to C, choosing C over affordable A creates a cycle.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Laspeyres Price Index",
+    "definition": "A price index that values a fixed base-period basket at current prices relative to its base-period cost.",
+    "example": "It asks how much more the original basket would cost after prices change.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Paasche Price Index",
+    "definition": "A price index that values a current-period basket at current prices relative to what that same basket would have cost at base-period prices.",
+    "example": "It uses today's quantities as weights when comparing price levels.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Fisher Ideal Index",
+    "definition": "The geometric mean of the Laspeyres and Paasche indices, balancing base-period and current-period quantity weights.",
+    "example": "If Laspeyres is 1.10 and Paasche is 1.04, Fisher is √(1.10×1.04).",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Slutsky Equation",
+    "definition": "A decomposition of a price-induced demand change into a compensated substitution effect and an income effect.",
+    "example": "When price rises, the substitution effect reduces demand for that good; the income effect depends on whether it is normal or inferior.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Hicksian Demand",
+    "definition": "The least-cost bundle demanded at given prices while holding utility at a specified level.",
+    "example": "After a price change, Hicksian demand asks what bundle reaches the original utility at minimum cost.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Compensated Demand",
+    "definition": "A demand response to price changes after adjusting income to hold utility or purchasing power fixed, depending on the compensation convention.",
+    "example": "The compensated response isolates substitution from the income effect.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Endowment",
+    "definition": "The bundle of goods a consumer initially owns before trading.",
+    "example": "A farmer's endowment may include wheat and land that can be exchanged for other goods.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Net Demand",
+    "definition": "The amount a consumer wants to buy after accounting for the goods they already own; it can be negative when they sell.",
+    "example": "With an endowment of 10 units and desired consumption of 7, net demand is −3, so the consumer sells 3 units.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Endowment Income Effect",
+    "definition": "The effect of a price change on purchasing power that arises because it changes the market value of the goods a consumer owns.",
+    "example": "A rise in the price of wheat benefits a net seller of wheat but hurts a net buyer.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Backward-Bending Labor Supply",
+    "definition": "A labor-supply pattern in which, beyond some wage, the income effect of a higher wage outweighs the substitution effect and hours worked fall.",
+    "example": "At a high wage, a worker may choose more leisure and fewer hours despite the higher opportunity cost of leisure.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Intertemporal Budget Constraint",
+    "definition": "The trade-off between consumption at different dates, linked by income, saving, borrowing, and the interest rate.",
+    "example": "Saving one dollar today allows more than one dollar of consumption next period when interest is positive.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Intertemporal Substitution",
+    "definition": "The shift of consumption across dates in response to a change in the relative price of present and future consumption.",
+    "example": "A higher interest rate can encourage a saver to postpone consumption until later.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Present Value",
+    "definition": "The current value of a future payment after discounting it by the relevant interest rate.",
+    "example": "At a 5% interest rate, $105 received in one year has a present value of $100.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "No-Arbitrage Condition",
+    "definition": "A condition requiring assets with identical payoffs to have the same price, or else a riskless profit opportunity exists.",
+    "example": "If two identical bonds sell at different prices, traders can buy the cheaper one and sell the more expensive one.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Hotelling Rule",
+    "definition": "For an exhaustible resource under ideal competitive conditions, its scarcity rent grows at the interest rate over time.",
+    "example": "A resource owner compares leaving oil underground with investing the proceeds from extracting it today.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Market Bubble",
+    "definition": "An asset price that is sustained partly by expectations of future resale at a higher price rather than by the asset's fundamental payoff value.",
+    "example": "If buyers pay more for an asset only because they expect later buyers to pay more, resale expectations can sustain a bubble.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Tax Capitalization",
+    "definition": "The incorporation of expected future taxes into the current value or price of an asset.",
+    "example": "A permanent tax on land can lower the sale price because buyers anticipate lower future returns.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Expected Utility",
+    "definition": "The probability-weighted average of a person's utility across possible outcomes.",
+    "example": "For a 50–50 lottery between $0 and $100, expected utility is half the utility of each outcome added together.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Risk Aversion",
+    "definition": "A preference for a sure outcome over a risky one with the same expected value.",
+    "example": "A risk-averse person may prefer a guaranteed $45 to a 50–50 chance of $0 or $100.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Certainty Equivalent",
+    "definition": "The sure amount of money that gives a person the same utility as a specified risky prospect.",
+    "example": "If a lottery feels as good as receiving $40 for sure, its certainty equivalent is $40.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Risk Premium",
+    "definition": "The amount by which expected value exceeds the certainty equivalent of a risky prospect for a risk-averse person.",
+    "example": "A lottery worth $50 on average with a $40 certainty equivalent has a $10 risk premium.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Actuarially Fair Insurance",
+    "definition": "Insurance whose premium equals the expected payout, so its expected monetary cost is zero before administrative costs.",
+    "example": "For a 1% chance of a $1,000 loss, a $10 premium is actuarially fair.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Diversification",
+    "definition": "Reducing portfolio risk by holding assets whose returns are not perfectly positively correlated.",
+    "example": "A portfolio split across industries can be less volatile than a single-stock portfolio.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "State-Contingent Consumption",
+    "definition": "Consumption specified separately for each possible future state of the world.",
+    "example": "An insurance contract can promise one consumption level if a house is undamaged and another if it burns down.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Risk Pooling",
+    "definition": "The sharing of uncertain losses across people or assets so that individual exposure becomes less variable.",
+    "example": "Many households paying premiums into one insurance pool spread the cost of a few fires.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Mean-Variance Utility",
+    "definition": "A way to rank risky assets by expected return and return variance, typically preferring higher mean and lower variance.",
+    "example": "An investor may accept a lower expected return only if the portfolio also has lower risk.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Counterparty Risk",
+    "definition": "The possibility that the other party to a financial contract will fail to meet its obligations.",
+    "example": "A bondholder faces counterparty risk if the issuer may default before repayment.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Value at Risk",
+    "definition": "A loss threshold that, for a chosen time horizon and confidence level, is expected not to be exceeded under the model.",
+    "example": "A one-day 99% VaR of $1 million says the modeled loss should exceed $1 million on about 1% of days.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Consumer Surplus",
+    "definition": "The difference between a buyer's willingness to pay and the price paid, summed across units or buyers.",
+    "example": "If willingness to pay is $15 and the market price is $9, the buyer gets $6 of surplus on that unit.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Compensating Variation",
+    "definition": "The income change needed after a price change to restore the consumer to the original utility level.",
+    "example": "After a price increase, it measures how much money would offset the loss and return the buyer to the starting utility.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Equivalent Variation",
+    "definition": "The income change at original prices that would make the consumer as well off as they would be after a price change.",
+    "example": "Before a price increase, it measures the money the consumer would give up to avoid that increase.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Reservation Price",
+    "definition": "The highest price a buyer is willing to pay for a unit, or the lowest price a seller will accept.",
+    "example": "A buyer whose reservation price is $40 gains no surplus if the price is exactly $40.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Extensive Margin",
+    "definition": "A change in whether a consumer participates in a market at all.",
+    "example": "A fare increase may make some commuters stop taking the train entirely.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Intensive Margin",
+    "definition": "A change in how much an existing market participant buys or sells.",
+    "example": "A fare increase may lead a regular commuter to take fewer trips.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Constant-Elasticity Demand",
+    "definition": "A demand function whose price elasticity has the same value at every price and quantity.",
+    "example": "If q=Ap⁻², elasticity remains −2 as price changes.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Unit-Elastic Demand",
+    "definition": "Demand with elasticity equal to −1, where a small percentage price change causes an equal opposite percentage quantity change.",
+    "example": "Along q=A/p, a price rise leaves total revenue unchanged.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Revenue",
+    "definition": "The additional revenue from selling one more unit; for a monopolist it is below price when demand slopes downward.",
+    "example": "With p=20−q, total revenue is 20q−q² and MR=20−2q.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Revenue-Maximizing Tax Rate",
+    "definition": "The tax rate that maximizes tax revenue, balancing a higher tax per transaction against the reduction in the tax base.",
+    "example": "On a Laffer curve, a rate above the revenue maximum may raise less revenue because the base shrinks sharply.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Tax Incidence",
+    "definition": "How the economic burden of a tax is divided between buyers and sellers, regardless of who legally remits it.",
+    "example": "The less elastic side of a market generally bears more of a per-unit tax.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Tax Wedge",
+    "definition": "The gap a tax creates between the price paid by buyers and the price received by sellers.",
+    "example": "With a $2 per-unit tax, buyers' price exceeds sellers' price by $2.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Specific Tax",
+    "definition": "A tax charged as a fixed amount per unit traded.",
+    "example": "A $2 tax on each bottle is specific even if the bottle's price varies.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Ad Valorem Tax",
+    "definition": "A tax charged as a percentage of the transaction price.",
+    "example": "A 10% sales tax rises in dollar amount when the product's price rises.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Excess Burden",
+    "definition": "The loss in total surplus from behavioral changes caused by a tax, beyond the transfer of revenue to the government.",
+    "example": "A tax discouraging trades with benefits above costs creates excess burden.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Simpson's Paradox",
+    "definition": "A pattern in which a relationship seen within separate groups reverses or disappears after the groups are combined, often because group composition differs.",
+    "example": "A treatment can have a higher success rate in each hospital but a lower overall rate if it is used more often at the harder hospital.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Treatment Effect",
+    "definition": "The change in an outcome caused by an intervention, defined relative to what would have happened without it.",
+    "example": "The effect of a police deployment is the difference between crime with the deployment and the counterfactual crime without it.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Identification",
+    "definition": "The conditions or variation that allow a model's causal parameter to be distinguished from competing explanations in observed data.",
+    "example": "Random assignment can identify a treatment effect by making treated and control groups comparable on average.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Observational Data",
+    "definition": "Data in which the researcher observes choices or outcomes without assigning the treatment or policy being studied.",
+    "example": "A comparison of wages across workers with different schooling is observational if schooling was not randomly assigned.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "First-Price Sealed-Bid Auction",
+    "definition": "An auction where each bidder submits a hidden bid and the winner pays their own bid.",
+    "example": "A bidder may bid below their true value to avoid overpaying if they win.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Second-Price Auction",
+    "definition": "A sealed-bid auction where the highest bidder wins but pays the second-highest bid; bidding one's value is a dominant strategy under standard assumptions.",
+    "example": "If you value an item at $70, bidding $70 lets you win when the second bid is lower without paying more than $70.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Winner's Curse",
+    "definition": "The tendency for the winner of a common-value auction to have overestimated the item's value because winning is evidence that others bid less.",
+    "example": "The winning firm in an oil-field auction may later discover that its reserve estimate was too optimistic.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Mechanism Design",
+    "definition": "The design of rules or institutions so that people with private information have incentives to reveal it or choose socially useful actions.",
+    "example": "An auction rule is a mechanism designed to allocate an object using bidders' private valuations.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Revenue Equivalence",
+    "definition": "Under standard assumptions, several auction formats yield the same expected seller revenue when bidders are risk-neutral and values are independent.",
+    "example": "A first-price and a second-price auction can have equal expected revenue even though the winner pays differently.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Common-Value Auction",
+    "definition": "An auction where the item's true value is the same for all bidders but uncertain when they bid.",
+    "example": "Oil firms may have different estimates of the same underground reserve's value.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Private-Value Auction",
+    "definition": "An auction where each bidder's value for the item is personal and does not depend on the other bidders' information.",
+    "example": "A bidder's value for a painting in their own home may differ from everyone else's.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Position Auction",
+    "definition": "An auction that assigns ranked positions, such as ad slots, with different values across positions and bidders.",
+    "example": "Search advertisers bid for slots where the top position usually receives more clicks.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Stable Matching",
+    "definition": "A matching in which no unmatched pair would both prefer to be matched with each other over their assigned partners.",
+    "example": "A school-student assignment is unstable if one student and one school would both rather be paired together.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Isoquant",
+    "definition": "The set of input combinations that produce the same output level.",
+    "example": "A firm can move along an isoquant by substituting labor for capital while keeping output fixed.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Fixed-Proportions Technology",
+    "definition": "A technology requiring inputs in fixed ratios, so extra amounts of one input alone do not increase output.",
+    "example": "One driver and one truck are needed per delivery route; extra trucks without drivers add no routes.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Elasticity of Substitution",
+    "definition": "A measure of how strongly the ratio of two inputs or goods responds to a change in their relative price or marginal rate of substitution.",
+    "example": "A high elasticity of substitution means a firm can replace labor with capital substantially when wages rise relative to rental costs.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Diminishing Marginal Product",
+    "definition": "The property that adding more of one input, holding other inputs fixed, eventually adds less output per additional unit.",
+    "example": "With fixed kitchen space, adding cooks eventually produces smaller output gains per extra cook.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Rate of Technical Substitution",
+    "definition": "The rate at which one input can replace another while holding output constant; its absolute value is the slope of an isoquant.",
+    "example": "A firm may trade some labor for capital while keeping production unchanged.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Returns to Scale",
+    "definition": "How output changes when all inputs are scaled by the same proportion.",
+    "example": "If doubling labor and capital more than doubles output, the technology has increasing returns to scale over that range.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Profit Maximization",
+    "definition": "A firm's choice of inputs and output to maximize revenue minus economic cost.",
+    "example": "A price-taking firm expands output until price equals marginal cost, if producing is worthwhile.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Economic Profit",
+    "definition": "Revenue minus all costs, including the opportunity cost of the owner's time and capital.",
+    "example": "A shop can have positive accounting profit but zero economic profit if the owner's next-best job pays the same amount.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Factor Demand",
+    "definition": "A firm's desired quantity of an input as a function of its price and other relevant conditions.",
+    "example": "A lower wage generally increases a firm's labor demanded, holding output price and technology fixed.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Inverse Factor Demand",
+    "definition": "The input price a firm is willing to pay for each quantity of an input, often given by marginal revenue product under competition.",
+    "example": "A competitive firm hires labor until wage equals the value of labor's marginal product.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Revealed Profitability",
+    "definition": "An inference about a firm's technology or cost efficiency from the choices it makes at observed input and output prices.",
+    "example": "If a firm chooses one production plan over another when both were feasible, the choice reveals which plan was more profitable at those prices.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Cost-Minimizing Input Mix",
+    "definition": "The least-cost combination of inputs for producing a specified output at given input prices.",
+    "example": "At an interior solution, the MRTS equals the ratio of input prices.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Conditional Factor Demand",
+    "definition": "The least-cost quantity of each input required to produce a specified output at given input prices.",
+    "example": "A wage cut changes the labor-capital mix that minimizes the cost of producing 1,000 units.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Expansion Path",
+    "definition": "The set of cost-minimizing input combinations as the firm's output target varies, holding input prices fixed.",
+    "example": "Tracing the least-cost labor-capital choices from low to high output gives the expansion path.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Quasi-Fixed Cost",
+    "definition": "A cost that does not vary with output over a range once a firm has entered or activated capacity, but can be avoided by not operating at all.",
+    "example": "A restaurant may pay a weekly opening cost even if it serves very few customers.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Sunk Cost",
+    "definition": "A cost already incurred that cannot be recovered and therefore should not affect a forward-looking choice.",
+    "example": "A nonrefundable research expense should not change whether a firm launches a product now.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Cost and Average Cost",
+    "definition": "Marginal cost pulls average cost down when below it and pushes average cost up when above it.",
+    "example": "When the next unit costs less than current average cost, average cost falls.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Economies of Scale",
+    "definition": "A fall in average cost as output increases, typically associated with cost rising less than proportionally with output.",
+    "example": "If doubling output raises long-run cost by only 60%, average cost falls.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Economies of Scope",
+    "definition": "Cost savings from producing two or more goods jointly rather than in separate firms.",
+    "example": "A delivery company may lower total cost by using the same network for parcels and groceries.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Minimum Efficient Scale",
+    "definition": "The smallest output at which long-run average cost reaches its minimum, or is close to it.",
+    "example": "A firm producing far below MES may face a cost disadvantage relative to larger firms.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Shutdown Condition",
+    "definition": "In the short run, a competitive firm operates only if price covers average variable cost at its best output; otherwise it minimizes loss by producing zero.",
+    "example": "If price is below the minimum AVC, producing adds more avoidable cost than revenue.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Shutdown Point",
+    "definition": "The price at which a competitive firm is indifferent between producing and shutting down in the short run; it is the minimum of AVC.",
+    "example": "Below the shutdown price, operating fails to cover avoidable variable costs.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Break-Even Price",
+    "definition": "The price at which a firm's total revenue just covers total cost, so economic profit is zero.",
+    "example": "For output y, break-even price equals average cost, TC(y)/y.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Short-Run Supply Curve",
+    "definition": "A competitive firm's marginal-cost curve above minimum average variable cost, representing output supplied at each price.",
+    "example": "Below the shutdown price, short-run quantity supplied is zero.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Producer Surplus",
+    "definition": "For a competitive firm, revenue minus variable cost; it excludes fixed costs in the short run.",
+    "example": "A firm with revenue $500 and variable cost $320 has producer surplus of $180.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Zero Economic Profit",
+    "definition": "A condition where revenue covers all explicit and opportunity costs, including the normal return to owned resources.",
+    "example": "A firm can earn zero economic profit while its owner receives a market-level salary.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Economic Rent",
+    "definition": "A payment to a factor above the minimum required to keep it in its current use; it can arise when supply is limited.",
+    "example": "A scarce license may earn rent because its owner would still supply it for less than the market payment.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Long-Run Industry Supply",
+    "definition": "The relationship between market price and industry output after firms can enter, exit, or adjust all inputs; its shape depends on industry cost conditions.",
+    "example": "With identical firms and constant input prices, entry can keep the long-run price near minimum average cost.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Free Entry and Exit",
+    "definition": "A market condition under which firms can enter when profits are positive and leave when profits are negative.",
+    "example": "In a competitive long-run equilibrium, entry and exit tend to eliminate economic profit.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Lerner Index",
+    "definition": "The fraction of price represented by the price–marginal-cost markup; at an interior monopoly optimum it equals the inverse of absolute demand elasticity.",
+    "example": "With elasticity −4, the optimal markup share (p−MC)/p is 1/4.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Monopoly Markup Rule",
+    "definition": "The profit-maximizing relation between price, marginal cost, and demand elasticity: the less elastic demand is, the larger the markup can be.",
+    "example": "A monopolist facing more elastic demand must keep price closer to marginal cost.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Tax Pass-Through",
+    "definition": "The change in the buyer price caused by a per-unit tax, relative to the tax change.",
+    "example": "If a $1 tax raises the price by 60 cents, pass-through is 0.6.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Monopoly Deadweight Loss",
+    "definition": "The total surplus lost because a monopolist restricts output below the efficient quantity.",
+    "example": "Units with willingness to pay above marginal cost go untraded when monopoly output is too low.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Natural Monopoly",
+    "definition": "A market in which one firm can serve total demand at lower cost than multiple firms, often because average cost falls over the relevant output range.",
+    "example": "Duplicating a citywide water-pipe network may cost more than one network serving all households.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Quota",
+    "definition": "A legal limit on the quantity that may be bought, sold, or produced.",
+    "example": "An import quota can raise the domestic price by restricting the quantity of foreign goods available.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Patent Thicket",
+    "definition": "A dense web of overlapping patents that can make it costly or difficult for firms to develop or use a technology.",
+    "example": "A device maker may need licenses from many patent holders before it can sell a product.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "First-Degree Price Discrimination",
+    "definition": "Charging each buyer their exact willingness to pay for each unit, thereby capturing the available consumer surplus.",
+    "example": "A seller who knows every buyer's exact maximum willingness to pay charges each buyer a different personalized price.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Second-Degree Price Discrimination",
+    "definition": "Offering a menu of prices or product versions so buyers sort themselves by quantity or quality.",
+    "example": "A utility charges a lower per-unit rate after a household passes a usage threshold.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Third-Degree Price Discrimination",
+    "definition": "Charging different observable groups different prices based on their separate demand elasticities, when resale can be prevented.",
+    "example": "A cinema offers student tickets at a lower price than adult tickets.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Self-Selection Constraint",
+    "definition": "A condition ensuring each customer type prefers the option intended for that type.",
+    "example": "A low-usage plan must be unattractive enough to heavy users that they choose the premium plan.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Bundling",
+    "definition": "Selling two or more goods together as one package, often to extract more value when buyers' valuations differ across goods.",
+    "example": "A software firm sells its word processor and spreadsheet as one suite.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Two-Part Tariff",
+    "definition": "A pricing scheme with a fixed access fee plus a per-unit price.",
+    "example": "A gym charges a membership fee and then a separate fee for each class.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Monopolistic Competition",
+    "definition": "A market with many firms selling differentiated products and facing downward-sloping demand, with entry tending to eliminate long-run economic profit.",
+    "example": "Many cafés compete while each offers a slightly distinct location or menu.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Product Differentiation",
+    "definition": "A difference in product attributes or location that makes buyers view otherwise similar goods as imperfect substitutes.",
+    "example": "Two cafés on opposite sides of campus sell coffee but serve different convenient locations.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Hotelling Location Model",
+    "definition": "A model where consumers choose among differentiated sellers partly according to their distance or mismatch cost.",
+    "example": "On a beach, visitors may choose the nearest ice-cream stand even if prices match.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Monopsony",
+    "definition": "A market with one buyer, whose purchase decisions affect the price it must pay for an input.",
+    "example": "The only major hospital in a small town may have market power when hiring nurses.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Factor Cost",
+    "definition": "The extra cost of hiring one more unit of an input, including the effect of raising the payment to attract it.",
+    "example": "If a monopsonist must raise wages for all workers to hire one more, MFC exceeds the wage.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Revenue Product",
+    "definition": "The additional revenue generated by employing one more unit of an input; with a single output, it is marginal product times marginal revenue.",
+    "example": "A worker adding 3 units of output when each unit sells for $8 has an MRP of $24 under price-taking output sales.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Double Marginalization",
+    "definition": "The loss from successive firms with market power each adding a markup, producing a final price that is too high and output too low.",
+    "example": "An upstream monopolist sells an input to a downstream monopolist, and both add markups.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Monopsony Wage Setting",
+    "definition": "A monopsonist hires labor where marginal revenue product equals marginal factor cost and pays the wage on the labor supply curve.",
+    "example": "Because MFC exceeds the wage, the monopsonist hires fewer workers and pays less than a competitive labor market would.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Upstream and Downstream Monopoly",
+    "definition": "A sequence in which a monopolist sells an input to another monopolist that uses it to sell the final good.",
+    "example": "The input supplier and final-good seller may each add a markup, causing double marginalization.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Cournot Equilibrium",
+    "definition": "An oligopoly outcome in which firms choose quantities simultaneously and each quantity is a best response to rivals' quantities.",
+    "example": "Each duopolist selects output assuming the other firm's output will stay fixed.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Stackelberg Quantity Leadership",
+    "definition": "A sequential quantity game in which a leader commits to output before followers choose their best responses.",
+    "example": "The first-moving firm accounts for how its chosen quantity changes its rival's later choice.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Price Leadership",
+    "definition": "An oligopoly arrangement in which one firm sets a price and other firms follow, often with the leader accounting for rivals' supply.",
+    "example": "A dominant producer announces a price that smaller competitors then match.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Bertrand Competition",
+    "definition": "A model in which firms set prices simultaneously; with identical goods and constant marginal cost, competition can drive price to marginal cost.",
+    "example": "If two firms sell the same product and can serve all demand, either can undercut a price above cost.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Collusion",
+    "definition": "Coordination among competitors to raise joint profit by restricting competition, often through higher prices or lower output.",
+    "example": "Two firms agree to limit production, though each has an incentive to secretly expand it.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Punishment Strategy",
+    "definition": "A strategy that threatens a costly response after a rival deviates, helping sustain cooperation in a repeated game.",
+    "example": "After a price cut, firms may revert to a competitive price for several periods.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Strategic Substitutes",
+    "definition": "Actions that become less attractive as rivals take more of the same action; best-response functions slope downward.",
+    "example": "In Cournot competition, a rival producing more usually makes a firm choose less output.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Strategic Complements",
+    "definition": "Actions that become more attractive as rivals take more of the same action; best-response functions slope upward.",
+    "example": "In some price-setting models, a rival's higher price can make a firm raise its own price.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Quantity Leadership",
+    "definition": "A sequential oligopoly model in which a leader chooses output first and a follower chooses output after observing it.",
+    "example": "The leader anticipates the follower's reaction curve when selecting its own quantity.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Best Response",
+    "definition": "The action that gives a player the highest payoff for a specified action by the other players.",
+    "example": "In a quantity game, a firm's best-response curve maps each rival output to its profit-maximizing output.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Nash Equilibrium",
+    "definition": "A combination of strategies where no player can gain by changing their own strategy alone.",
+    "example": "At equilibrium, each firm's output is a best response to the other firm's output.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Dominant Strategy",
+    "definition": "A strategy that gives a player at least as high a payoff as every alternative, for every action of the other players.",
+    "example": "If undercutting yields more profit whether or not the rival undercuts, undercutting is dominant.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Prisoner's Dilemma",
+    "definition": "A game where individually rational choices lead to an outcome worse for all players than mutual cooperation.",
+    "example": "Two firms may both advertise heavily even though both would earn more if neither advertised.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Extensive-Form Game",
+    "definition": "A game represented by a tree showing the order of moves, available actions, and information at each decision point.",
+    "example": "A game tree can show a leader choosing output before a follower responds.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Backward Induction",
+    "definition": "A method for solving a sequential game by starting at the final decision and working back to earlier choices.",
+    "example": "In a leader–follower game, first solve the follower's best response, then the leader's choice.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Subgame-Perfect Equilibrium",
+    "definition": "A strategy profile that is a Nash equilibrium in every subgame, ruling out non-credible threats.",
+    "example": "A firm's threat to start a price war is credible only if it would actually be optimal after the rival enters.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Mixed Strategy",
+    "definition": "A strategy that assigns probabilities to different actions rather than choosing one action with certainty.",
+    "example": "A firm may randomize between two prices so a rival cannot predict its next move.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Repeated Game",
+    "definition": "A game in which the same players interact more than once, allowing current actions to affect future payoffs.",
+    "example": "The possibility of future retaliation can make firms less likely to cut price today.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Assurance Game",
+    "definition": "A coordination game in which each player prefers to match the other's action, while the payoff from cooperation depends on confidence that others will cooperate.",
+    "example": "Two firms may both invest in a new standard if each expects the other to adopt it.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Chicken Game",
+    "definition": "A strategic game in which each player prefers the other to yield, but mutual refusal to yield gives both a very bad outcome.",
+    "example": "Two firms that both refuse to cut capacity may trigger a costly price war.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Commitment",
+    "definition": "An action that changes future incentives by making some later choices costly or impossible to reverse.",
+    "example": "A firm may build capacity before negotiations to make its promise to produce a large quantity credible.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Hold-Up Problem",
+    "definition": "The risk that after one party makes a relationship-specific investment, another party can exploit the resulting dependence in later bargaining.",
+    "example": "A supplier may hesitate to build a custom factory if the buyer can demand a lower price after the investment is sunk.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Ultimatum Game",
+    "definition": "A bargaining game where one player proposes a division and the other accepts or rejects, with rejection typically giving both little or nothing.",
+    "example": "A responder may reject a very unequal offer even though accepting would give them a small positive payoff.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Law of Small Numbers",
+    "definition": "The tendency to expect small samples to resemble the population closely, leading people to overread noisy patterns.",
+    "example": "An investor may infer a manager is exceptionally skilled from a short run of good returns.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Asset Integration",
+    "definition": "The way people evaluate a risky choice as part of their overall wealth rather than in isolation; narrow evaluation can increase apparent risk aversion.",
+    "example": "A person may reject a small fair gamble separately but accept it when its gains and losses are viewed within a diversified portfolio.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Bracketing",
+    "definition": "The way decision-makers group choices into narrow or broad mental accounts, changing how gains and losses are evaluated.",
+    "example": "A person may treat each day's trading result separately instead of evaluating the whole month's portfolio.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Constructed Preferences",
+    "definition": "Preferences that are formed during the decision process rather than retrieved as a fixed ranking already stored in memory.",
+    "example": "Adding many similar options can change which attributes a shopper focuses on and what they choose.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Hyperbolic Discounting",
+    "definition": "A pattern in which people discount near-term delays more heavily than equally sized delays farther in the future, creating time-inconsistent plans.",
+    "example": "Someone may choose an immediate small reward over a larger reward next week, yet prefer the larger reward when both options are a year away.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Overconfidence",
+    "definition": "A tendency to overestimate one's knowledge, precision, or ability to predict outcomes.",
+    "example": "A trader may place too large a bet because they underestimate the uncertainty in their forecast.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Edgeworth Box",
+    "definition": "A diagram representing all feasible allocations of two goods between two consumers, with each person's origin at a different corner.",
+    "example": "The box shows whether a trade can move both consumers to higher indifference curves.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Contract Curve",
+    "definition": "The set of Pareto-efficient allocations in an exchange economy, where the consumers' indifference curves are tangent under standard conditions.",
+    "example": "Allocations off the contract curve leave a mutually beneficial trade available.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Walras's Law",
+    "definition": "The value of aggregate excess demand across all markets is zero at any price vector when budgets are satisfied.",
+    "example": "If all but one market clear, Walras's Law implies the remaining market clears too, under the model's assumptions.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "First Welfare Theorem",
+    "definition": "Under standard assumptions, a competitive equilibrium allocation is Pareto efficient.",
+    "example": "With no externalities and price-taking behavior, decentralized trade can reach an efficient allocation.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Second Welfare Theorem",
+    "definition": "Under standard convexity assumptions, any Pareto-efficient allocation can be supported as a competitive equilibrium after suitable lump-sum redistribution.",
+    "example": "A society can separate equity goals from price-based efficiency by redistributing endowments first.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Robinson Crusoe Economy",
+    "definition": "A model that combines a consumer and producer in one person to study production and consumption choices together.",
+    "example": "Crusoe allocates time between gathering coconuts and leisure, then consumes the output.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Production Possibility Frontier",
+    "definition": "The boundary of the output combinations an economy can produce with its resources and technology.",
+    "example": "A point inside the frontier is feasible but inefficient if resources could produce more of one good without reducing the other.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Rate of Transformation",
+    "definition": "The amount of one output that must be given up to produce an additional unit of another output at the production frontier.",
+    "example": "If producing one more unit of cloth requires giving up two units of food, the MRT is 2 units of food per cloth.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Decentralized Resource Allocation",
+    "definition": "An allocation coordinated through individual decisions and market prices rather than a central planner.",
+    "example": "Consumers and firms respond to prices, and their choices jointly determine production and trade.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Social Welfare Function",
+    "definition": "A rule that ranks social states by aggregating individuals' utilities or well-being.",
+    "example": "A utilitarian social welfare function sums individual utilities, while other functions give different weights to inequality.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Utilitarian Criterion",
+    "definition": "A social objective that chooses the allocation maximizing the sum of individual utilities.",
+    "example": "A utilitarian planner may accept a loss for one person if gains to others raise total utility by more.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Maximin Criterion",
+    "definition": "A social objective that evaluates an allocation by the welfare of its worst-off person and seeks to maximize that minimum.",
+    "example": "A maximin planner compares allocations by the utility of the least advantaged individual.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Envy-Free Allocation",
+    "definition": "An allocation where no person would prefer another person's bundle to their own, given their preferences.",
+    "example": "An allocation is envy-free if each student weakly prefers their assigned study space to anyone else's.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Equity-Efficiency Trade-Off",
+    "definition": "A perceived conflict between distributing resources more equally and maximizing total surplus or output; whether a trade-off exists depends on the available policies and assumptions.",
+    "example": "A redistribution may reduce incentives in one model, but lump-sum transfers can separate equity and efficiency under stronger assumptions.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal Social Cost",
+    "definition": "The full cost to society of one additional unit of an activity, including private cost and any external cost.",
+    "example": "For a polluting factory, MSC includes both its production cost and the added health damage to neighbors.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Marginal External Cost",
+    "definition": "The extra harm imposed on others by one additional unit of an activity, not paid by the decision-maker.",
+    "example": "If one more production unit creates $5 of uncompensated pollution damage, MEC is $5.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Pigouvian Tax",
+    "definition": "A tax set to equal marginal external cost at the socially efficient quantity, making private decision-makers face the social cost.",
+    "example": "A tax per ton of emissions can induce a factory to reduce pollution until its marginal abatement cost equals the tax.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Coase Theorem",
+    "definition": "With clearly assigned rights and negligible transaction costs, bargaining can achieve an efficient outcome regardless of the initial rights allocation, though distribution can differ.",
+    "example": "A factory and nearby residents can bargain over pollution if organizing and enforcing an agreement is costless.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Transaction Costs",
+    "definition": "The costs of finding partners, negotiating, monitoring, and enforcing an agreement.",
+    "example": "Many scattered residents may find it too costly to bargain with one polluting firm.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Property Rights",
+    "definition": "Rules specifying who may use a resource, exclude others, and transfer control over it.",
+    "example": "Clearly assigned fishing rights can give owners an incentive to preserve fish stocks.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Tragedy of the Commons",
+    "definition": "Overuse of a resource when individuals receive the private benefit of use but share the depletion cost.",
+    "example": "Open-access fishers may catch too many fish because each bears only part of the stock loss.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Common-Pool Resource",
+    "definition": "A resource from which exclusion is difficult but one person's use reduces what remains for others.",
+    "example": "A shared fishery is hard to restrict access to, and each catch leaves fewer fish for others.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Cap-and-Trade",
+    "definition": "A policy that limits total emissions and allows firms to trade permits, directing abatement toward firms with lower reduction costs.",
+    "example": "A firm with cheap cleanup options can reduce extra emissions and sell permits to a firm with higher cleanup costs.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Pollution Permit",
+    "definition": "A transferable authorization to emit a specified amount of pollution under a regulatory cap.",
+    "example": "A factory must surrender one permit for each ton of emissions it releases.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Market Signal",
+    "definition": "A price or other observable market outcome that conveys information about scarcity or value to decision-makers.",
+    "example": "A higher pollination fee can signal that bee services are valuable to nearby almond growers.",
+    "category": "Microeconomics"
+  },
+  {
+    "term": "Production Externality",
+    "definition": "An effect of one producer's activity on another producer's costs or output that is not mediated by market prices.",
+    "example": "Bees kept by one beekeeper can raise the yield of a neighboring almond orchard.",
+    "category": "Microeconomics"
+  }
+]
