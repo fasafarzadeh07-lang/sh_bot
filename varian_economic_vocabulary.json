@@ -1,0 +1,735 @@
+{
+  "source": "Hal R. Varian, Intermediate Microeconomics: A Modern Approach, 9th edition",
+  "language": "en",
+  "entries": [
+    {
+      "id": "varian_02_001",
+      "term": "Budget Constraint",
+      "definition": "The limit on affordable consumption bundles given prices and income.",
+      "example": "With $20, a buyer can afford two $6 meals and one $8 drink.",
+      "chapter": 2,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_02_002",
+      "term": "Opportunity Cost",
+      "definition": "The value of the best alternative forgone when making a choice.",
+      "example": "Studying for an hour means giving up an hour of paid work.",
+      "chapter": 2,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_02_003",
+      "term": "Numeraire",
+      "definition": "A good whose price is normalized to one to express other prices relative to it.",
+      "example": "If bread is the numeraire, coffee costs three units of bread.",
+      "chapter": 2,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_03_004",
+      "term": "Indifference Curve",
+      "definition": "Bundles of goods that give a consumer the same satisfaction.",
+      "example": "A consumer is equally happy with two different combinations of tea and coffee.",
+      "chapter": 3,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_03_005",
+      "term": "Marginal Rate of Substitution",
+      "definition": "The rate at which a consumer is willing to trade one good for another while maintaining utility.",
+      "example": "A buyer would give up two apples for one extra orange.",
+      "chapter": 3,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_03_006",
+      "term": "Perfect Substitutes",
+      "definition": "Goods a consumer is willing to exchange at a constant rate.",
+      "example": "Two brands of identical bottled water may be perfect substitutes.",
+      "chapter": 3,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_03_007",
+      "term": "Perfect Complements",
+      "definition": "Goods that are consumed together in fixed proportions.",
+      "example": "Left and right shoes are useful as pairs.",
+      "chapter": 3,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_04_008",
+      "term": "Utility Function",
+      "definition": "A numerical representation of a consumer's preferences.",
+      "example": "A utility function can rank baskets of food and clothing.",
+      "chapter": 4,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_04_009",
+      "term": "Cobb-Douglas Preferences",
+      "definition": "Preferences often represented by utility as a product of goods raised to powers.",
+      "example": "A household allocates spending between food and housing.",
+      "chapter": 4,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_05_010",
+      "term": "Consumer Optimum",
+      "definition": "The most preferred affordable consumption bundle.",
+      "example": "A student chooses the best mix of books and meals within a budget.",
+      "chapter": 5,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_06_011",
+      "term": "Normal Good",
+      "definition": "A good whose demand rises as income increases, holding prices fixed.",
+      "example": "A consumer buys more restaurant meals after receiving a raise.",
+      "chapter": 6,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_06_012",
+      "term": "Inferior Good",
+      "definition": "A good whose demand falls as income increases, holding prices fixed.",
+      "example": "A commuter switches from bus rides to taxis after income rises.",
+      "chapter": 6,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_06_013",
+      "term": "Giffen Good",
+      "definition": "An inferior good whose quantity demanded rises when its own price rises.",
+      "example": "A severe budget squeeze may increase demand for a staple food.",
+      "chapter": 6,
+      "level": "advanced",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_07_014",
+      "term": "Revealed Preference",
+      "definition": "Inferring preferences from observed choices under budget constraints.",
+      "example": "Choosing A when B was affordable reveals A is preferred to B.",
+      "chapter": 7,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_07_015",
+      "term": "WARP",
+      "definition": "A consistency condition ruling out certain reversals of revealed preference.",
+      "example": "If A is chosen over affordable B, B should not later be chosen over affordable A.",
+      "chapter": 7,
+      "level": "advanced",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_08_016",
+      "term": "Substitution Effect",
+      "definition": "The demand change caused by a relative-price change while holding purchasing power appropriately adjusted.",
+      "example": "Cheaper tea encourages substitution away from coffee.",
+      "chapter": 8,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_08_017",
+      "term": "Income Effect",
+      "definition": "The demand change caused by a change in purchasing power after a price change.",
+      "example": "A fall in rice prices leaves more purchasing power for other goods.",
+      "chapter": 8,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_08_018",
+      "term": "Slutsky Equation",
+      "definition": "A decomposition of the total price effect into substitution and income effects.",
+      "example": "A price cut changes demand through both substitution and purchasing power.",
+      "chapter": 8,
+      "level": "advanced",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_09_019",
+      "term": "Endowment",
+      "definition": "The initial bundle of goods or resources an agent owns.",
+      "example": "A farmer starts with 100 kilograms of wheat to sell or consume.",
+      "chapter": 9,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_10_020",
+      "term": "Present Value",
+      "definition": "The value today of a future payment discounted at an interest rate.",
+      "example": "At 10% interest, $110 next year is worth $100 today.",
+      "chapter": 10,
+      "level": "basic",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_10_021",
+      "term": "Intertemporal Choice",
+      "definition": "Choosing consumption across different periods.",
+      "example": "A student saves some income now to spend after graduation.",
+      "chapter": 10,
+      "level": "intermediate",
+      "topic": "Consumer Theory"
+    },
+    {
+      "id": "varian_11_022",
+      "term": "Arbitrage",
+      "definition": "Exploiting price differences for equivalent assets or payoffs.",
+      "example": "A trader buys an asset where it is cheaper and sells where it is dearer.",
+      "chapter": 11,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_11_023",
+      "term": "Market Bubble",
+      "definition": "A sustained asset-price increase driven partly by expectations of further price rises.",
+      "example": "Investors buy an overpriced asset expecting to resell it later.",
+      "chapter": 11,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_12_024",
+      "term": "Expected Utility",
+      "definition": "Probability-weighted utility across possible outcomes.",
+      "example": "A person compares a guaranteed payment with a risky lottery.",
+      "chapter": 12,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_12_025",
+      "term": "Risk Aversion",
+      "definition": "A preference for a certain payoff over a fair gamble with the same expected value.",
+      "example": "An investor prefers a guaranteed $100 to an equal-chance $0 or $200 gamble.",
+      "chapter": 12,
+      "level": "basic",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_12_026",
+      "term": "Diversification",
+      "definition": "Reducing exposure to individual risks by spreading investments or activities.",
+      "example": "Holding shares in multiple industries reduces firm-specific risk.",
+      "chapter": 12,
+      "level": "basic",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_13_027",
+      "term": "Value at Risk",
+      "definition": "A loss threshold associated with a specified probability and time horizon.",
+      "example": "A portfolio has a 5% chance of losing more than its daily VaR.",
+      "chapter": 13,
+      "level": "advanced",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_14_028",
+      "term": "Consumer Surplus",
+      "definition": "The difference between willingness to pay and the amount actually paid.",
+      "example": "A buyer willing to pay $30 pays $20 and gains $10 in surplus.",
+      "chapter": 14,
+      "level": "basic",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_14_029",
+      "term": "Producer Surplus",
+      "definition": "Revenue minus variable production costs in the standard short-run framework.",
+      "example": "A firm earns $500 in revenue with $300 in variable costs: surplus is $200.",
+      "chapter": 14,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_14_030",
+      "term": "Compensating Variation",
+      "definition": "The money needed after a price change to restore the original utility level.",
+      "example": "After rent rises, calculate compensation that restores the tenant's former welfare.",
+      "chapter": 14,
+      "level": "advanced",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_15_031",
+      "term": "Market Demand",
+      "definition": "The sum of quantities demanded by individual consumers at each price.",
+      "example": "At $5, three customers demand 2, 3 and 4 units: market demand is 9.",
+      "chapter": 15,
+      "level": "basic",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_15_032",
+      "term": "Price Elasticity of Demand",
+      "definition": "The percentage change in quantity demanded divided by the percentage change in price.",
+      "example": "A 10% price rise causing a 20% demand fall gives elasticity of -2.",
+      "chapter": 15,
+      "level": "basic",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_15_033",
+      "term": "Marginal Revenue",
+      "definition": "The additional revenue from selling one more unit.",
+      "example": "A monopolist evaluates how selling another unit changes total revenue.",
+      "chapter": 15,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_15_034",
+      "term": "Income Elasticity",
+      "definition": "The percentage change in demand divided by the percentage change in income.",
+      "example": "If income rises 10% and demand rises 5%, income elasticity is 0.5.",
+      "chapter": 15,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_16_035",
+      "term": "Market Equilibrium",
+      "definition": "A price and quantity at which quantity supplied equals quantity demanded.",
+      "example": "At $8, buyers and sellers both want to trade 100 units.",
+      "chapter": 16,
+      "level": "basic",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_16_036",
+      "term": "Comparative Statics",
+      "definition": "Comparing equilibria before and after an external change.",
+      "example": "Analyze the new equilibrium after a tax is introduced.",
+      "chapter": 16,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_16_037",
+      "term": "Deadweight Loss",
+      "definition": "The reduction in total surplus caused by inefficient allocation.",
+      "example": "A tax prevents trades whose benefits exceed their costs.",
+      "chapter": 16,
+      "level": "intermediate",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_18_038",
+      "term": "Winner's Curse",
+      "definition": "The risk that an auction winner overestimates an item's value.",
+      "example": "The highest bidder overpays for an oil exploration license.",
+      "chapter": 18,
+      "level": "advanced",
+      "topic": "Risk and Welfare"
+    },
+    {
+      "id": "varian_19_039",
+      "term": "Marginal Product",
+      "definition": "The additional output from one extra unit of input, holding other inputs fixed.",
+      "example": "An additional worker raises daily production from 40 to 46 units.",
+      "chapter": 19,
+      "level": "basic",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_19_040",
+      "term": "Returns to Scale",
+      "definition": "How output changes when all inputs change proportionally.",
+      "example": "Doubling labor and capital triples output: increasing returns to scale.",
+      "chapter": 19,
+      "level": "intermediate",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_19_041",
+      "term": "Technical Rate of Substitution",
+      "definition": "The rate of input substitution along an isoquant.",
+      "example": "A factory replaces some labor with machines while keeping output fixed.",
+      "chapter": 19,
+      "level": "advanced",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_20_042",
+      "term": "Profit Maximization",
+      "definition": "Choosing feasible production decisions to maximize revenue minus economic costs.",
+      "example": "A firm expands output while marginal revenue exceeds marginal cost.",
+      "chapter": 20,
+      "level": "basic",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_21_043",
+      "term": "Sunk Cost",
+      "definition": "A past cost that cannot be recovered and should not affect marginal decisions.",
+      "example": "A nonrefundable software license is a sunk cost.",
+      "chapter": 21,
+      "level": "basic",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_21_044",
+      "term": "Cost Minimization",
+      "definition": "Choosing the least-cost input mix for a target output.",
+      "example": "A factory selects labor and machines to make 100 units at minimum cost.",
+      "chapter": 21,
+      "level": "intermediate",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_22_045",
+      "term": "Marginal Cost",
+      "definition": "The additional total cost of producing one more unit.",
+      "example": "Total cost rises from $90 to $97 when output rises by one: MC is $7.",
+      "chapter": 22,
+      "level": "basic",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_22_046",
+      "term": "Average Cost",
+      "definition": "Total cost divided by the quantity produced.",
+      "example": "Producing 50 units for $400 gives average cost of $8.",
+      "chapter": 22,
+      "level": "basic",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_23_047",
+      "term": "Perfect Competition",
+      "definition": "A market environment where individual firms take the market price as given.",
+      "example": "A small wheat farmer cannot influence the market price.",
+      "chapter": 23,
+      "level": "basic",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_23_048",
+      "term": "Shutdown Condition",
+      "definition": "A short-run rule comparing price with avoidable operating costs.",
+      "example": "A firm shuts down temporarily if price is below minimum average variable cost.",
+      "chapter": 23,
+      "level": "intermediate",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_24_049",
+      "term": "Economic Rent",
+      "definition": "Payment to a factor above the minimum needed to keep it in its current use.",
+      "example": "A scarce location earns rent due to its exceptional position.",
+      "chapter": 24,
+      "level": "intermediate",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_24_050",
+      "term": "Zero Economic Profit",
+      "definition": "Revenue exactly covers all economic costs including opportunity costs.",
+      "example": "At price equal to average cost, a competitive firm earns zero economic profit.",
+      "chapter": 24,
+      "level": "intermediate",
+      "topic": "Production and Costs"
+    },
+    {
+      "id": "varian_25_051",
+      "term": "Monopoly",
+      "definition": "A market with a single seller of a product without close substitutes.",
+      "example": "An exclusive local utility may face no direct rival.",
+      "chapter": 25,
+      "level": "basic",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_25_052",
+      "term": "Markup Pricing",
+      "definition": "Setting price above marginal cost, with the markup related to demand elasticity.",
+      "example": "A monopolist with inelastic demand may charge a higher markup.",
+      "chapter": 25,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_25_053",
+      "term": "Lerner Index",
+      "definition": "The price-cost margin divided by price, measuring monopoly markup.",
+      "example": "With price $10 and MC $6, the Lerner index is 0.4.",
+      "chapter": 25,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_25_054",
+      "term": "Natural Monopoly",
+      "definition": "A market where one firm can serve demand at lower cost than multiple firms.",
+      "example": "A water-pipe network can have large fixed costs and scale economies.",
+      "chapter": 25,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_055",
+      "term": "Price Discrimination",
+      "definition": "Charging different prices for the same good not explained by cost differences.",
+      "example": "A cinema offers cheaper tickets to students than other adults.",
+      "chapter": 26,
+      "level": "basic",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_056",
+      "term": "First-Degree Price Discrimination",
+      "definition": "Charging each customer their maximum willingness to pay for each unit.",
+      "example": "A seller perfectly tailors every price to each buyer's valuation.",
+      "chapter": 26,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_057",
+      "term": "Second-Degree Price Discrimination",
+      "definition": "Offering price schedules or product versions that induce self-selection.",
+      "example": "A utility charges different per-unit rates for different usage blocks.",
+      "chapter": 26,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_058",
+      "term": "Third-Degree Price Discrimination",
+      "definition": "Charging different observable customer groups different prices.",
+      "example": "A museum offers different admission prices for students and adults.",
+      "chapter": 26,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_059",
+      "term": "Bundling",
+      "definition": "Selling multiple products together as a package.",
+      "example": "A software company sells a word processor and spreadsheet together.",
+      "chapter": 26,
+      "level": "basic",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_060",
+      "term": "Two-Part Tariff",
+      "definition": "A pricing scheme with a fixed entry fee and a per-unit charge.",
+      "example": "A gym charges a membership fee plus a fee per visit.",
+      "chapter": 26,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_061",
+      "term": "Monopolistic Competition",
+      "definition": "Competition among many sellers offering differentiated products.",
+      "example": "Coffee shops compete with distinct brands and locations.",
+      "chapter": 26,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_26_062",
+      "term": "Product Differentiation",
+      "definition": "Making products distinct in consumers' perceptions or characteristics.",
+      "example": "Two cafes differ in location, ambiance and service.",
+      "chapter": 26,
+      "level": "basic",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_27_063",
+      "term": "Monopsony",
+      "definition": "A market with a single buyer of an input or product.",
+      "example": "A remote town has only one major employer hiring local workers.",
+      "chapter": 27,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_27_064",
+      "term": "Marginal Factor Cost",
+      "definition": "The extra total expenditure required to acquire one more unit of an input.",
+      "example": "A monopsonist may need to raise wages for existing workers to hire another.",
+      "chapter": 27,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_27_065",
+      "term": "Marginal Revenue Product",
+      "definition": "The extra revenue generated by an additional unit of input.",
+      "example": "A worker adds 4 units sold for $5 each, generating $20 of revenue.",
+      "chapter": 27,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_28_066",
+      "term": "Oligopoly",
+      "definition": "A market dominated by a small number of strategically interacting firms.",
+      "example": "Two major airlines compete on a particular route.",
+      "chapter": 28,
+      "level": "basic",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_28_067",
+      "term": "Cournot Equilibrium",
+      "definition": "An equilibrium where firms choose quantities as best responses to rivals' quantities.",
+      "example": "Two producers simultaneously choose how many units to make.",
+      "chapter": 28,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_28_068",
+      "term": "Bertrand Competition",
+      "definition": "A model in which firms strategically choose prices.",
+      "example": "Two sellers of identical goods compete by setting prices.",
+      "chapter": 28,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_28_069",
+      "term": "Stackelberg Leadership",
+      "definition": "A sequential quantity game where a leader commits before a follower.",
+      "example": "One producer chooses output first and the rival responds.",
+      "chapter": 28,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_28_070",
+      "term": "Collusion",
+      "definition": "Coordination among firms to raise joint profits by restricting competition.",
+      "example": "Rival producers agree to limit output and raise prices.",
+      "chapter": 28,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_29_071",
+      "term": "Payoff Matrix",
+      "definition": "A table showing each player's payoff for combinations of strategies.",
+      "example": "A matrix displays profits when two firms choose high or low prices.",
+      "chapter": 29,
+      "level": "basic",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_29_072",
+      "term": "Dominant Strategy",
+      "definition": "A strategy that yields a better payoff regardless of opponents' actions.",
+      "example": "A firm's low-price strategy beats its high-price strategy in every case.",
+      "chapter": 29,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_29_073",
+      "term": "Nash Equilibrium",
+      "definition": "A set of strategies where no player benefits from changing strategy alone.",
+      "example": "Neither of two firms can gain by changing its price unilaterally.",
+      "chapter": 29,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_29_074",
+      "term": "Prisoner's Dilemma",
+      "definition": "A game where individually attractive choices can produce a collectively worse result.",
+      "example": "Two firms cut prices even though both would gain from maintaining them.",
+      "chapter": 29,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_29_075",
+      "term": "Mixed Strategy",
+      "definition": "A strategy that randomizes among available actions.",
+      "example": "A firm varies promotions unpredictably to avoid being anticipated.",
+      "chapter": 29,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_30_076",
+      "term": "Best Response",
+      "definition": "A player's payoff-maximizing strategy given the other players' strategies.",
+      "example": "A firm chooses its best output after observing a rival's planned output.",
+      "chapter": 30,
+      "level": "intermediate",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_30_077",
+      "term": "Credible Commitment",
+      "definition": "An action that changes future incentives in a believable way.",
+      "example": "A company signs a costly long-term capacity contract before a rival enters.",
+      "chapter": 30,
+      "level": "advanced",
+      "topic": "Market Power and Strategy"
+    },
+    {
+      "id": "varian_31_078",
+      "term": "Loss Aversion",
+      "definition": "The tendency to weigh losses more heavily than comparable gains.",
+      "example": "Losing $50 feels worse than gaining $50 feels good.",
+      "chapter": 31,
+      "level": "basic",
+      "topic": "Behavior and Exchange"
+    },
+    {
+      "id": "varian_31_079",
+      "term": "Anchoring Effect",
+      "definition": "The influence of an initial reference number on later judgments.",
+      "example": "A high initial list price affects willingness to pay.",
+      "chapter": 31,
+      "level": "basic",
+      "topic": "Behavior and Exchange"
+    },
+    {
+      "id": "varian_32_080",
+      "term": "Edgeworth Box",
+      "definition": "A diagram of feasible allocations of two goods between two agents.",
+      "example": "Two consumers trade apples and oranges within a fixed total supply.",
+      "chapter": 32,
+      "level": "advanced",
+      "topic": "Behavior and Exchange"
+    },
+    {
+      "id": "varian_32_081",
+      "term": "Pareto Efficiency",
+      "definition": "An allocation where nobody can be made better off without making someone worse off.",
+      "example": "All mutually beneficial trades have been exhausted.",
+      "chapter": 32,
+      "level": "intermediate",
+      "topic": "Behavior and Exchange"
+    }
+  ]
+}
