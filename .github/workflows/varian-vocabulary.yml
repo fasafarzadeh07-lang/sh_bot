@@ -2,9 +2,15 @@ name: Varian Daily Vocabulary
 
 on:
   schedule:
-    # 06:00 Tehran (UTC+03:30); GitHub's cron operates in UTC.
+    # 06:00 in Tehran (GitHub cron uses UTC)
     - cron: '30 2 * * *'
   workflow_dispatch:
+    inputs:
+      term_number:
+        description: 'Manual test: term number 1–81; leave empty for random'
+        required: false
+        type: string
+        default: ''
 
 concurrency:
   group: varian-daily-vocabulary
@@ -17,10 +23,12 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Send today's Varian term to dedicated forum topic
+      - name: Send one Varian term to dedicated forum topic
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           VOCAB_CHAT_ID: ${{ secrets.VOCAB_CHAT_ID }}
           VOCAB_THREAD_ID: ${{ secrets.VOCAB_THREAD_ID }}
           VOCAB_START_DATE: '2026-10-18'
+          VOCAB_MANUAL_TEST: ${{ github.event_name == 'workflow_dispatch' }}
+          VOCAB_TEST_TERM_NUMBER: ${{ inputs.term_number || '' }}
         run: python send_varian_vocab.py
