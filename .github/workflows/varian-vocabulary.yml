@@ -2,33 +2,52 @@ name: Varian Daily Vocabulary
 
 on:
   schedule:
-    # 06:00 in Tehran (GitHub cron uses UTC)
+    # Tehran 06:00 = UTC 02:30 (Iran does not currently observe DST)
     - cron: '30 2 * * *'
   workflow_dispatch:
     inputs:
       term_number:
-        description: 'Manual test: term number 1–81; leave empty for random'
+        description: 'Manual test: number 1–182, blank = random (does not advance tracker)'
         required: false
         type: string
         default: ''
 
+permissions:
+  contents: write  # Needed to persist vocab_progress.json on scheduled runs.
+
 concurrency:
-  group: varian-daily-vocabulary
+  group: varian-vocabulary-tracker
   cancel-in-progress: false
 
 jobs:
   send_vocab:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out default branch with tracker
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
       - name: Send one Varian term to dedicated forum topic
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           VOCAB_CHAT_ID: ${{ secrets.VOCAB_CHAT_ID }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
           VOCAB_THREAD_ID: ${{ secrets.VOCAB_THREAD_ID }}
           VOCAB_START_DATE: '2026-10-18'
           VOCAB_MANUAL_TEST: ${{ github.event_name == 'workflow_dispatch' }}
           VOCAB_TEST_TERM_NUMBER: ${{ inputs.term_number || '' }}
         run: python send_varian_vocab.py
+      - name: Persist scheduled vocabulary progress in repository
+        if: ${{ github.event_name == 'schedule' }}
+        shell: bash
+        run: |
+          if git diff --quiet -- vocab_progress.json; then
+            echo 'Tracker unchanged; nothing to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add vocab_progress.json
+          git commit -m 'chore: advance Varian vocabulary tracker [skip ci]'
+          git push origin HEAD:${{ github.event.repository.default_branch }}
