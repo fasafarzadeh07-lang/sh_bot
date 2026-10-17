@@ -1,0 +1,26 @@
+name: Varian Daily Vocabulary
+
+on:
+  schedule:
+    # 06:00 Tehran (UTC+03:30); GitHub's cron operates in UTC.
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: varian-daily-vocabulary
+  cancel-in-progress: false
+
+jobs:
+  send_vocab:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send today's Varian term to dedicated forum topic
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          VOCAB_CHAT_ID: ${{ secrets.VOCAB_CHAT_ID }}
+          VOCAB_THREAD_ID: ${{ secrets.VOCAB_THREAD_ID }}
+          VOCAB_START_DATE: '2026-10-18'
+        run: python send_varian_vocab.py
