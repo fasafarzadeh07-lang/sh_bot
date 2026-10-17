@@ -65,7 +65,6 @@ def format_message(entry):
     category = entry.get('category', '').strip()
     footer = f'\n\n🏷️ {category}' if category else ''
     return (
-        '📚 Varian | Daily Microeconomics Term\n\n'
         f'💡 {entry["term"]}\n\n'
         f'📖 Definition: {entry["definition"]}\n\n'
         f'🔎 Example: {entry["example"]}'
