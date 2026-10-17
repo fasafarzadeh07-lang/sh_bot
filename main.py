@@ -28,6 +28,7 @@ import yfinance as yf
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 GEMINI_KEY = os.getenv("GEMINI_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 CHANNEL_ID_2 = os.getenv("CHANNEL_ID_2")
 FRED_API_KEY = os.getenv("FRED_API_KEY")
 
@@ -589,51 +590,82 @@ Headlines:
 {headlines}
 """
 
-    client = genai.Client(api_key=GEMINI_KEY)
-    
+    # Provider order: Gemini 3.8 Flash -> Groq GPT-OSS 120B -> Gemini backup.
+    # The independent Groq fallback can keep the bot running during Gemini outages.
     primary_model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
-    backup_model = "gemini-2.5-flash"
-    max_retries = 3
-    delay = 2  # wait 2 seconds initially
+    groq_model = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+    backup_model = os.getenv("GEMINI_BACKUP_MODEL", "gemini-3.6-flash")
+    errors = []
+    client = genai.Client(api_key=GEMINI_KEY) if GEMINI_KEY else None
 
-    # --- Try generating with the newer Gemini 3.6 Flash first ---
-    for attempt in range(max_retries):
-        try:
-            print(f"Attempting econ summary with {primary_model} (Attempt {attempt + 1}/{max_retries})...")
-            response = client.models.generate_content(
-                model=primary_model,
-                contents=prompt
-            )
-            if not response.text or not response.text.strip():
-                raise ValueError("Gemini returned an empty response")
-            return response.text
-            
-        except APIError as e:
-            if e.code in (429, 500, 502, 503, 504):
-                print(f"Gemini temporary API error ({e.code}); retrying in {delay} seconds...")
+    def call_gemini(model, attempts=2):
+        delay = 2
+        for attempt in range(attempts):
+            try:
+                print(f"Trying Gemini {model} ({attempt + 1}/{attempts})")
+                response = client.models.generate_content(model=model, contents=prompt)
+                result = response.text
+                if not result or not result.strip():
+                    raise ValueError("Gemini returned an empty response")
+                return result.strip()
+            except APIError as exc:
+                print(f"Gemini {model} API error: {exc.code}")
+                if exc.code not in (429, 500, 502, 503, 504):
+                    break
+            except Exception as exc:
+                print(f"Gemini {model} failed: {type(exc).__name__}")
+            if attempt + 1 < attempts:
                 time.sleep(delay)
-                delay *= 2  # Exponential backoff
-            else:
-                # If it is any other type of API error (like 400 or 403), raise it
-                raise e
-        except Exception as e:
-            print(f"Connection issue on attempt {attempt + 1}: {e}. Retrying...")
-            time.sleep(delay)
-            delay *= 2
+                delay *= 2
+        errors.append(f"Gemini {model} failed")
+        return None
 
-    # --- Fallback Option ---
-    # If Gemini 3.6 was completely overloaded, we use your highly reliable Gemini 2.5 Flash
-    print(f"{primary_model} unavailable. Falling back to {backup_model}...")
-    try:
-        response = client.models.generate_content(
-            model=backup_model,
-            contents=prompt
-        )
-        if not response.text or not response.text.strip():
-            raise ValueError("Fallback Gemini returned an empty response")
-        return response.text
-    except Exception as fallback_err:
-        raise RuntimeError(f"Both Gemini models failed ({primary_model}, {backup_model})") from fallback_err
+    if client:
+        result = call_gemini(primary_model)
+        if result:
+            return result
+    else:
+        print("GEMINI_KEY not configured; skipping Gemini")
+
+    if GROQ_API_KEY:
+        print(f"Trying Groq fallback: {groq_model}")
+        try:
+            # Use requests already included in requirements; no new dependency.
+            response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {GROQ_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": groq_model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.3,
+                    "max_completion_tokens": 3500,
+                },
+                timeout=100,
+            )
+            if not response.ok:
+                # Never print HTTP response body: it may contain sensitive data.
+                raise RuntimeError(f"Groq HTTP {response.status_code}")
+            payload = response.json()
+            result = payload["choices"][0]["message"]["content"]
+            if not isinstance(result, str) or not result.strip():
+                raise ValueError("Groq returned an empty response")
+            print("Groq fallback succeeded")
+            return result.strip()
+        except Exception as exc:
+            print(f"Groq fallback failed: {type(exc).__name__}: {exc}")
+            errors.append("Groq failed")
+    else:
+        print("GROQ_API_KEY not configured; skipping Groq fallback")
+
+    if client and backup_model != primary_model:
+        result = call_gemini(backup_model, attempts=1)
+        if result:
+            return result
+
+    raise RuntimeError("Unable to generate news summary: " + "; ".join(errors))
 
 
 def split_telegram_message(message, limit=4000):
