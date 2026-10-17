@@ -1,5 +1,7 @@
 {
-  "next_index": 12,
-  "last_sent": "2026-10-29",
+  "sent_ids": [],
+  "last_sent_date": null,
+  "last_sent_term": null,
+  "last_message_id": null,
   "completed_cycles": 0
 }
