@@ -1,10 +1,11 @@
 {
   "sent_ids": [
     "pareto efficiency",
-    "comparative statics"
+    "comparative statics",
+    "kinked budget constraint"
   ],
-  "last_sent_date": "2026-10-19",
-  "last_sent_term": "Comparative Statics",
-  "last_message_id": 4215,
+  "last_sent_date": "2026-10-20",
+  "last_sent_term": "Kinked Budget Constraint",
+  "last_message_id": 4246,
   "completed_cycles": 0
 }
