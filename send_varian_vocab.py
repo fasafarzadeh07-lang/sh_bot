@@ -7,6 +7,8 @@ Scheduled runs send the next unsent term and update the tracker only on success.
 import json
 import os
 import random
+import requests
+from vocab_visual import render
 from datetime import date, datetime
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -72,25 +74,30 @@ def format_message(entry):
     )
 
 
-def post_to_telegram(message):
+def post_to_telegram(message, entry):
+    """Send an educational image with the original message as its caption."""
     token = os.getenv('BOT_TOKEN', '').strip()
     chat_id = (os.getenv('VOCAB_CHAT_ID') or os.getenv('CHANNEL_ID') or '').strip()
     thread_id = os.getenv('VOCAB_THREAD_ID', '').strip()
     if not token or not chat_id or not thread_id:
         raise RuntimeError('Set BOT_TOKEN, VOCAB_THREAD_ID and either VOCAB_CHAT_ID or CHANNEL_ID.')
-    data = urlencode({'chat_id': chat_id, 'message_thread_id': thread_id, 'text': message}).encode('utf-8')
-    req = Request(f'https://api.telegram.org/bot{token}/sendMessage', data=data, method='POST')
-    try:
-        with urlopen(req, timeout=30) as resp:
-            result = json.load(resp)
-    except HTTPError as exc:
-        # Do not print tokens or request URLs.
-        raise RuntimeError(f'Telegram API HTTP {exc.code}; check chat ID, topic ID and bot permissions.') from None
-    except URLError as exc:
-        raise RuntimeError(f'Could not reach Telegram API: {exc.reason}') from None
-    if not result.get('ok') or not result.get('result', {}).get('message_id'):
-        raise RuntimeError('Telegram did not confirm the message ID.')
-    return result['result']['message_id']
+    caption_length = len(message.encode('utf-16-le')) // 2
+    if caption_length > 1024:
+        raise ValueError('Telegram photo caption exceeds 1024 characters.')
+    photo, is_diagram = render(entry)
+    print('Image type:', 'economic diagram' if is_diagram else 'concept card')
+    response = requests.post(
+        f'https://api.telegram.org/bot{token}/sendPhoto',
+        data={'chat_id': chat_id, 'message_thread_id': thread_id, 'caption': message},
+        files={'photo': ('varian.png', photo, 'image/png')},
+        timeout=60,
+    )
+    if not response.ok:
+        raise RuntimeError(f'Telegram sendPhoto failed (HTTP {response.status_code}).')
+    payload = response.json()
+    if not payload.get('ok') or not payload.get('result', {}).get('message_id'):
+        raise RuntimeError('Telegram did not confirm the photo message.')
+    return payload['result']['message_id']
 
 
 def main():
@@ -110,7 +117,7 @@ def main():
             entry = terms[index - 1]
         else:
             entry = random.choice(terms)
-        message_id = post_to_telegram(format_message(entry))
+        message_id = post_to_telegram(format_message(entry), entry)
         print(f'MANUAL TEST sent: {entry["term"]!r}; message_id={message_id}; tracker unchanged.')
         return
 
@@ -125,7 +132,7 @@ def main():
         return
 
     entry, sent = select_scheduled(terms, progress)
-    message_id = post_to_telegram(format_message(entry))
+    message_id = post_to_telegram(format_message(entry), entry)
     sent.add(term_id(entry))
     progress['sent_ids'] = [term_id(t) for t in terms if term_id(t) in sent]
     progress['last_sent_date'] = today.isoformat()
