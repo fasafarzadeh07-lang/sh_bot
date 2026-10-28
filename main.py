@@ -271,7 +271,7 @@ def get_market_snapshot():
             result = get_change(ticker, include_date=True)
             if result is not None:
                 price, change, as_of = result
-                lines.append(f"{name}: {fmt.format(price)} ({format_change(change)}) · {as_of:%Y-%m-%d}")
+                lines.append(f"{name}: {fmt.format(price)} ({format_change(change)})")
                 return
         except Exception as e:
             print(f"{ticker} failed: {e}")
