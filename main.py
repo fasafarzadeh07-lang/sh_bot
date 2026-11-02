@@ -577,11 +577,16 @@ Headlines:
 {headlines}
 """
 
-    # Provider order: Gemini 3.8 Flash -> Groq GPT-OSS 120B -> Gemini backup.
-    # The independent Groq fallback can keep the bot running during Gemini outages.
+    # Provider order: Gemini 3.8 Flash -> Groq -> Gemini 3.6 -> 3.5 -> 3.1 Lite.
+    # Keep the English bot's proven model choices as extra Gemini fallbacks.
     primary_model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
     groq_model = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
     backup_model = os.getenv("GEMINI_BACKUP_MODEL", "gemini-3.6-flash")
+    fallback_models = list(dict.fromkeys([
+        backup_model,
+        "gemini-3.5-flash",
+        "gemini-3.1-flash-lite",
+    ]))
     errors = []
     client = genai.Client(api_key=GEMINI_KEY) if GEMINI_KEY else None
 
@@ -647,10 +652,13 @@ Headlines:
     else:
         print("GROQ_API_KEY not configured; skipping Groq fallback")
 
-    if client and backup_model != primary_model:
-        result = call_gemini(backup_model, attempts=1)
-        if result:
-            return result
+    if client:
+        for model in fallback_models:
+            if model == primary_model:
+                continue
+            result = call_gemini(model, attempts=1)
+            if result:
+                return result
 
     raise RuntimeError("Unable to generate news summary: " + "; ".join(errors))
 
