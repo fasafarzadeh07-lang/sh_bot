@@ -17,10 +17,11 @@
     "income offer curve",
     "price offer curve",
     "gross substitutes",
-    "revealed preference"
+    "revealed preference",
+    "weak axiom of revealed preference (warp)"
   ],
-  "last_sent_date": "2026-11-05",
-  "last_sent_term": "Revealed Preference",
-  "last_message_id": 312,
+  "last_sent_date": "2026-11-06",
+  "last_sent_term": "Weak Axiom of Revealed Preference (WARP)",
+  "last_message_id": 313,
   "completed_cycles": 0
 }
