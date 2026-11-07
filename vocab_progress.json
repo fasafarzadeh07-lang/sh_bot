@@ -18,10 +18,11 @@
     "price offer curve",
     "gross substitutes",
     "revealed preference",
-    "weak axiom of revealed preference (warp)"
+    "weak axiom of revealed preference (warp)",
+    "strong axiom of revealed preference (sarp)"
   ],
-  "last_sent_date": "2026-11-06",
-  "last_sent_term": "Weak Axiom of Revealed Preference (WARP)",
-  "last_message_id": 313,
+  "last_sent_date": "2026-11-07",
+  "last_sent_term": "Strong Axiom of Revealed Preference (SARP)",
+  "last_message_id": 314,
   "completed_cycles": 0
 }
