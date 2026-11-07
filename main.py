@@ -593,11 +593,7 @@ Headlines:
 
     def call_gemini(model):
         print(f"Trying Gemini model: {model}", flush=True)
-        # Google recommends omitting temperature on newer Gemini 3 models.
-        # Keep the requested 0.25 setting for Gemini 2.5 models.
-        generation_config = {"maxOutputTokens": 1024}
-        if model.startswith("gemini-2.5-"):
-            generation_config["temperature"] = 0.25
+        generation_config = {"maxOutputTokens": 1024, "temperature": 0.25}
         try:
             response = requests.post(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
