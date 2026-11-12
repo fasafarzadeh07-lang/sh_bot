@@ -22,10 +22,11 @@
     "strong axiom of revealed preference (sarp)",
     "laspeyres price index",
     "paasche price index",
-    "fisher ideal index"
+    "fisher ideal index",
+    "slutsky equation"
   ],
-  "last_sent_date": "2026-11-11",
-  "last_sent_term": "Fisher Ideal Index",
-  "last_message_id": 318,
+  "last_sent_date": "2026-11-12",
+  "last_sent_term": "Slutsky Equation",
+  "last_message_id": 319,
   "completed_cycles": 0
 }
