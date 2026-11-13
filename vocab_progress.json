@@ -23,10 +23,11 @@
     "laspeyres price index",
     "paasche price index",
     "fisher ideal index",
-    "slutsky equation"
+    "slutsky equation",
+    "hicksian demand"
   ],
-  "last_sent_date": "2026-11-12",
-  "last_sent_term": "Slutsky Equation",
-  "last_message_id": 319,
+  "last_sent_date": "2026-11-13",
+  "last_sent_term": "Hicksian Demand",
+  "last_message_id": 320,
   "completed_cycles": 0
 }
