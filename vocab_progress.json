@@ -24,10 +24,11 @@
     "paasche price index",
     "fisher ideal index",
     "slutsky equation",
-    "hicksian demand"
+    "hicksian demand",
+    "compensated demand"
   ],
-  "last_sent_date": "2026-11-13",
-  "last_sent_term": "Hicksian Demand",
-  "last_message_id": 320,
+  "last_sent_date": "2026-11-14",
+  "last_sent_term": "Compensated Demand",
+  "last_message_id": 321,
   "completed_cycles": 0
 }
