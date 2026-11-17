@@ -27,10 +27,11 @@
     "hicksian demand",
     "compensated demand",
     "endowment",
-    "net demand"
+    "net demand",
+    "endowment income effect"
   ],
-  "last_sent_date": "2026-11-16",
-  "last_sent_term": "Net Demand",
-  "last_message_id": 323,
+  "last_sent_date": "2026-11-17",
+  "last_sent_term": "Endowment Income Effect",
+  "last_message_id": 324,
   "completed_cycles": 0
 }
