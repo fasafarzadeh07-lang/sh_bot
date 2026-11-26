@@ -36,10 +36,11 @@
     "no-arbitrage condition",
     "hotelling rule",
     "market bubble",
-    "tax capitalization"
+    "tax capitalization",
+    "expected utility"
   ],
-  "last_sent_date": "2026-11-25",
-  "last_sent_term": "Tax Capitalization",
-  "last_message_id": 332,
+  "last_sent_date": "2026-11-26",
+  "last_sent_term": "Expected Utility",
+  "last_message_id": 333,
   "completed_cycles": 0
 }
