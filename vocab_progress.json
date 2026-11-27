@@ -37,10 +37,11 @@
     "hotelling rule",
     "market bubble",
     "tax capitalization",
-    "expected utility"
+    "expected utility",
+    "risk aversion"
   ],
-  "last_sent_date": "2026-11-26",
-  "last_sent_term": "Expected Utility",
-  "last_message_id": 333,
+  "last_sent_date": "2026-11-27",
+  "last_sent_term": "Risk Aversion",
+  "last_message_id": 334,
   "completed_cycles": 0
 }
